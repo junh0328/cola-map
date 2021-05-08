@@ -1,0 +1,59 @@
+paths:
+  /user/register:
+    post:
+      tags:
+      - user
+      summary: REGISTER
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  required: true
+                  example: "james@naver.com"
+                password:
+                  type: string
+                  required: true
+                  example: "test1234"
+                passwordCheck:
+                  type: string
+                  required: true
+                  example: "test1234"
+      responses:
+        '200':
+          description: OK
+
+  /user/login:
+    post:
+      tags:
+      - user
+      summary: LOGIN
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "james@naver.com"
+                password:
+                  type: string
+                  example: "test1234"
+      responses:
+        '200':
+          description: OK
+
+  /user/logout:
+    post:
+      tags:
+      - user
+      summary: LOGOUT
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
