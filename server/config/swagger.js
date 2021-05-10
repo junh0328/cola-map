@@ -12,7 +12,7 @@ const swagger = {
       },
       contact: {
         name: "JINSOO YOO",
-        email: "wlstn4966@gmailc.om"
+        email: "wlstn4966@gmail.com"
       }
     },
     servers: [
