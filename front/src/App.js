@@ -1,9 +1,9 @@
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Main from './Pages/Main';
-import Categories from './Pages/Categories';
-import Submit from './Pages/Submit';
-import Private from './Pages/Private';
+import Main from './pages/Main';
+import Categories from './pages/Categories';
+import Submit from './pages/Submit';
+import Private from './pages/Private';
 
 function App() {
   return (

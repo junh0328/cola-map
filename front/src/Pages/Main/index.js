@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import FetchingMap from '../../apis/FetchingMap';
 
-const Main = () => {
+export default function Main() {
+  useEffect(() => {
+    FetchingMap();
+  }, []); // 마운트 될때 사용할수 있도록 useEffect 사용
+
   return (
-    <div>
-      <h1>Main 페이지입니다.</h1>
-    </div>
+    <div
+      id="Map"
+      style={{
+        width: '100vw',
+        height: '100vh',
+      }}
+    ></div>
   );
-};
-
-export default Main;
+}
