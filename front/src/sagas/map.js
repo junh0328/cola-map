@@ -5,9 +5,7 @@ import { FETCH_MAP_FAILURE, FETCH_MAP_REQUEST, FETCH_MAP_SUCCESS } from '../redu
 
 function* fetchMap() {
   try {
-    setTimeout(() => {
-      FetchingMap();
-    }, 1000);
+    FetchingMap();
     yield put({
       type: FETCH_MAP_SUCCESS,
     });

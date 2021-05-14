@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FETCH_MAP_REQUEST } from '../../reducers/map';
+import { FETCH_MAP_REQUEST, RESET_MAP_STATE } from '../../reducers/map';
 
 export default function Main() {
   const { fetchMapDone } = useSelector((state) => state.map);
@@ -10,7 +10,7 @@ export default function Main() {
     dispatch({
       type: FETCH_MAP_REQUEST,
     });
-  }, [dispatch]); // 마운트 될때 사용할수 있도록 useEffect 사용
+  }, []); // 마운트 될때 사용할수 있도록 useEffect 사용
 
   // redux-saga의 전반적인 흐름 보기
   useEffect(() => {
@@ -24,13 +24,12 @@ export default function Main() {
         <div
           id="Map"
           style={{
-            width: '100vw',
             height: '95vh',
           }}
         ></div>
       ) : (
         <div>
-          <h1>로딩중</h1>
+          <h1>...on Loading</h1>
         </div>
       )}
     </>
