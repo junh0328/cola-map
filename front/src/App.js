@@ -6,17 +6,18 @@ import Submit from './pages/Submit';
 import Private from './pages/Private';
 import { Global } from '@emotion/react';
 import reset from './theme/globalStyle';
-import AppLayout from './components/applayout';
+import AppLayout from './components/AppLayout';
 
 function App() {
   return (
     <Router>
-      <Global styles={reset} />
-      <Route path="/" exact component={Main} />
-      <Route path="/categories" component={Categories} />
-      <Route path="/submit" component={Submit} />
-      <Route path="/private" component={Private} />
-      <AppLayout />
+      <AppLayout>
+        <Global styles={reset} />
+        <Route path="/" exact component={Main} />
+        <Route path="/categories" component={Categories} />
+        <Route path="/submit" component={Submit} />
+        <Route path="/private" component={Private} />
+      </AppLayout>
     </Router>
   );
 }

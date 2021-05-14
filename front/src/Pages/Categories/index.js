@@ -4,7 +4,7 @@ import { Button } from './style';
 const Categories = () => {
   return (
     <div>
-      <h1>Categories 페이지입니다.</h1>
+      <div>Categories 페이지입니다.</div>
       <Button>버튼 1</Button>
     </div>
   );

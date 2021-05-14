@@ -1,19 +1,9 @@
 import styled from '@emotion/styled';
 
-export const LinkWrapper = styled.div`
-  height: 5vh;
-  display: flex;
-  background-color: #fff;
+export const MainWrapper = styled.div`
+  margin: 0 auto;
+`;
 
-  & a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25%;
-    text-decoration: none;
-    color: #0f4c82;
-    margin-right: 10px;
-    text-align: center;
-    font-size: 1.2rem;
-  }
+export const MainContent = styled.div`
+  height: 95vh;
 `;

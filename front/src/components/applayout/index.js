@@ -1,25 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { LinkWrapper } from './style';
-import { BarsOutlined, FormOutlined, HomeOutlined, SmileOutlined } from '@ant-design/icons';
+import Navbar from '../Navbar';
+import { MainContent, MainWrapper } from './style';
+import PropTypes from 'prop-types';
 
-const AppLayout = () => {
+const AppLayout = ({ children }) => {
   return (
-    <LinkWrapper>
-      <a href="/">
-        <HomeOutlined />
-      </a>
-      <Link to="/categories">
-        <BarsOutlined />
-      </Link>
-      <Link to="/submit">
-        <FormOutlined />
-      </Link>
-      <Link to="/private">
-        <SmileOutlined />
-      </Link>
-    </LinkWrapper>
+    <MainWrapper>
+      <MainContent>{children}</MainContent>
+      <Navbar />
+    </MainWrapper>
   );
+};
+AppLayout.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default AppLayout;
