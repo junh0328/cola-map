@@ -2,6 +2,11 @@ import produce from 'immer';
 // import FetchingMap from '../apis/FetchingMap';
 
 export const initialState = {
+  // map에 대한 상태 관리를 할 객체, maskMap
+  colaMap: {
+    map: null,
+  },
+
   fetchMapLoading: false,
   fetchMapDone: false,
   fetchMapError: null,

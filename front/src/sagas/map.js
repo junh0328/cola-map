@@ -1,11 +1,12 @@
-import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
-import FetchingMap from '../apis/FetchingMap';
+import { all, fork, put, takeLatest } from 'redux-saga/effects';
+import useFetchingMap from '../apis/useFetchingMap';
 
 import { FETCH_MAP_FAILURE, FETCH_MAP_REQUEST, FETCH_MAP_SUCCESS } from '../reducers/map';
 
 function* fetchMap() {
+  console.log(useFetchingMap);
   try {
-    FetchingMap();
+    useFetchingMap();
     yield put({
       type: FETCH_MAP_SUCCESS,
     });
