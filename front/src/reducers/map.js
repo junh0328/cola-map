@@ -4,7 +4,7 @@ import produce from 'immer';
 export const initialState = {
   // map에 대한 상태 관리를 할 객체, maskMap
   colaMap: {
-    map: null,
+    map: [],
   },
 
   fetchMapLoading: false,
@@ -28,6 +28,7 @@ const map = (state = initialState, action) =>
       case FETCH_MAP_SUCCESS: {
         draft.fetchMapLoading = false;
         draft.fetchMapDone = true;
+        draft.colaMap.map = draft.colaMap.map.push(action.data);
         break;
       }
       case FETCH_MAP_FAILURE: {
