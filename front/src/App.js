@@ -6,7 +6,7 @@ import Submit from './pages/Submit';
 import Private from './pages/Private';
 import { Global } from '@emotion/react';
 import reset from './theme/globalStyle';
-import AppLayout from './components/Applayout';
+import AppLayout from './components/AppLayout';
 
 function App() {
   return (
