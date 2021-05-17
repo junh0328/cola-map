@@ -7,22 +7,21 @@ export default function Map() {
   const dispatch = useDispatch();
   const { colaMap } = useSelector((state) => {
     return {
-      colaMap: state.map.colaMap && state.map.colaMap.map
-    }
+      colaMap: state.map.colaMap && state.map.colaMap.map,
+    };
   });
 
   useEffect(() => {
     dispatch(fetchMap());
-  }, [])
+  }, []);
 
-  const test = () => {
-    colaMap.setLevel(1);
-  }
+  // const test = () => {
+  //   colaMap.setLevel(1);
+  // };
 
   return (
     <>
-      <button onClick={test}>test</button>
       <MapWrapper id="Map" />
     </>
-  )
+  );
 }

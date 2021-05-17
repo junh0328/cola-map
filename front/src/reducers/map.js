@@ -16,9 +16,9 @@ export const FETCH_MAP_FAILURE = 'FETCH_MAP_FAILURE';
 
 export const fetchMap = () => {
   return {
-    type: FETCH_MAP_REQUEST
-  }
-}
+    type: FETCH_MAP_REQUEST,
+  };
+};
 
 const map = (state = initialState, action) =>
   produce(state, (draft) => {

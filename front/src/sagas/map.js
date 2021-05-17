@@ -17,7 +17,7 @@ function* fetchMap() {
     // console.log('result 출력: ', map);
     yield put({
       type: FETCH_MAP_SUCCESS,
-      map: map
+      map: map,
     });
   } catch (err) {
     console.log(err);
