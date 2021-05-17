@@ -13,12 +13,11 @@ async function useFetchingMapAPI() {
 
 function* fetchMap() {
   try {
-    const result = yield call(useFetchingMapAPI);
-    console.log('result 출력: ', result);
-    // useFetchingMap();
+    const map = yield call(useFetchingMapAPI);
+    // console.log('result 출력: ', map);
     yield put({
       type: FETCH_MAP_SUCCESS,
-      data: result,
+      map: map
     });
   } catch (err) {
     console.log(err);

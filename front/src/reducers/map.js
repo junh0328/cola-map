@@ -3,10 +3,7 @@ import produce from 'immer';
 
 export const initialState = {
   // map에 대한 상태 관리를 할 객체, maskMap
-  colaMap: {
-    map: [],
-  },
-
+  colaMap: null,
   fetchMapLoading: false,
   fetchMapDone: false,
   fetchMapError: null,
@@ -16,6 +13,12 @@ export const RESET_MAP_STATE = 'RESET_MAP_STATE';
 export const FETCH_MAP_REQUEST = 'FETCH_MAP_REQUEST';
 export const FETCH_MAP_SUCCESS = 'FETCH_MAP_SUCCESS';
 export const FETCH_MAP_FAILURE = 'FETCH_MAP_FAILURE';
+
+export const fetchMap = () => {
+  return {
+    type: FETCH_MAP_REQUEST
+  }
+}
 
 const map = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -28,7 +31,7 @@ const map = (state = initialState, action) =>
       case FETCH_MAP_SUCCESS: {
         draft.fetchMapLoading = false;
         draft.fetchMapDone = true;
-        draft.colaMap.map = draft.colaMap.map.push(action.data);
+        draft.colaMap = action.map;
         break;
       }
       case FETCH_MAP_FAILURE: {

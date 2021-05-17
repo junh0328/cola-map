@@ -6,9 +6,9 @@ import { BarsOutlined, FormOutlined, HomeOutlined, SmileOutlined } from '@ant-de
 const Navbar = () => {
   return (
     <LinkWrapper>
-      <a href="/">
+      <Link to="/">
         <HomeOutlined />
-      </a>
+      </Link>
       <Link to="/categories">
         <BarsOutlined />
       </Link>
