@@ -1,28 +1,40 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MapWrapper } from './style';
-import { fetchMap } from '../../reducers/map';
+import { fetchMap, fetchAddress } from '../../reducers/map';
+import useUserLocation from '../../apis/useUserLocation';
 
 export default function Map() {
   const dispatch = useDispatch();
-  const { colaMap } = useSelector((state) => {
+  const { location } = useUserLocation();
+  const { map } = useSelector((state) => {
     return {
-      colaMap: state.map.colaMap && state.map.colaMap.map
-    }
+      map: state.map.colaMap && state.map.colaMap.map,
+    };
   });
 
   useEffect(() => {
     dispatch(fetchMap());
-  }, [])
+  }, []);
 
-  const test = () => {
-    colaMap.setLevel(1);
-  }
+  useEffect(() => {
+    if (location && map) {
+      const { latitude, longitude } = location;
+      map && map.setCenter(new kakao.maps.LatLng(latitude, longitude));
+
+      const geocoder = new kakao.maps.services.Geocoder();
+      kakao.maps.event.addListener(map, 'dragend', function () {
+        const { La, Ma } = map.getCenter();
+        geocoder.coord2Address(La, Ma, (result, status) => {
+          dispatch(fetchAddress(result[0], status));
+        });
+      });
+    }
+  }, [map, location]);
 
   return (
     <>
-      <button onClick={test}>test</button>
       <MapWrapper id="Map" />
     </>
-  )
+  );
 }

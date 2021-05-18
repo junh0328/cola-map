@@ -6,7 +6,7 @@ const { kakao } = window;
 // const { displayMarker } = useDisplayMark();
 
 export default function useFetchingMap() {
-  console.log(`useFetchingMap`);
+  //console.log(`useFetchingMap`);
   const container = document.getElementById('Map'); // 가이드는 Map이다
   const options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),

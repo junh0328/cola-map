@@ -12,7 +12,7 @@ const Navbar = () => {
       <Link to="/categories">
         <BarsOutlined />
       </Link>
-      <Link to="/submit">
+      <Link to="/apply">
         <FormOutlined />
       </Link>
       <Link to="/private">

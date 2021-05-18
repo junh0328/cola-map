@@ -5,6 +5,10 @@ const reset = css`
     height: 100%;
   }
 
+  body {
+    background-color: #eee;
+  }
+
   body,
   #Map {
     width: 100vw;
