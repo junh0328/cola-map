@@ -27,6 +27,7 @@ export const MySlider = styled(Slider)`
     display: flex;
     justify-content: center;
     background-color: white;
+
     & div {
       display: flex;
       align-items: center;

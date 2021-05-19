@@ -5,6 +5,7 @@ import { fetchMap } from '../../reducers/map';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import AimButton from '../AimButtonn';
 
 export default function Map() {
   const dispatch = useDispatch();
@@ -24,14 +25,14 @@ export default function Map() {
 
   const items = [
     { id: 1, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '펩시' },
-    { id: 2, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '코카콜라' },
-    { id: 3, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '스프라이트' },
+    { id: 2, url: 'http://www.hahn.ph/wp-content/uploads/2021/02/coke-no-sugar-slim.png', name: '코카콜라' },
+    { id: 3, url: 'http://www.hahn.ph/wp-content/uploads/2021/02/sprite-slim.png', name: '스프라이트' },
     { id: 4, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '사이다' },
   ];
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -42,6 +43,7 @@ export default function Map() {
   return (
     <>
       <MapWrapper id="Map">
+        <AimButton />
         <SlideWrapper>
           <MySlider {...settings} style={{ height: '100%' }}>
             {items.map((item) => {

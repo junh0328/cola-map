@@ -1,6 +1,7 @@
 // 마크를 표시하는 함수 (카카오 제공 API)
 
 export function useDisplayMark() {
+  console.log('displayMarker');
   const { kakao } = window;
 
   // 지도에 마커와 인포윈도우를 표시하는 함수입니다
