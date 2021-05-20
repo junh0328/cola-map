@@ -1,6 +1,10 @@
 import { css } from '@emotion/react';
 
 const reset = css`
+  * {
+    box-sizing: border-box;
+  }
+
   #root {
     height: 100%;
   }

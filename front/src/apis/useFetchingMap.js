@@ -14,6 +14,8 @@ export default function useFetchingMap() {
   };
   const map = new kakao.maps.Map(container, options);
 
+  kakao.maps.event.addListener(map, 'dragend', () => console.log(123));
+
   //console.log('map', map);
   return { map };
 }
