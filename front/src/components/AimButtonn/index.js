@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { AimOutlined } from '@ant-design/icons';
-import { AimButtonWrapper } from './style';
+import { useGetMyLoc } from '../../apis/useGetMyLoc';
+
 // import { useDispatch } from 'react-redux';
 // import { useDisplayMark } from '../../apis/useDisplayMark';
 
@@ -9,11 +10,11 @@ const AimButton = () => {
   // const displayMarker = useDisplayMark();
 
   const getCurrentLocation = useCallback(() => {
-    alert('현재 위치 출력!');
+    useGetMyLoc();
   }, []);
 
   return (
-    <AimButtonWrapper
+    <div
       style={{
         borderRadius: '50%',
         position: 'absolute',
@@ -34,7 +35,7 @@ const AimButton = () => {
         }}
         onClick={getCurrentLocation}
       />
-    </AimButtonWrapper>
+    </div>
   );
 };
 

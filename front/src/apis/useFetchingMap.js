@@ -1,9 +1,6 @@
-// import { useDisplayMark } from './useDisplayMark';
+import { useGetMyLoc } from './useGetMyLoc';
 
 const { kakao } = window;
-
-// 마크를 표시하는 함수 분리
-// const { displayMarker } = useDisplayMark();
 
 export default function useFetchingMap() {
   console.log(`useFetchingMap`);
@@ -14,6 +11,7 @@ export default function useFetchingMap() {
   };
   const map = new kakao.maps.Map(container, options);
 
-  //console.log('map', map);
+  useGetMyLoc();
+
   return { map };
 }
