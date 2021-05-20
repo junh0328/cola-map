@@ -7,7 +7,7 @@ export const AimButtonWrapper = styled.div`
   z-index: 10000;
   bottom: '30%';
   right: '5%';
-  /* box-shadow: '5px 6px 5px 1px rgba(0,0,0,0.75)'; */
+  box-shadow: 5px 6px 5px 1px rgba(0, 0, 0, 0.1);
 `;
 
 export const CustomAim = styled(AimOutlined)`
@@ -18,4 +18,8 @@ export const CustomAim = styled(AimOutlined)`
   padding: 10;
   cursor: 'pointer';
   border-radius: '50%';
+
+  @media (max-width: 350px) {
+    font-size: '2rem';
+  }
 `;

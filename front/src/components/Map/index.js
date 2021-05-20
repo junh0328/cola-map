@@ -6,6 +6,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import AimButton from '../AimButtonn';
+import SearchInput from '../SearchInput';
 
 export default function Map() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ export default function Map() {
   return (
     <>
       <MapWrapper id="Map">
+        <SearchInput />
         <AimButton />
         <SlideWrapper>
           <MySlider {...settings} style={{ height: '100%' }}>

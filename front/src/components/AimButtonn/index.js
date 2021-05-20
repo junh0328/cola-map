@@ -10,6 +10,7 @@ const AimButton = () => {
   // const displayMarker = useDisplayMark();
 
   const getCurrentLocation = useCallback(() => {
+    alert('지도 상에 현재 위치를 불러옵니다.');
     useGetMyLoc();
   }, []);
 

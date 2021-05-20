@@ -44,7 +44,7 @@ export function useGetMyLoc() {
       map: map,
       position: locPosition,
       image: markerImage,
-      // draggable: true, // 마커를 드래그 가능하도록 설정한다
+      draggable: true, // 마커를 드래그 가능하도록 설정한다
     });
 
     var iwContent = message, // 인포윈도우에 표시할 내용
