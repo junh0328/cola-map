@@ -2,13 +2,7 @@ import React, { useCallback } from 'react';
 import { AimOutlined } from '@ant-design/icons';
 import { useGetMyLoc } from '../../apis/useGetMyLoc';
 
-// import { useDispatch } from 'react-redux';
-// import { useDisplayMark } from '../../apis/useDisplayMark';
-
 const AimButton = () => {
-  // const dispatch = useDispatch();
-  // const displayMarker = useDisplayMark();
-
   const getCurrentLocation = useCallback(() => {
     alert('지도 상에 현재 위치를 불러옵니다.');
     useGetMyLoc();

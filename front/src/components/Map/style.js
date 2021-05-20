@@ -52,7 +52,7 @@ export const SlideMainWrapper = styled.div`
 
 export const SlideImgWrapper = styled.div`
   & img {
-    width: 15%;
+    width: 10%;
   }
 `;
 
