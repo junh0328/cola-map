@@ -9,7 +9,7 @@ export const ContentTopWrapper = styled.div`
   top: ${(props) => (props.top === 'true' ? '0' : '10px')};
   left: 50%;
   transform: translate(-50%, 0);
-  z-index: 999;
+  z-index: 99999;
   background-color: #fff;
   border-radius: 20px;
   box-shadow: ${(props) => (props.top === 'true' ? '0 2px 7px 2px #ddd' : '0 0 7px 2px #ddd')};

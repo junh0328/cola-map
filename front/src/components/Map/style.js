@@ -10,7 +10,7 @@ export const MarkerIcon = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 9999;
+  z-index: 999;
   border-radius: 50%;
   & > img {
     width: 100%;

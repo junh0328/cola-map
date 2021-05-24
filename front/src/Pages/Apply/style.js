@@ -6,7 +6,7 @@ export const ApplyContentWrapper = styled.div`
   position: absolute;
   bottom: 0;
   background-color: #fff;
-  z-index: 9999;
+  z-index: 999;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   display: flex;

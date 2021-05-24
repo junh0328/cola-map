@@ -7,4 +7,5 @@ export const MainWrapper = styled.div`
 export const MainContent = styled.div`
   height: 95vh;
   position: relative;
+  overflow: hidden;
 `;
