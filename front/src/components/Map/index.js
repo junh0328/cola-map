@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MapWrapper, MarkerIcon } from './style';
 import { fetchMap, fetchAddress } from '../../reducers/map';
-import useUserLocation from '../../apis/useUserLocation';
 import PropTypes from 'prop-types';
+
+import useUserLocation from '../../apis/useUserLocation';
 
 Map.propTypes = {
   height: PropTypes.string,
@@ -11,28 +12,24 @@ Map.propTypes = {
 
 export default function Map({ height }) {
   const dispatch = useDispatch();
-  const { location } = useUserLocation();
   const { map } = useSelector((state) => {
     return {
       map: state.map.colaMap && state.map.colaMap.map,
+      location: state.map.address,
     };
   });
+  const { setMapCenter } = useUserLocation();
 
   useEffect(() => {
     dispatch(fetchMap());
   }, []);
 
   useEffect(() => {
-    if (location && map) {
-      // 초기 값
-      //getAddress();
-      const { latitude, longitude } = location;
-      map && map.setCenter(new kakao.maps.LatLng(latitude, longitude));
-
-      // 드래그가 끝날 때 발생한다.
-      //kakao.maps.event.addListener(map, 'dragend', () => getAddress());
+    setMapCenter();
+    if (map) {
+      kakao.maps.event.addListener(map, 'idle', getAddress);
     }
-  }, [map, location]);
+  }, [map]);
 
   const getAddress = () => {
     const geocoder = new kakao.maps.services.Geocoder();

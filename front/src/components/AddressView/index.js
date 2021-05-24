@@ -7,7 +7,7 @@ const AddressView = () => {
 
   return (
     <AddressViewer>
-      <b>{result && status === 'OK' ? result.address.address_name : `잘못 된 주소입니다.`}</b>
+      <b>{result && status === 'OK' ? result.address.address_name : `-`}</b>
     </AddressViewer>
   );
 };
