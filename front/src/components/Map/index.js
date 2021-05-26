@@ -15,14 +15,17 @@ export default function Map() {
       colaMap: state.map.colaMap && state.map.colaMap.map,
     };
   });
+  const { getLocationDone } = useSelector((state) => state.map);
 
   useEffect(() => {
     dispatch(fetchMap());
   }, []);
 
-  // const test = () => {
-  //   colaMap.setLevel(1);
-  // };
+  useEffect(() => {
+    if (getLocationDone) {
+      alert('현재 주소를 불러왔습니다!');
+    }
+  }, [getLocationDone]);
 
   const items = [
     { id: 1, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '펩시' },
