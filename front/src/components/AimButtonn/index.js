@@ -4,9 +4,16 @@ import { useGetMyLoc } from '../../apis/useGetMyLoc';
 
 const AimButton = () => {
   const getCurrentLocation = useCallback(() => {
-    alert('지도 상에 현재 위치를 불러옵니다.');
+    console.log('지도 상에 현재 위치를 불러옵니다.');
     useGetMyLoc();
   }, []);
+
+  /* 
+  const getCurrentLocation = useCallback(() => {
+    console.log('지도 상에 현재 위치를 불러옵니다.');
+    useGetMyLoc();
+  }, []);
+  */
 
   return (
     <div
