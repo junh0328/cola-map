@@ -1,6 +1,7 @@
 const { kakao } = window;
 
 export function useGetMyLoc() {
+  // console.log(`useGetMYLoc`);
   const container = document.getElementById('Map'); // 가이드는 Map이다
   const options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -62,6 +63,7 @@ export function useGetMyLoc() {
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);
 
-    return { map };
+    // console.log('함수 내에서 map 객체 출력: ', map);
   }
+  return { map };
 }

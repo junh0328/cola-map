@@ -23,9 +23,15 @@ export default function Map() {
 
   useEffect(() => {
     if (getLocationDone) {
-      alert('현재 주소를 불러왔습니다!');
+      alert('여기 계신가요?');
     }
   }, [getLocationDone]);
+
+  // useEffect(() => {
+  //   if (colaMap) {
+  //     console.log('colaMap 객체 값 관리', colaMap);
+  //   }
+  // }, [colaMap]);
 
   const items = [
     { id: 1, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '펩시' },
