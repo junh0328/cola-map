@@ -1,3 +1,4 @@
+import { CloseOutlined } from '@ant-design/icons';
 import React, { useCallback } from 'react';
 import { CloseModalButton, ModalWrapper } from './style';
 
@@ -12,10 +13,7 @@ const Modal = ({ show, onCloseModal, children }) => {
 
   return (
     <ModalWrapper onClick={onCloseModal}>
-      <div onClick={stopPropagation}>
-        <CloseModalButton onClick={onCloseModal}>&times;</CloseModalButton>
-        {children}
-      </div>
+      <div onClick={stopPropagation}>{children}</div>
     </ModalWrapper>
   );
 };
