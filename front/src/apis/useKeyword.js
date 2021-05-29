@@ -2,8 +2,6 @@ const { kakao } = window;
 
 export default function useKeyword(searchValue) {
   console.log('useKeyword!', searchValue);
-
-  console.log('innerStart!');
   // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
   var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
@@ -49,7 +47,12 @@ export default function useKeyword(searchValue) {
     // 마커에 클릭이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function () {
       // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-      infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+
+      infowindow.setContent(
+        '<div style="padding:5px;font-size:12px;font-weight:bold;display:flex;justify-content:center;align-items:center;">' +
+          place.place_name +
+          '</div>',
+      );
       infowindow.open(map, marker);
     });
   }

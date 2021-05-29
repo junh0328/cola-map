@@ -20,18 +20,18 @@ export const SearchForm = styled.div`
   width: 60vw;
   height: auto;
   background-color: white;
-  color: black;
-  font-size: 1rem;
-  font-weight: bolder;
+  color: #414141;
+  font-size: 0.9rem;
   cursor: pointer;
   outline: none;
   box-shadow: 5px 6px 5px 1px rgba(0, 0, 0, 0.1);
 
   & span {
-    margin-left: 2%;
+    margin-left: 4%;
   }
 
-  @media (max-width: 350px) {
-    font-size: 0.6rem;
+  @media (max-width: 400px) {
+    font-size: 0.7rem;
+    padding: 5px;
   }
 `;

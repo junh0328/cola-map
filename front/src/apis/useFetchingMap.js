@@ -11,5 +11,7 @@ export default function useFetchingMap() {
   };
   const map = new kakao.maps.Map(container, options);
 
+  useGetMyLoc();
+
   return { map };
 }

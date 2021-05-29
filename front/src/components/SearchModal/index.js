@@ -6,21 +6,9 @@ import { CloseModalButton, SearchModalWrapper, SearchModalHeader, SearchModalInp
 import { CustomAim } from '../AimButtonn/style';
 import useKeyword from '../../apis/useKeyword';
 
-const SearchModal = ({ show, onCloseModal }) => {
-  const [searchValue, setSearchValue] = useState('');
-
-  const onChangeValue = useCallback((e) => {
-    setSearchValue(e.target.value);
-  }, []);
-
+const SearchModal = ({ searchValue, onChangeValue, show, onCloseModal }) => {
   const SearchKeyword = useCallback((e) => {
     e.preventDefault();
-    if (searchValue) {
-      alert(`검색할 장소: ${searchValue}`);
-    } else {
-      alert('값이 제대로 넘어오지 않았습니다 ㅠㅠ');
-    }
-    // 창을 닫은 뒤, 해당 키워드 함수 실행
     useKeyword(searchValue);
     onCloseModal();
   });
