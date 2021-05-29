@@ -1,9 +1,8 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import React, { useCallback, useState } from 'react';
-import { AimButtonWrapper, SearchWrapper } from './style';
+import { AimButtonWrapper, SearchWrapper, CustonAimBtn } from './style';
 import Modal from '../Modal';
 import { CloseModalButton, SearchModalWrapper, SearchModalHeader, SearchModalInput, SearchModalMain } from './style';
-import { CustomAim } from '../AimButtonn/style';
 import useKeyword from '../../apis/useKeyword';
 
 const SearchModal = ({ searchValue, onChangeValue, show, onCloseModal }) => {
@@ -34,7 +33,7 @@ const SearchModal = ({ searchValue, onChangeValue, show, onCloseModal }) => {
               />
             </SearchWrapper>
             <AimButtonWrapper>
-              <CustomAim onClick={SearchKeyword} />
+              <CustonAimBtn onClick={SearchKeyword} />
             </AimButtonWrapper>
           </form>
         </SearchModalMain>

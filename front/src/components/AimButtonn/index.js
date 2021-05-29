@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { AimOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { getLocation } from '../../reducers/map';
+import { AimButtonWrapper, CustomAim } from './style';
 
 const AimButton = () => {
   const dispatch = useDispatch();
@@ -18,28 +19,9 @@ const AimButton = () => {
   */
 
   return (
-    <div
-      style={{
-        borderRadius: '50%',
-        position: 'absolute',
-        zIndex: 10000,
-        bottom: '30%',
-        right: '5%',
-      }}
-    >
-      <AimOutlined
-        style={{
-          fontSize: '3rem',
-          zIndex: 9999,
-          background: '#fff',
-          color: '#0F4C82',
-          padding: 10,
-          cursor: 'pointer',
-          borderRadius: '50%',
-        }}
-        onClick={getCurrentLocation}
-      />
-    </div>
+    <AimButtonWrapper>
+      <CustomAim onClick={getCurrentLocation} />
+    </AimButtonWrapper>
   );
 };
 
