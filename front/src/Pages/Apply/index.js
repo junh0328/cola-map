@@ -23,7 +23,7 @@ const Apply = () => {
         {isApplyForm ? <LeftOutlined onClick={useToggle} /> : <CloseOutlined />}
         <h1>가게 제보</h1>
       </ContentTop>
-      <Map height={'small'} />
+      <Map />
       <ApplyContentWrapper>
         <h3>제보하려는 가게의 위치</h3>
         <AddressView />

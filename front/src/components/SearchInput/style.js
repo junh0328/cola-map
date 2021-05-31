@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
 
 export const SearchInputWrapper = styled.div`
-  margin-top: 6%;
+  width: 90%;
   height: 5vh;
   z-index: 10000;
-  position: relative;
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
-  margin-left: 4%;
-  margin-right: 4%;
 `;
 
 export const SearchForm = styled.div`

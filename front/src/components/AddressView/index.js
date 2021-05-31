@@ -4,11 +4,10 @@ import { useSelector } from 'react-redux';
 import { AddressViewer } from './style';
 
 const AddressView = ({ style }) => {
-  const { result, status } = useSelector((state) => state.map.address);
-
+  const { address, status } = useSelector((state) => state.map.userAddress);
   return (
     <AddressViewer style={style}>
-      <b>{result && status === 'OK' ? result.address.address_name : `-`}</b>
+      <b>{address && status === 'OK' ? address.address.address_name : `-`}</b>
     </AddressViewer>
   );
 };

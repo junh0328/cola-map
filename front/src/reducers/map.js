@@ -3,11 +3,7 @@ import produce from 'immer';
 export const initialState = {
   // map에 대한 상태 관리를 할 객체, maskMap
   colaMap: null,
-<<<<<<< HEAD
-  address: {},
-=======
-
->>>>>>> c2c25517674f9e67df9cdd3ee8a8557617db761a
+  userAddress: {},
   fetchMapLoading: false,
   fetchMapDone: false,
   fetchMapError: null,
@@ -23,15 +19,13 @@ export const FETCH_MAP_REQUEST = 'FETCH_MAP_REQUEST';
 export const FETCH_MAP_SUCCESS = 'FETCH_MAP_SUCCESS';
 export const FETCH_MAP_FAILURE = 'FETCH_MAP_FAILURE';
 
-<<<<<<< HEAD
-export const FETCH_ADDRESS_REQUEST = 'FETCH_ADDRESS_REQUEST';
-export const FETCH_ADDRESS_SUCCESS = 'FETCH_ADDRESS_SUCCESS';
-export const FETCH_ADDRESS_FAILURE = 'FETCH_ADDRESS_FAILURE';
-=======
 export const GET_LOCATION_REQUEST = 'GET_LOCATION_REQUEST';
 export const GET_LOCATION_SUCCESS = 'GET_LOCATION_SUCCESS';
 export const GET_LOCATION_FAILURE = 'GET_LOCATION_FAILURE';
->>>>>>> c2c25517674f9e67df9cdd3ee8a8557617db761a
+
+export const SET_ADDRESS_REQEUST = 'SET_ADDRESS_REQEUST';
+export const SET_ADDRESS_SUCCESS = 'SET_ADDRESS_SUCCESS';
+export const SET_ADDRESS_FAILURE = 'SET_ADDRESS_FAILURE';
 
 export const fetchMap = () => {
   return {
@@ -39,17 +33,17 @@ export const fetchMap = () => {
   };
 };
 
-<<<<<<< HEAD
-export const fetchAddress = (result, status) => {
-  return {
-    type: FETCH_ADDRESS_REQUEST,
-    result,
-    status,
-=======
 export const getLocation = () => {
   return {
     type: GET_LOCATION_REQUEST,
->>>>>>> c2c25517674f9e67df9cdd3ee8a8557617db761a
+  };
+};
+
+export const setAddress = (address, status) => {
+  return {
+    type: SET_ADDRESS_REQEUST,
+    address,
+    status,
   };
 };
 
@@ -72,14 +66,6 @@ const map = (state = initialState, action) =>
         draft.fetchMapError = action.error;
         break;
       }
-<<<<<<< HEAD
-      case FETCH_ADDRESS_SUCCESS: {
-        draft.address = { result: action.result, status: action.status };
-        break;
-      }
-      case FETCH_ADDRESS_FAILURE: {
-        draft.address = { status: action.status };
-=======
       case GET_LOCATION_REQUEST: {
         draft.getLocationLoading = true;
         draft.getLocationDone = false;
@@ -94,7 +80,13 @@ const map = (state = initialState, action) =>
       case GET_LOCATION_FAILURE: {
         draft.getLocationLoading = false;
         draft.getLocationError = action.error;
->>>>>>> c2c25517674f9e67df9cdd3ee8a8557617db761a
+        break;
+      }
+      case SET_ADDRESS_SUCCESS: {
+        draft.userAddress = { address: action.address, status: action.status };
+        break;
+      }
+      case SET_ADDRESS_FAILURE: {
         break;
       }
       default:
