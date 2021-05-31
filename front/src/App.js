@@ -7,6 +7,7 @@ import Private from './pages/Private';
 import { Global } from '@emotion/react';
 import reset from './theme/globalStyle';
 import AppLayout from './components/AppLayout';
+import Category from './pages/Categories/Category';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
       <AppLayout>
         <Global styles={reset} />
         <Route path="/" exact component={Main} />
-        <Route path="/categories" component={Categories} />
+        <Route path="/categories" exact component={Categories} />
+        <Route path="/categories/category/:name" exact component={Category} />
         <Route path="/submit" component={Submit} />
         <Route path="/private" component={Private} />
       </AppLayout>
