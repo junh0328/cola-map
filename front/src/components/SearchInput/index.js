@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
 import SearchModal from '../SearchModal';
+import { getList } from '../../apis/useGetList';
 
 const SearchInput = () => {
   // 모달 상태 관리
@@ -13,6 +14,7 @@ const SearchInput = () => {
 
   const onChangeValue = useCallback((e) => {
     setSearchValue(e.target.value);
+    getList(e.target.value);
   }, []);
 
   // 검색 모달 켜기
