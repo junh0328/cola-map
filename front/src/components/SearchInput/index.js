@@ -1,6 +1,6 @@
 // 메인 창에 뜨는 검색창 (input)
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
 import SearchModal from '../SearchModal';
@@ -12,10 +12,41 @@ const SearchInput = () => {
 
   const [searchValue, setSearchValue] = useState('');
 
+  // const [fetchedData, setFetchedData] = useState([]);
+
   const onChangeValue = useCallback((e) => {
     setSearchValue(e.target.value);
     getList(e.target.value);
+    // fetch(e.target.value);
   }, []);
+
+  // case1
+  // let datas = [];
+  // const fetch = async (query) => {
+  //   try {
+  //     datas = await getList(query);
+  //     // console.log(datas);
+  //     setFetchedData(datas);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // case2
+  // const fetch = async (query) => {
+  //   try {
+  //     const result = await getList(query);
+  //     console.log('fetch 함수 결과값 출력: ', result);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (fetchedData) {
+  //     console.log('결과 출력', fetchedData);
+  //   }
+  // }, [fetchedData]);
 
   // 검색 모달 켜기
   const onClickSearchModal = useCallback(() => {
