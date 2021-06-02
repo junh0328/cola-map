@@ -15,7 +15,7 @@ const Navbar = () => {
       <Link to="/apply">
         <FormOutlined />
       </Link>
-      <Link to="/private">
+      <Link to="/personal">
         <SmileOutlined />
       </Link>
     </LinkWrapper>

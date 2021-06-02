@@ -30,3 +30,16 @@ export const ApplyButton = styled.button`
   font-weight: bold;
   cursor: pointer;
 `;
+
+export const CenterMarker = styled.div`
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: red;
+  box-shadow: 0 0 10px 3px #ccc;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+`;

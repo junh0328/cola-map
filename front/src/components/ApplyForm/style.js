@@ -35,3 +35,21 @@ export const ApplyFormTitle = styled.div`
     }
   }
 `;
+
+export const ApplyFormInput = styled.input`
+  width: 100%;
+  padding: 1em;
+  border-radius: 15px;
+  border: 1px solid #ddd;
+  font-size: 1.1rem;
+  margin-top: 1em;
+`;
+
+export const ApplyFormSelect = styled.select`
+  width: 100%;
+  padding: 1em;
+  border-radius: 15px;
+  border: 1px solid #ddd;
+  font-size: 1.1rem;
+  margin-top: 1em;
+`;

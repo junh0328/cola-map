@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { CloseOutlined, LeftOutlined } from '@ant-design/icons';
-import { ApplyContentWrapper, ApplyButton } from './style';
+import { ApplyContentWrapper, ApplyButton, CenterMarker } from './style';
 
 import { toggleApplyForm } from '../../reducers/apply';
 
@@ -24,6 +24,7 @@ const Apply = () => {
         <h1>가게 제보</h1>
       </ContentTop>
       <Map />
+      <CenterMarker />
       <ApplyContentWrapper>
         <h3>제보하려는 가게의 위치</h3>
         <AddressView />
