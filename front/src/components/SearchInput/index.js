@@ -5,7 +5,6 @@ import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
 import SearchModal from '../SearchModal';
 import { getSearchData } from 'apis/useGetSearchData';
-// import { useGetList } from '../../apis/useGetList';
 
 const SearchInput = () => {
   // 모달 상태 관리
@@ -20,11 +19,9 @@ const SearchInput = () => {
     if (e.target.value !== '') {
       (async () => {
         await getSearchData(e.target.value).then((result) => {
-          console.log(result.length);
           // 데이터 배열이 5개 이상이면 5개로 자른다.
           if (result.length > 5) {
             result.length = 5;
-            console.log('changed: ', result.length);
           }
           setFetchedData(result);
         });
@@ -45,6 +42,7 @@ const SearchInput = () => {
   // props로 내려줄 모달 닫기 버튼에 대한 함수
   const onCloseModal = useCallback(() => {
     setShowSearchModal(false);
+    setFetchedData([]);
   }, []);
 
   return (
@@ -63,6 +61,8 @@ const SearchInput = () => {
         </SearchForm>
       </SearchInputWrapper>
       <SearchModal
+        fetchedData={fetchedData}
+        setFetchedData={setFetchedData}
         searchValue={searchValue}
         setSearchValue={setSearchValue}
         onChangeValue={onChangeValue}
