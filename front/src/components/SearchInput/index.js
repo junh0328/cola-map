@@ -4,7 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
 import SearchModal from '../SearchModal';
-import { getList } from '../../apis/useGetList';
+import { getSearchData } from 'apis/useGetSearchData';
+// import { useGetList } from '../../apis/useGetList';
 
 const SearchInput = () => {
   // 모달 상태 관리
@@ -12,41 +13,28 @@ const SearchInput = () => {
 
   const [searchValue, setSearchValue] = useState('');
 
-  // const [fetchedData, setFetchedData] = useState([]);
+  const [fetchedData, setFetchedData] = useState([]);
 
   const onChangeValue = useCallback((e) => {
     setSearchValue(e.target.value);
-    getList(e.target.value);
-    // fetch(e.target.value);
+    if (e.target.value !== '') {
+      (async () => {
+        await getSearchData(e.target.value).then((result) => {
+          console.log(result.length);
+          // 데이터 배열이 5개 이상이면 5개로 자른다.
+          if (result.length > 5) {
+            result.length = 5;
+            console.log('changed: ', result.length);
+          }
+          setFetchedData(result);
+        });
+      })();
+    }
   }, []);
 
-  // case1
-  // let datas = [];
-  // const fetch = async (query) => {
-  //   try {
-  //     datas = await getList(query);
-  //     // console.log(datas);
-  //     setFetchedData(datas);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // case2
-  // const fetch = async (query) => {
-  //   try {
-  //     const result = await getList(query);
-  //     console.log('fetch 함수 결과값 출력: ', result);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (fetchedData) {
-  //     console.log('결과 출력', fetchedData);
-  //   }
-  // }, [fetchedData]);
+  useEffect(() => {
+    console.log('fetchedData: ', fetchedData);
+  }, [fetchedData]);
 
   // 검색 모달 켜기
   const onClickSearchModal = useCallback(() => {
