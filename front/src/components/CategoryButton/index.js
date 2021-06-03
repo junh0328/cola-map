@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Category, ContentName, ContentWrapper, ContentImg } from './style';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';

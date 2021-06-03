@@ -1,4 +1,4 @@
-import { useGetMyLoc } from './useGetMyLoc';
+import { useGetMyLoc } from 'apis/useGetMyLoc';
 
 const { kakao } = window;
 

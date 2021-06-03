@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
-import SearchModal from '../SearchModal';
+import SearchModal from 'components/SearchModal';
 import { getSearchData } from 'apis/useGetSearchData';
 
 const SearchInput = () => {
@@ -29,6 +29,7 @@ const SearchInput = () => {
     }
   }, []);
 
+  // fetching 결과를 확인하기 위한 useEffect
   useEffect(() => {
     console.log('fetchedData: ', fetchedData);
   }, [fetchedData]);
@@ -62,9 +63,7 @@ const SearchInput = () => {
       </SearchInputWrapper>
       <SearchModal
         fetchedData={fetchedData}
-        setFetchedData={setFetchedData}
         searchValue={searchValue}
-        setSearchValue={setSearchValue}
         onChangeValue={onChangeValue}
         show={showSearchModal}
         onCloseModal={onCloseModal}
