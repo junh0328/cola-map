@@ -1,5 +1,5 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   AimButtonWrapper,
   SearchWrapper,
@@ -14,14 +14,14 @@ import Modal from 'components/Modal';
 import useKeyword from 'apis/useKeyword';
 import PropTypes from 'prop-types';
 
-const SearchModal = ({ fetchedData, searchValue, onChangeValue, show, onCloseModal }) => {
+const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, show, onCloseModal }) => {
+  const divStyle = useMemo(() => ({ overflow: 'auto', height: '60vh' }));
   const liStyle = useMemo(
     () => ({
       cursor: 'pointer',
       marginBottom: '10px',
       fontSize: '1rem',
       color: 'grey',
-
       borderBottom: '1px solid grey',
       paddingBottom: 5,
     }),
@@ -41,6 +41,13 @@ const SearchModal = ({ fetchedData, searchValue, onChangeValue, show, onCloseMod
     useKeyword(keyword);
     onCloseModal();
   });
+
+  // searcValue 값이 모두 지워지면, FetchedData를 빈 배열로 만듬
+  useEffect(() => {
+    if (!searchValue) {
+      setFetchedData([]);
+    }
+  }, [searchValue]);
 
   return (
     <Modal show={show}>
@@ -71,11 +78,12 @@ const SearchModal = ({ fetchedData, searchValue, onChangeValue, show, onCloseMod
           <ul style={ulStyle}>
             {searchValue && (
               <li style={{ marginBottom: 15 }}>
-                <b style={{ fontSize: '1.2rem' }}>{searchValue}</b> 에 대한 검색 결과입니다.
+                <b style={{ fontSize: '1.2rem' }}>{searchValue}</b> 에 대한 검색 결과입니다
               </li>
             )}
-            {fetchedData.length > 0 && (
-              <div>
+            {/* 빈 배열일 경우에는 후위(false)로 넘어감 */}
+            {fetchedData.length ? (
+              <div style={divStyle}>
                 {fetchedData.map((data) => (
                   <li key={data.id} style={liStyle} onClick={() => ClickKeyword(data.place_name)}>
                     <div style={{ fontSize: '0.9rem', fontWeight: 'bolder' }}>{data.place_name}</div>
@@ -83,6 +91,9 @@ const SearchModal = ({ fetchedData, searchValue, onChangeValue, show, onCloseMod
                   </li>
                 ))}
               </div>
+            ) : (
+              // fetchedData를 빈 배열 때 기존 검색결과 제거
+              <div />
             )}
           </ul>
         </div>

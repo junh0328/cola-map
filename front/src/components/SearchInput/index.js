@@ -20,9 +20,9 @@ const SearchInput = () => {
       (async () => {
         await getSearchData(e.target.value).then((result) => {
           // 데이터 배열이 5개 이상이면 5개로 자른다.
-          if (result.length > 5) {
-            result.length = 5;
-          }
+          // if (result.length > 5) {
+          //   result.length = 5;
+          // }
           setFetchedData(result);
         });
       })();
@@ -30,9 +30,9 @@ const SearchInput = () => {
   }, []);
 
   // fetching 결과를 확인하기 위한 useEffect
-  useEffect(() => {
-    console.log('fetchedData: ', fetchedData);
-  }, [fetchedData]);
+  // useEffect(() => {
+  //   console.log('fetchedData: ', fetchedData);
+  // }, [fetchedData]);
 
   // 검색 모달 켜기
   const onClickSearchModal = useCallback(() => {
@@ -63,6 +63,7 @@ const SearchInput = () => {
       </SearchInputWrapper>
       <SearchModal
         fetchedData={fetchedData}
+        setFetchedData={setFetchedData}
         searchValue={searchValue}
         onChangeValue={onChangeValue}
         show={showSearchModal}

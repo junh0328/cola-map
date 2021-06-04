@@ -50,3 +50,7 @@ REACT_APP_KAKAO_KEY=자신의 카카오 API 중 JS 라이브러리 키
 
 yarn run start / npm run start
 ```
+
+## 6. 정상실행화면
+
+<img src="./images/5.png" alt="5">
