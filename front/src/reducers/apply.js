@@ -17,7 +17,6 @@ const apply = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case APPLYFORM_TOGGLE: {
-        console.log(state.isApplyForm);
         draft.isApplyForm = !state.isApplyForm;
         break;
       }

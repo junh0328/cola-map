@@ -1,15 +1,11 @@
-import { useDispatch } from 'react-redux';
 import { UserInfoWrapper } from './style';
-import { SettingOutlined } from '@ant-design/icons';
-import { togglePersonalOption } from '../../reducers/personal';
+import { LogoutOutlined } from '@ant-design/icons';
 
 const UserInfoBar = () => {
-  const dispatch = useDispatch();
-
   return (
     <UserInfoWrapper>
-      <b>UserName</b>
-      <SettingOutlined style={{ cursor: 'pointer' }} onClick={() => dispatch(togglePersonalOption())} />
+      <b title="UserName">UserName</b>
+      <LogoutOutlined style={{ cursor: 'pointer' }} title="로그아웃" />
     </UserInfoWrapper>
   );
 };
