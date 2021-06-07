@@ -11,33 +11,8 @@ const Categories = () => {
     },
     {
       id: 2,
-      img: 'http://getdrawings.com/free-icon/coke-icon-70.png',
+      img: 'http://img.danawa.com/prod_img/500000/840/156/img/3156840_1.jpg?shrink=500:500&_v=20200326113047',
       name: '코카콜라',
-    },
-    {
-      id: 3,
-      img: 'http://getdrawings.com/free-icon/coke-icon-70.png',
-      name: '맥콜',
-    },
-    {
-      id: 4,
-      img: 'http://getdrawings.com/free-icon/coke-icon-70.png',
-      name: '스프라이트',
-    },
-    {
-      id: 5,
-      img: 'http://getdrawings.com/free-icon/coke-icon-70.png',
-      name: '칠성사이다',
-    },
-    {
-      id: 6,
-      img: 'http://getdrawings.com/free-icon/coke-icon-70.png',
-      name: '오란씨',
-    },
-    {
-      id: 7,
-      img: 'http://getdrawings.com/free-icon/coke-icon-70.png',
-      name: '미린다',
     },
   ];
 

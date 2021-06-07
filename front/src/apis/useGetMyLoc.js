@@ -32,11 +32,11 @@ export function useGetMyLoc() {
   }
 
   // 마커 이미지를 가져옵니다.
-  var imageSrc = 'http://getdrawings.com/free-icon/coke-icon-70.png', // 마커이미지의 주소입니다
-    imageSize = new kakao.maps.Size(60, 60), // 마커이미지의 크기입니다
-    imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+  // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/2012/img/marker_p.png', // 마커이미지의 주소입니다
+  //   imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
+  //   imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
-  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+  // var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
   // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 
   function displayMarker(locPosition, message) {
@@ -44,7 +44,7 @@ export function useGetMyLoc() {
     var marker = new kakao.maps.Marker({
       map: map,
       position: locPosition,
-      image: markerImage,
+      // image: markerImage,
       draggable: true, // 마커를 드래그 가능하도록 설정한다
     });
 

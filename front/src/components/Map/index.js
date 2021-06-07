@@ -21,12 +21,6 @@ export default function Map() {
     dispatch(fetchMap());
   }, []);
 
-  useEffect(() => {
-    if (getLocationDone) {
-      alert('여기 계신가요?');
-    }
-  }, [getLocationDone]);
-
   // useEffect(() => {
   //   if (colaMap) {
   //     console.log('colaMap 객체 값 관리', colaMap);
@@ -34,10 +28,11 @@ export default function Map() {
   // }, [colaMap]);
 
   const items = [
+    { id: 0, url: '', name: '전체 정보 보기' },
     { id: 1, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '펩시' },
     { id: 2, url: 'http://www.hahn.ph/wp-content/uploads/2021/02/coke-no-sugar-slim.png', name: '코카콜라' },
-    { id: 3, url: 'http://www.hahn.ph/wp-content/uploads/2021/02/sprite-slim.png', name: '스프라이트' },
-    { id: 4, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '사이다' },
+    // { id: 3, url: 'http://www.hahn.ph/wp-content/uploads/2021/02/sprite-slim.png', name: '스프라이트' },
+    // { id: 4, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '사이다' },
   ];
 
   const settings = {

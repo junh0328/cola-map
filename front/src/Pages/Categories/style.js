@@ -22,5 +22,14 @@ export const CategoriesMain = styled.div``;
 export const CategoryWrap = styled.div`
   padding: 0 1%;
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
+`;
+
+/*
+후에 음료 종류 추가시, 다시 그리드로 설정
+export const CategoryWrap = styled.div`
+  padding: 0 1%;
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
 `;
+ */
