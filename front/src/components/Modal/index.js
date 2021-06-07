@@ -1,6 +1,5 @@
-import { CloseOutlined } from '@ant-design/icons';
 import React, { useCallback } from 'react';
-import { CloseModalButton, ModalWrapper } from './style';
+import { ModalWrapper } from './style';
 
 const Modal = ({ show, onCloseModal, children }) => {
   const stopPropagation = useCallback((e) => {
