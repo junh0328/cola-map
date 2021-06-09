@@ -1,18 +1,18 @@
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Main from './pages/Main';
-import Categories from './pages/Categories';
-import Apply from './pages/Apply';
-import Personal from './pages/Personal';
+import Main from 'pages/Main';
+import Categories from 'pages/Categories';
+import Apply from 'pages/Apply';
+import Personal from 'pages/Personal';
 import { Global } from '@emotion/react';
-import reset from './theme/globalStyle';
-import AppLayout from './components/AppLayout';
-import Category from './pages/Categories/Category';
-import MyApply from './pages/MyApply';
-import MyReview from './pages/MyReview';
-import Qna from './pages/Qna';
-import Question from './pages/Question';
-import Quit from './pages/Quit';
+import reset from 'theme/globalStyle';
+import AppLayout from 'components/AppLayout';
+import Category from 'pages/Categories/Category';
+import MyApply from 'pages/MyApply';
+import MyReview from 'pages/MyReview';
+import Qna from 'pages/Qna';
+import Question from 'pages/Question';
+import Quit from 'pages/Quit';
 
 function App() {
   return (

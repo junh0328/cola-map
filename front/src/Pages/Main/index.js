@@ -1,8 +1,8 @@
 import React from 'react';
 import { MySlider, SlideImgWrapper, SlideMainWrapper, SlideName, SlideWrapper } from './style';
-import Map from '../../components/Map';
-import AimButton from '../../components/AimButtonn';
-import SearchInput from '../../components/SearchInput';
+import Map from 'components/Map';
+import AimButton from 'components/AimButtonn';
+import SearchInput from 'components/SearchInput';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 

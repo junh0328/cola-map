@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from 'react';
 import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
-import SearchModal from '../SearchModal';
+import SearchModal from 'components/SearchModal';
 
 const SearchInput = () => {
   // 모달 상태 관리

@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CloseOutlined, LeftOutlined } from '@ant-design/icons';
 import { ApplyContentWrapper, ApplyButton, CenterMarker } from './style';
 
-import { toggleApplyForm } from '../../reducers/apply';
+import { toggleApplyForm } from 'reducers/apply';
 
-import ContentTop from '../../components/ContentTop';
-import Map from '../../components/Map';
-import AddressView from '../../components/AddressView';
-import ApplyForm from '../../components/ApplyForm';
+import ContentTop from 'components/ContentTop';
+import Map from 'components/Map';
+import AddressView from 'components/AddressView';
+import ApplyForm from 'components/ApplyForm';
 
 const Apply = () => {
   const dispatch = useDispatch();

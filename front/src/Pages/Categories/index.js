@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryButton from '../../components/CategoryButton';
+import CategoryButton from 'components/CategoryButton';
 import { CategoriesHeader, CategoriesMain, CategoriesWrapper, CategoryWrap } from './style';
 
 const Categories = () => {

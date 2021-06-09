@@ -1,9 +1,9 @@
 import { CloseOutlined, SearchOutlined } from '@ant-design/icons';
 import React, { useCallback, useState } from 'react';
 import { AimButtonWrapper, SearchWrapper, CustonAimBtn } from './style';
-import Modal from '../Modal';
+import Modal from 'components/Modal';
 import { CloseModalButton, SearchModalWrapper, SearchModalHeader, SearchModalInput, SearchModalMain } from './style';
-import useKeyword from '../../apis/useKeyword';
+import useKeyword from 'apis/useKeyword';
 
 const SearchModal = ({ searchValue, onChangeValue, show, onCloseModal }) => {
   const SearchKeyword = useCallback((e) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ApplyFormWrapper, ApplyFormContent, ApplyFormTitle, ApplyFormInput, ApplyFormSelect } from './style';
-import AddressView from '../AddressView';
+import AddressView from 'components/AddressView';
 
 const ApplyForm = ({ isApplyForm }) => {
   return (

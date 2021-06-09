@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MapWrapper } from './style';
-import { getLocation, setAddress } from '../../reducers/map';
+import { getLocation, setAddress } from 'reducers/map';
 
 export default function Map() {
   const dispatch = useDispatch();

@@ -3,8 +3,8 @@ import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { TitleInput, SubmitButton } from './style';
-import CommonLayout from '../../components/CommonLayout';
-import PersonalHeader from '../../components/PersonalHeader';
+import CommonLayout from 'components/CommonLayout';
+import PersonalHeader from 'components/PersonalHeader';
 
 const Question = () => {
   const titleRef = useRef();

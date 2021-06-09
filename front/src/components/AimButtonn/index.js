@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { AimOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { getLocation } from '../../reducers/map';
+import { getLocation } from 'reducers/map';
 import { AimButtonWrapper, CustomAim } from './style';
 
 const AimButton = () => {

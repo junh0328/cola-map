@@ -1,6 +1,6 @@
-import CommonLayout from '../../components/CommonLayout';
-import PersonalHeader from '../../components/PersonalHeader';
-import ApplyItem from '../../components/ApplyItem';
+import CommonLayout from 'components/CommonLayout';
+import PersonalHeader from 'components/PersonalHeader';
+import ApplyItem from 'components/ApplyItem';
 
 const tmpStoreData = [
   {

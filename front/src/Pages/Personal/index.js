@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PersonalWrapper, PersonalContentBox, PersonalLinkBox } from './style';
-import UserInfoBar from '../../components/UserInfoBar';
+import UserInfoBar from 'components/UserInfoBar';
 
 const Personal = () => {
   return (

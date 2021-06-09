@@ -1,5 +1,5 @@
-import CommonLayout from '../../components/CommonLayout';
-import PersonalHeader from '../../components/PersonalHeader';
+import CommonLayout from 'components/CommonLayout';
+import PersonalHeader from 'components/PersonalHeader';
 
 const MyReview = () => {
   return (
