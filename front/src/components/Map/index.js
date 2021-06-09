@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MapWrapper, MySlider, SlideImgWrapper, SlideMainWrapper, SlideName, SlideWrapper } from './style';
 import { fetchMap } from '../../reducers/map';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import AimButton from '../AimButtonn';
@@ -17,15 +16,13 @@ export default function Map() {
   });
   const { getLocationDone } = useSelector((state) => state.map);
 
+  // const getCurrent = useRef();
+  // .slick-current 를 가지는 div에 대해서 console.log 로 찍고 싶음
+  // 후에 해당 div가 .slick-current일 경우, 요청을 보내 정보를 받아와야 하기 때문에
+
   useEffect(() => {
     dispatch(fetchMap());
   }, []);
-
-  // useEffect(() => {
-  //   if (colaMap) {
-  //     console.log('colaMap 객체 값 관리', colaMap);
-  //   }
-  // }, [colaMap]);
 
   const items = [
     { id: 0, url: '', name: '전체 정보 보기' },

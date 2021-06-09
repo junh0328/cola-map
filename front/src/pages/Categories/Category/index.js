@@ -1,26 +1,38 @@
 // categories 페이자애서 음료수를 선택했을 때 해당 음료수에 대한 정보를 불러와 지도에 표시하기 위한 페이지입니다.
 
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { MapWrapper } from 'components/Map/style';
 import { fetchMap } from 'reducers/map';
-import { CategoryHeader } from './style';
+import { CategoryHeader, CloseModalButton } from './style';
 import AimButton from 'components/AimButtonn';
+import { LeftOutlined } from '@ant-design/icons';
 
 const Category = () => {
   const { name } = useParams();
   const dispatch = useDispatch();
+  const { colaMap } = useSelector((state) => state.map);
 
   useEffect(() => {
     dispatch(fetchMap());
+
+    // 추후에 작성할 백엔드에서 가져올 음료수에 대한 모든 좌표 및 정보를 호출하는 함수
+    // dispatch(getBeverage(name));
+  }, []);
+
+  const goToCategories = useCallback(() => {
+    return history.go(-1);
   }, []);
 
   return (
     <MapWrapper id="Map">
       <AimButton />
       <CategoryHeader>
-        <h2>🌟 {name}에 대한 페이지입니다. 🌟</h2>
+        <CloseModalButton onClick={goToCategories}>
+          <LeftOutlined />
+        </CloseModalButton>
+        <span>{name}</span>
       </CategoryHeader>
     </MapWrapper>
   );
