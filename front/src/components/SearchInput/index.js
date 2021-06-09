@@ -42,9 +42,13 @@ const SearchInput = () => {
 
   // props로 내려줄 모달 닫기 버튼에 대한 함수
   const onCloseModal = useCallback(() => {
-    setShowSearchModal(false);
+    setShowSearchModal((prev) => !prev);
     setFetchedData([]);
   }, []);
+
+  useEffect(() => {
+    console.log('show: ', showSearchModal);
+  }, [showSearchModal]);
 
   return (
     <>

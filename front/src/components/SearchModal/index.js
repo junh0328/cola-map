@@ -10,7 +10,6 @@ import {
   SearchModalInput,
   SearchModalMain,
 } from './style';
-import Modal from 'components/Modal';
 import useKeyword from 'apis/useKeyword';
 import PropTypes from 'prop-types';
 
@@ -50,55 +49,54 @@ const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, 
   }, [searchValue]);
 
   return (
-    <Modal show={show}>
-      <SearchModalWrapper show={show}>
-        <SearchModalHeader>
-          <CloseModalButton onClick={onCloseModal}>
-            <CloseOutlined />
-          </CloseModalButton>
-          <span>위치 검색</span>
-        </SearchModalHeader>
-        <SearchModalMain>
-          <form onSubmit={SearchKeyword}>
-            <SearchWrapper>
-              <SearchOutlined />
-              <SearchModalInput
-                value={searchValue}
-                onChange={onChangeValue}
-                type="text"
-                placeholder="구, 동, 건물명, 역 등으로 검색"
-              />
-            </SearchWrapper>
-            <AimButtonWrapper>
-              <CustonAimBtn onClick={SearchKeyword} />
-            </AimButtonWrapper>
-          </form>
-        </SearchModalMain>
-        <div>
-          <ul style={ulStyle}>
-            {searchValue && (
-              <li style={{ marginBottom: 15 }}>
-                <b style={{ fontSize: '1.2rem' }}>{searchValue}</b> 에 대한 검색 결과입니다
-              </li>
-            )}
-            {/* 빈 배열일 경우에는 후위(false)로 넘어감 */}
-            {fetchedData.length ? (
-              <div style={divStyle}>
-                {fetchedData.map((data) => (
-                  <li key={data.id} style={liStyle} onClick={() => ClickKeyword(data.place_name)}>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 'bolder' }}>{data.place_name}</div>
-                    <span style={{ fontSize: '0.7rem' }}>{data.address_name}</span>
-                  </li>
-                ))}
-              </div>
-            ) : (
-              // fetchedData를 빈 배열 때 기존 검색결과 제거
-              <div />
-            )}
-          </ul>
-        </div>
-      </SearchModalWrapper>
-    </Modal>
+    // show.toString() 을 해주는 이유는 emotion을 통해 true/false를 관리하기 위해서 입니다.
+    <SearchModalWrapper show={show.toString()}>
+      <SearchModalHeader>
+        <CloseModalButton onClick={onCloseModal}>
+          <CloseOutlined />
+        </CloseModalButton>
+        <span>위치 검색</span>
+      </SearchModalHeader>
+      <SearchModalMain>
+        <form onSubmit={SearchKeyword}>
+          <SearchWrapper>
+            <SearchOutlined />
+            <SearchModalInput
+              value={searchValue}
+              onChange={onChangeValue}
+              type="text"
+              placeholder="구, 동, 건물명, 역 등으로 검색"
+            />
+          </SearchWrapper>
+          <AimButtonWrapper>
+            <CustonAimBtn onClick={SearchKeyword} />
+          </AimButtonWrapper>
+        </form>
+      </SearchModalMain>
+      <div>
+        <ul style={ulStyle}>
+          {searchValue && (
+            <li style={{ marginBottom: 15 }}>
+              <b style={{ fontSize: '1.2rem' }}>{searchValue}</b> 에 대한 검색 결과입니다
+            </li>
+          )}
+          {/* 빈 배열일 경우에는 후위(false)로 넘어감 */}
+          {fetchedData.length ? (
+            <div style={divStyle}>
+              {fetchedData.map((data) => (
+                <li key={data.id} style={liStyle} onClick={() => ClickKeyword(data.place_name)}>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 'bolder' }}>{data.place_name}</div>
+                  <span style={{ fontSize: '0.7rem' }}>{data.address_name}</span>
+                </li>
+              ))}
+            </div>
+          ) : (
+            // fetchedData를 빈 배열 때 기존 검색결과 제거
+            <div />
+          )}
+        </ul>
+      </div>
+    </SearchModalWrapper>
   );
 };
 
