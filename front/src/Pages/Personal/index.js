@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { PersonalWrapper, PersonalContentBox, PersonalGridBox, PersonalLinkBox } from './style';
+import { PersonalWrapper, PersonalContentBox, PersonalLinkBox } from './style';
 import UserInfoBar from '../../components/UserInfoBar';
 
 const Personal = () => {
@@ -8,34 +8,34 @@ const Personal = () => {
       <UserInfoBar />
       <PersonalContentBox>
         <PersonalLinkBox>
-          <Link to="/personal/4">
+          <Link to="/myapply">
             <span>내가 제보한 가게</span>
           </Link>
         </PersonalLinkBox>
         <PersonalLinkBox>
-          <Link to="/personal/5">
+          <Link to="/myreview">
             <span>내가 쓴 리뷰</span>
           </Link>
         </PersonalLinkBox>
         <PersonalLinkBox>
-          <Link to="/personal/1">
+          <Link to="/qna">
             <span>자주 묻는 질문</span>
           </Link>
         </PersonalLinkBox>
         <PersonalLinkBox>
-          <Link to="/personal/2">
-            <span>문의사항</span>
+          <Link to="/question">
+            <span>문의하기</span>
           </Link>
         </PersonalLinkBox>
         <PersonalLinkBox>
-          <Link to="/personal/3">
+          <Link to="/quit">
             <span>탈퇴하기</span>
           </Link>
         </PersonalLinkBox>
         <PersonalLinkBox>
-          <Link to="/personal/32">
+          <a href="https://doong-ji.github.io/" target="_blank">
             <span>만든 사람들</span>
-          </Link>
+          </a>
         </PersonalLinkBox>
       </PersonalContentBox>
     </PersonalWrapper>
