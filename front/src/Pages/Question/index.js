@@ -14,7 +14,12 @@ const Question = () => {
     const title = titleRef.current;
     const content = contentRef.current;
 
-    console.log(`title: ${title.value}`);
+    if (title.value.trim() === '' || content.getInstance().getHtml() === '') {
+      alert(`제목과 내용 모두 작성해주세요.`);
+      return false;
+    }
+
+    console.log(`title: ${title.value.trim()}`);
     console.log(`content: ${content.getInstance().getHtml()}`);
 
     title.value = '';
