@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MapWrapper, MySlider, SlideImgWrapper, SlideMainWrapper, SlideName, SlideWrapper } from './style';
 import { fetchMap } from '../../reducers/map';
@@ -16,12 +16,13 @@ export default function Map() {
   });
   const { getLocationDone } = useSelector((state) => state.map);
 
-  // const getCurrent = useRef();
-  // .slick-current 를 가지는 div에 대해서 console.log 로 찍고 싶음
-  // 후에 해당 div가 .slick-current일 경우, 요청을 보내 정보를 받아와야 하기 때문에
-
   useEffect(() => {
     dispatch(fetchMap());
+  }, []);
+
+  const selectId = useCallback((id) => {
+    console.log(`선택된 id는 ${id}입니다`);
+    // 후에 해당 슬라이더를 클릭했을 때 정보를 불러오도록 만들 수도 있을 것
   }, []);
 
   const items = [
@@ -51,7 +52,7 @@ export default function Map() {
           <MySlider {...settings} style={{ height: '100%' }}>
             {items.map((item) => {
               return (
-                <SlideMainWrapper key={item.id}>
+                <SlideMainWrapper key={item.id} onClick={() => selectId(item.id)}>
                   <SlideImgWrapper>
                     <img src={item.url} />
                   </SlideImgWrapper>
