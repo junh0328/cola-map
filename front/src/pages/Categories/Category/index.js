@@ -6,6 +6,7 @@ import { useParams } from 'react-router';
 import { MapWrapper } from 'components/Map/style';
 import { fetchMap } from 'reducers/map';
 import { CategoryHeader } from './style';
+import AimButton from 'components/AimButtonn';
 
 const Category = () => {
   const { name } = useParams();
@@ -17,6 +18,7 @@ const Category = () => {
 
   return (
     <MapWrapper id="Map">
+      <AimButton />
       <CategoryHeader>
         <h2>🌟 {name}에 대한 페이지입니다. 🌟</h2>
       </CategoryHeader>
