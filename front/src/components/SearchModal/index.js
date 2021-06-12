@@ -28,6 +28,7 @@ const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, 
   );
   const ulStyle = useMemo(() => ({ listStyle: 'none', padding: '0 40px' }));
 
+
   const SearchKeyword = useCallback((e) => {
     e.preventDefault();
     useKeyword(searchValue);

@@ -7,7 +7,8 @@ const AimButton = () => {
   const dispatch = useDispatch();
 
   const getCurrentLocation = useCallback(() => {
-    dispatch(getLocation());
+    // getLocation 함수 없어짐
+    // dispatch(getLocation());
   }, []);
 
   return (
