@@ -14,6 +14,7 @@ const Categories = () => {
       img: 'http://img.danawa.com/prod_img/500000/840/156/img/3156840_1.jpg?shrink=500:500&_v=20200326113047',
       name: '코카콜라',
     },
+
   ];
 
   return (

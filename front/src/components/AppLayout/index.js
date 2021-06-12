@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../Navbar';
+import Navbar from 'components/Navbar';
 import { MainContent, MainWrapper } from './style';
 import PropTypes from 'prop-types';
 

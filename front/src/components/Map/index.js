@@ -1,31 +1,33 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { MapWrapper, MySlider, SlideImgWrapper, SlideMainWrapper, SlideName, SlideWrapper } from './style';
-import { fetchMap } from '../../reducers/map';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import AimButton from '../AimButtonn';
-import SearchInput from '../SearchInput';
+import { MapWrapper } from './style';
+import { getLocation, setAddress } from 'reducers/map';
 
 export default function Map() {
   const dispatch = useDispatch();
-  const { colaMap } = useSelector((state) => {
+  const { map } = useSelector((state) => {
     return {
-      colaMap: state.map.colaMap && state.map.colaMap.map,
+      map: state.map.colaMap && state.map.colaMap.map,
     };
   });
   const { getLocationDone } = useSelector((state) => state.map);
 
   useEffect(() => {
-    dispatch(fetchMap());
+    dispatch(getLocation());
   }, []);
 
-  // useEffect(() => {
-  //   if (colaMap) {
-  //     console.log('colaMap 객체 값 관리', colaMap);
-  //   }
-  // }, [colaMap]);
+  useEffect(() => {
+    if (map) {
+      kakao.maps.event.addListener(map, 'idle', getAddress);
+    }
+  }, [map]);
+
+  const getAddress = () => {
+    const geocoder = new kakao.maps.services.Geocoder();
+    const { La, Ma } = map.getCenter();
+    geocoder.coord2Address(La, Ma, (result, status) => {
+      dispatch(setAddress(result[0], status));
+    });
 
   const items = [
     { id: 0, url: '', name: '전체 정보 보기' },
@@ -43,28 +45,18 @@ export default function Map() {
     slidesToScroll: 1,
     arrows: false,
     centerMode: true,
+
   };
+
+  useEffect(() => {
+    if (getLocationDone) {
+      //alert('여기 계신가요?');
+    }
+  }, [getLocationDone]);
 
   return (
     <>
-      <MapWrapper id="Map">
-        <SearchInput />
-        <AimButton />
-        <SlideWrapper>
-          <MySlider {...settings} style={{ height: '100%' }}>
-            {items.map((item) => {
-              return (
-                <SlideMainWrapper key={item.id}>
-                  <SlideImgWrapper>
-                    <img src={item.url} />
-                  </SlideImgWrapper>
-                  <SlideName>{item.name}</SlideName>
-                </SlideMainWrapper>
-              );
-            })}
-          </MySlider>
-        </SlideWrapper>
-      </MapWrapper>
+      <MapWrapper id="Map" />
     </>
   );
 }

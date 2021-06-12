@@ -9,6 +9,9 @@ import {
   GET_LOCATION_FAILURE,
   GET_LOCATION_REQUEST,
   GET_LOCATION_SUCCESS,
+  SET_ADDRESS_REQEUST,
+  SET_ADDRESS_SUCCESS,
+  SET_ADDRESS_FAILURE,
 } from '../reducers/map';
 
 async function useFetchingMapAPI() {
@@ -61,6 +64,19 @@ function* getLocation() {
   }
 }
 
+function* setAddress(param) {
+  const { address, status } = param;
+  try {
+    yield put({
+      type: SET_ADDRESS_SUCCESS,
+      address,
+      status,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 function* watchFetchMap() {
   yield takeLatest(FETCH_MAP_REQUEST, fetchMap);
 }
@@ -69,6 +85,10 @@ function* watchGetLocation() {
   yield takeLatest(GET_LOCATION_REQUEST, getLocation);
 }
 
+function* watchSetAddress() {
+  yield takeLatest(SET_ADDRESS_REQEUST, setAddress);
+}
+
 export default function* mapSaga() {
-  yield all([fork(watchFetchMap), fork(watchGetLocation)]);
+  yield all([fork(watchFetchMap), fork(watchGetLocation), fork(watchSetAddress)]);
 }
