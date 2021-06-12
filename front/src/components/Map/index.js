@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { MapWrapper } from './style';
-import { fetchMap, fetchAddress } from 'reducers/map';
-import useUserLocation from 'apis/useUserLocation';
+import { getLocation, setAddress } from 'reducers/map';
 
 export default function Map() {
   const dispatch = useDispatch();
-  const { location } = useUserLocation();
   const { map } = useSelector((state) => {
     return {
       map: state.map.colaMap && state.map.colaMap.map,
@@ -14,23 +12,25 @@ export default function Map() {
   });
 
   useEffect(() => {
-    dispatch(fetchMap());
+    dispatch(getLocation());
   }, []);
 
   useEffect(() => {
-    if (location && map) {
-      const { latitude, longitude } = location;
-      map && map.setCenter(new kakao.maps.LatLng(latitude, longitude));
-
-      const geocoder = new kakao.maps.services.Geocoder();
-      kakao.maps.event.addListener(map, 'dragend', function () {
-        const { La, Ma } = map.getCenter();
-        geocoder.coord2Address(La, Ma, (result, status) => {
-          dispatch(fetchAddress(result[0], status));
-        });
-      });
+    if (map) {
+      console.log('map을 가져옵니다');
+      kakao.maps.event.addListener(map, 'idle', getAddress);
+    } else {
+      console.log('map 객체가 없습니다.');
     }
-  }, [map, location]);
+  }, [map]);
+
+  const getAddress = () => {
+    const geocoder = new kakao.maps.services.Geocoder();
+    const { La, Ma } = map.getCenter();
+    geocoder.coord2Address(La, Ma, (result, status) => {
+      dispatch(setAddress(result[0], status));
+    });
+  };
 
   return (
     <>

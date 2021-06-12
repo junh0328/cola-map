@@ -1,13 +1,16 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import useFetchingMap from '../apis/useFetchingMap';
-
+import { useGetMyLoc } from '../apis/useGetMyLoc';
 import {
   FETCH_MAP_FAILURE,
   FETCH_MAP_REQUEST,
   FETCH_MAP_SUCCESS,
-  FETCH_ADDRESS_REQUEST,
-  FETCH_ADDRESS_SUCCESS,
-  FETCH_ADDRESS_FAILURE,
+  GET_LOCATION_FAILURE,
+  GET_LOCATION_REQUEST,
+  GET_LOCATION_SUCCESS,
+  SET_ADDRESS_REQEUST,
+  SET_ADDRESS_SUCCESS,
+  SET_ADDRESS_FAILURE,
 } from '../reducers/map';
 
 async function useFetchingMapAPI() {
@@ -34,28 +37,56 @@ function* fetchMap() {
   }
 }
 
-function* fetchAddress(param) {
-  const { result, status } = param;
+async function useGetMyLocationAPI() {
   try {
+    return await useGetMyLoc();
+  } catch (error) {
+    console.log(error);
+  }
+}
+function* getLocation() {
+  try {
+    const map = yield call(useGetMyLocationAPI);
+    // console.log('result 출력: ', map);
     yield put({
-      type: FETCH_ADDRESS_SUCCESS,
-      result,
-      status,
+      type: GET_LOCATION_SUCCESS,
+      map: map,
     });
   } catch (err) {
     console.log(err);
     yield put({
-      type: FETCH_ADDRESS_FAILURE,
+      type: GET_LOCATION_FAILURE,
+      error: err.response,
+    });
+  }
+}
+
+function* setAddress(param) {
+  const { address, status } = param;
+  console.log(address, status);
+  try {
+    yield put({
+      type: SET_ADDRESS_SUCCESS,
+      address,
       status,
     });
+  } catch (err) {
+    console.log(err);
   }
 }
 
 function* watchFetchMap() {
   yield takeLatest(FETCH_MAP_REQUEST, fetchMap);
-  yield takeLatest(FETCH_ADDRESS_REQUEST, fetchAddress);
+}
+
+function* watchGetLocation() {
+  yield takeLatest(GET_LOCATION_REQUEST, getLocation);
+}
+
+function* watchSetAddress() {
+  yield takeLatest(SET_ADDRESS_REQEUST, setAddress);
 }
 
 export default function* mapSaga() {
-  yield all([fork(watchFetchMap)]);
+  yield all([fork(watchFetchMap), fork(watchGetLocation), fork(watchSetAddress)]);
 }
