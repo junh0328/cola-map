@@ -1,7 +1,6 @@
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import useFetchingMap from '../apis/useFetchingMap';
 import { useGetMyLoc } from '../apis/useGetMyLoc';
-
 import {
   FETCH_MAP_FAILURE,
   FETCH_MAP_REQUEST,
@@ -21,7 +20,6 @@ async function useFetchingMapAPI() {
     console.log(error);
   }
 }
-
 function* fetchMap() {
   try {
     const map = yield call(useFetchingMapAPI);
@@ -46,7 +44,6 @@ async function useGetMyLocationAPI() {
     console.log(error);
   }
 }
-
 function* getLocation() {
   try {
     const map = yield call(useGetMyLocationAPI);
@@ -66,6 +63,7 @@ function* getLocation() {
 
 function* setAddress(param) {
   const { address, status } = param;
+  console.log(address, status);
   try {
     yield put({
       type: SET_ADDRESS_SUCCESS,

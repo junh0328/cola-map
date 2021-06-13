@@ -7,14 +7,11 @@ export const initialState = {
   fetchMapLoading: false,
   fetchMapDone: false,
   fetchMapError: null,
-
   getLocationLoading: false,
   getLocationDone: false,
   getLocationError: null,
 };
-
 export const RESET_MAP_STATE = 'RESET_MAP_STATE';
-
 export const FETCH_MAP_REQUEST = 'FETCH_MAP_REQUEST';
 export const FETCH_MAP_SUCCESS = 'FETCH_MAP_SUCCESS';
 export const FETCH_MAP_FAILURE = 'FETCH_MAP_FAILURE';
@@ -93,5 +90,4 @@ const map = (state = initialState, action) =>
         return state;
     }
   });
-
 export default map;

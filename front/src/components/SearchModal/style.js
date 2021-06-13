@@ -5,12 +5,13 @@ import styled from '@emotion/styled';
 export const SearchModalWrapper = styled.div`
   width: 100%;
   height: 100%;
+  position: absolute;
+  /* top: 0; */
+  top: ${(props) => (props.show === 'true' ? '0' : '120%')};
+  z-index: 10001;
   background-color: #fff;
-  user-select: none;
-  max-width: 840px;
   padding-top: 8%;
-  position: relative;
-  height: 100vh;
+  transition: 0.5s;
 `;
 
 // 나가기 버튼을 포함한 헤더

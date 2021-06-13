@@ -36,15 +36,19 @@ const SearchInput = () => {
 
   // 검색 모달 켜기
   const onClickSearchModal = useCallback(() => {
-    setSearchValue('');
     setShowSearchModal(true);
+    setSearchValue('');
   }, []);
 
   // props로 내려줄 모달 닫기 버튼에 대한 함수
   const onCloseModal = useCallback(() => {
-    setShowSearchModal(false);
+    setShowSearchModal((prev) => !prev);
     setFetchedData([]);
   }, []);
+
+  useEffect(() => {
+    console.log('show: ', showSearchModal);
+  }, [showSearchModal]);
 
   return (
     <>
@@ -52,11 +56,11 @@ const SearchInput = () => {
         <SearchForm onClick={onClickSearchModal}>
           {/* 후에 현재 위치를 받아와 location을 표시 */}
           {searchValue ? (
-            <p>
+            <span style={{ marginBottom: '0 !important' }}>
               <b>'{searchValue}'</b> 에 대한 검색 결과입니다
-            </p>
+            </span>
           ) : (
-            <p>구, 동, 건물명, 역 등으로 검색</p>
+            <span style={{ marginBottom: '0 !important' }}>구, 동, 건물명, 역 등으로 검색</span>
           )}
           <DownOutlined />
         </SearchForm>
