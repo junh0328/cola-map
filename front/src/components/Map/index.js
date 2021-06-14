@@ -17,10 +17,7 @@ export default function Map() {
 
   useEffect(() => {
     if (map) {
-      console.log('map을 가져옵니다');
       kakao.maps.event.addListener(map, 'idle', getAddress);
-    } else {
-      console.log('map 객체가 없습니다.');
     }
   }, [map]);
 
