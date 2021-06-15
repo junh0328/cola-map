@@ -1,6 +1,6 @@
 // 메인 창에 뜨는 검색창 (input)
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
 import SearchModal from 'components/SearchModal';
@@ -9,9 +9,7 @@ import { getSearchData } from 'apis/useGetSearchData';
 const SearchInput = () => {
   // 모달 상태 관리
   const [showSearchModal, setShowSearchModal] = useState(false);
-
   const [searchValue, setSearchValue] = useState('');
-
   const [fetchedData, setFetchedData] = useState([]);
 
   const onChangeValue = useCallback((e) => {
@@ -19,20 +17,11 @@ const SearchInput = () => {
     if (e.target.value !== '') {
       (async () => {
         await getSearchData(e.target.value).then((result) => {
-          // 데이터 배열이 5개 이상이면 5개로 자른다.
-          // if (result.length > 5) {
-          //   result.length = 5;
-          // }
           setFetchedData(result);
         });
       })();
     }
   }, []);
-
-  // fetching 결과를 확인하기 위한 useEffect
-  // useEffect(() => {
-  //   console.log('fetchedData: ', fetchedData);
-  // }, [fetchedData]);
 
   // 검색 모달 켜기
   const onClickSearchModal = useCallback(() => {
@@ -45,10 +34,6 @@ const SearchInput = () => {
     setShowSearchModal((prev) => !prev);
     setFetchedData([]);
   }, []);
-
-  useEffect(() => {
-    console.log('show: ', showSearchModal);
-  }, [showSearchModal]);
 
   return (
     <>

@@ -28,7 +28,6 @@ const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, 
   );
   const ulStyle = useMemo(() => ({ listStyle: 'none', padding: '0 40px' }));
 
-
   const SearchKeyword = useCallback((e) => {
     e.preventDefault();
     useKeyword(searchValue);
@@ -37,7 +36,6 @@ const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, 
 
   // fetchedData가 매핑된 li 태그 클릭시 해당 키워드를 바탕으로 useKeyword() 함수 호출
   const ClickKeyword = useCallback((keyword) => {
-    // alert(`keyword로 검색: ${keyword}`);
     useKeyword(keyword);
     onCloseModal();
   });
