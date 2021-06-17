@@ -48,5 +48,5 @@ app.use('/api/v1/', userRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.listen(port, () => {
-  console.log(`Server Listening on ${port}`);
+  console.log(`✅ Server Listening on ${port}`);
 });
