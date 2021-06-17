@@ -15,10 +15,10 @@ export function useGetMyLoc() {
   // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      var lat = position.coords.latitude, // 위도
+      let lat = position.coords.latitude, // 위도
         lon = position.coords.longitude; // 경도
 
-      var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+      let locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 
       if (locPosition) {
         positions[0].latlng = locPosition;
@@ -26,16 +26,16 @@ export function useGetMyLoc() {
       displayMarker(positions);
     });
   } else {
-    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+    let locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
     displayMarker(locPosition);
   }
 
   function displayMarker(positions) {
     for (var i = 0; i < positions.length; i++) {
-      var imageSize = new kakao.maps.Size(40, 60);
+      const imageSize = new kakao.maps.Size(40, 60);
 
       // 마커 이미지를 위한 변수
-      var markerImage;
+      let markerImage;
 
       // 마커 이미지가 있을 경우에만 표시
       if (positions[i].img) {
@@ -45,7 +45,7 @@ export function useGetMyLoc() {
       }
 
       // 마커를 생성합니다
-      var marker = new kakao.maps.Marker({
+      let marker = new kakao.maps.Marker({
         map: map,
         title: positions[i].title,
         position: positions[i].latlng,
@@ -60,7 +60,7 @@ export function useGetMyLoc() {
   }
 
   // 더미데이터이기 때문에 useGetMyLoc 함수 내에 적용하였습니다
-  var positions = [
+  const positions = [
     {
       title: '내 위치',
       latlng: null,
