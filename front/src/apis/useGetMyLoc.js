@@ -1,3 +1,6 @@
+import pepsi from 'apis/license/pepsi.png';
+import coca from 'apis/license/coca.png';
+
 const { kakao } = window;
 
 export function useGetMyLoc() {
@@ -11,59 +14,72 @@ export function useGetMyLoc() {
 
   // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
   if (navigator.geolocation) {
-    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
     navigator.geolocation.getCurrentPosition(function (position) {
       var lat = position.coords.latitude, // 위도
         lon = position.coords.longitude; // 경도
 
-      var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-        message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+      var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 
-      // 마커와 인포윈도우를 표시합니다
-      displayMarker(locPosition, message);
+      if (locPosition) {
+        positions[0].latlng = locPosition;
+      }
+      displayMarker(positions);
     });
   } else {
-    // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
-
-    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
-      message = 'geolocation을 사용할수 없어요..';
-
-    displayMarker(locPosition, message);
+    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+    displayMarker(locPosition);
   }
 
-  // 마커 이미지를 가져옵니다.
-  // var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/2012/img/marker_p.png', // 마커이미지의 주소입니다
-  //   imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
-  //   imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+  function displayMarker(positions) {
+    for (var i = 0; i < positions.length; i++) {
+      var imageSize = new kakao.maps.Size(40, 60);
 
-  // var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
-  // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+      // 마커 이미지를 위한 변수
+      var markerImage;
 
-  function displayMarker(locPosition, message) {
-    // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-      map: map,
-      position: locPosition,
-      // image: markerImage,
-      draggable: true, // 마커를 드래그 가능하도록 설정한다
-    });
+      // 마커 이미지가 있을 경우에만 표시
+      if (positions[i].img) {
+        markerImage = new kakao.maps.MarkerImage(positions[i].img, imageSize);
+      } else {
+        markerImage = null;
+      }
 
-    var iwContent = message, // 인포윈도우에 표시할 내용
-      iwRemoveable = true;
+      // 마커를 생성합니다
+      var marker = new kakao.maps.Marker({
+        map: map,
+        title: positions[i].title,
+        position: positions[i].latlng,
+        image: markerImage,
+      });
 
-    // 인포윈도우를 생성합니다
-    var infowindow = new kakao.maps.InfoWindow({
-      content: iwContent,
-      removable: iwRemoveable,
-    });
+      // 지도 중심좌표를 접속위치로 변경합니다
+      map.setCenter(positions[0].latlng, marker);
 
-    // 인포윈도우를 마커위에 표시합니다
-    infowindow.open(map, marker);
-
-    // 지도 중심좌표를 접속위치로 변경합니다
-    map.setCenter(locPosition);
-
-    // console.log('함수 내에서 map 객체 출력: ', map);
+      // console.log('함수 내에서 map 객체 출력: ', map);
+    }
   }
+
+  // 더미데이터이기 때문에 useGetMyLoc 함수 내에 적용하였습니다
+  var positions = [
+    {
+      title: '내 위치',
+      latlng: null,
+    },
+    {
+      title: '내손 의왕 메가커피',
+      latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
+      img: coca,
+    },
+    {
+      title: '평촌동 두산벤쳐다임',
+      latlng: new kakao.maps.LatLng(37.39124205567942, 126.97296865595483),
+      img: pepsi,
+    },
+    {
+      title: '내손 의왕 스타벅스',
+      latlng: new kakao.maps.LatLng(37.38903279939199, 126.97623476944985),
+      img: coca,
+    },
+  ];
   return { map };
 }
