@@ -5,19 +5,44 @@ import 'slick-carousel/slick/slick-theme.css';
 import AimButton from 'components/AimButtonn';
 import SearchInput from 'components/SearchInput';
 import Map from 'components/Map';
+import pepsi from 'apis/license/pepsi.png';
+import coca from 'apis/license/coca.png';
 
 export default function Main() {
-  const selectId = useCallback((id) => {
-    console.log(`선택된 id는 ${id}입니다`);
-    // 후에 해당 슬라이더를 클릭했을 때 정보를 불러오도록 만들 수도 있을 것
+  const selectInfo = useCallback((id, title) => {
+    console.log(`${title}의 id는 ${id}입니다`);
   }, []);
 
-  const items = [
-    { id: 0, url: '', name: '전체 정보 보기' },
-    { id: 1, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '펩시' },
-    { id: 2, url: 'http://www.hahn.ph/wp-content/uploads/2021/02/coke-no-sugar-slim.png', name: '코카콜라' },
-    // { id: 3, url: 'http://www.hahn.ph/wp-content/uploads/2021/02/sprite-slim.png', name: '스프라이트' },
-    // { id: 4, url: 'http://getdrawings.com/free-icon/coke-icon-70.png', name: '사이다' },
+  const positions = [
+    {
+      id: 1,
+      title: '내 위치',
+      latlng: null,
+    },
+    {
+      id: 2,
+      title: '내손 의왕 메가커피',
+      latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
+      img: coca,
+    },
+    {
+      id: 3,
+      title: '평촌동 두산벤쳐다임',
+      latlng: new kakao.maps.LatLng(37.39124205567942, 126.97296865595483),
+      img: pepsi,
+    },
+    {
+      id: 4,
+      title: '내손 의왕 스타벅스',
+      latlng: new kakao.maps.LatLng(37.38903279939199, 126.97623476944985),
+      img: coca,
+    },
+    {
+      id: 5,
+      title: '범계 베스킨라빈스',
+      latlng: new kakao.maps.LatLng(37.39050367826452, 126.95222998928415),
+      img: coca,
+    },
   ];
 
   const settings = {
@@ -37,13 +62,13 @@ export default function Main() {
       <AimButton />
       <SlideWrapper>
         <MySlider {...settings} style={{ height: '100%' }}>
-          {items.map((item) => {
+          {positions.map((item) => {
             return (
-              <SlideMainWrapper key={item.id} onClick={() => selectId(item.id)}>
+              <SlideMainWrapper key={item.id} onClick={() => selectInfo(item.id, item.title)}>
                 <SlideImgWrapper>
-                  <img src={item.url} />
+                  <img src={item.img} />
                 </SlideImgWrapper>
-                <SlideName>{item.name}</SlideName>
+                <SlideName>{item.title}</SlideName>
               </SlideMainWrapper>
             );
           })}

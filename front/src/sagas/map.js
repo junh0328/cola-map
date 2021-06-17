@@ -63,7 +63,7 @@ function* getLocation() {
 
 function* setAddress(param) {
   const { address, status } = param;
-  console.log(address, status);
+  // console.log(address, status);
   try {
     yield put({
       type: SET_ADDRESS_SUCCESS,

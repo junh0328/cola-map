@@ -31,7 +31,7 @@ export function useGetMyLoc() {
   }
 
   function displayMarker(positions) {
-    console.log('positions 배열 출력:', positions);
+    // console.log('positions 배열 출력:', positions);
     for (var i = 0; i < positions.length; i++) {
       const imageSize = new kakao.maps.Size(40, 60);
 
@@ -86,6 +86,12 @@ export function useGetMyLoc() {
       id: 4,
       title: '내손 의왕 스타벅스',
       latlng: new kakao.maps.LatLng(37.38903279939199, 126.97623476944985),
+      img: coca,
+    },
+    {
+      id: 5,
+      title: '범계 베스킨라빈스',
+      latlng: new kakao.maps.LatLng(37.39050367826452, 126.95222998928415),
       img: coca,
     },
   ];
