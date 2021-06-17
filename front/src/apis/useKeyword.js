@@ -1,3 +1,5 @@
+// useGetSearchData를 바탕으로 검색된 데이터를 지도에 표시하기 위한 함수
+
 const { kakao } = window;
 
 export default function useKeyword(searchValue) {
@@ -27,6 +29,8 @@ export default function useKeyword(searchValue) {
       for (var i = 0; i < data.length; i++) {
         displayMarker(data[i]);
         bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        // 데이터 결과물을 확인하기 위한 로그
+        console.log('useKeyword, 내부 결과 출력:', data[0]);
       }
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.setBounds(bounds);
@@ -42,6 +46,8 @@ export default function useKeyword(searchValue) {
       map: map,
       position: new kakao.maps.LatLng(place.y, place.x),
     });
+
+    console.log('useKeyword, marker 출력: ', marker);
 
     // 마커에 클릭이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function () {
