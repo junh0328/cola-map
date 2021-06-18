@@ -7,6 +7,7 @@ import SearchInput from 'components/SearchInput';
 import Map from 'components/Map';
 import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
+import { NavLink } from 'react-router-dom';
 
 export default function Main() {
   const selectInfo = useCallback((id, title) => {
@@ -68,7 +69,9 @@ export default function Main() {
                 <SlideImgWrapper>
                   <img src={item.img} />
                 </SlideImgWrapper>
-                <SlideName>{item.title}</SlideName>
+                <NavLink key={item.id} to={`/store/${item.title}`} style={{ color: 'white' }}>
+                  <SlideName>{item.title}</SlideName>
+                </NavLink>
               </SlideMainWrapper>
             );
           })}

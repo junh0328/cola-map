@@ -59,6 +59,7 @@ export function useGetMyLoc() {
       kakao.maps.event.addListener(marker, 'click', () => {
         console.log('maker:', marker);
         console.log('marker.Fb:', marker.Fb);
+        return (location.href = `/store/${marker.Fb}`);
       });
     }
   }
