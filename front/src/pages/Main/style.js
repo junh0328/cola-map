@@ -43,15 +43,17 @@ export const MySlider = styled(Slider)`
 export const SlideMainWrapper = styled.div`
   display: flex;
   align-items: center;
+  text-align: center;
 `;
 
 export const SlideImgWrapper = styled.div`
+  text-align: center;
   & img {
     width: 10%;
   }
 `;
 
-export const SlideName = styled.div`
+export const SlideName = styled.span`
   margin-top: 3%;
   font-size: 1.1rem;
 `;
