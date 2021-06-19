@@ -17,7 +17,7 @@ const swaggerSpec = swaggerJsdoc(swagger);
 
 // Router
 const userRouter = require('./routers/userRouter');
-const userRouter = require('./routers/colaRouter');
+const colaRouter = require('./routers/colaRouter');
 
 // Proxy set
 app.set('trust proxy', 1);
