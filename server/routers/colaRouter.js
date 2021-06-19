@@ -2,7 +2,7 @@ const express = require('express');
 const colaRouter = express.Router();
 const Cola = require('../models/cola');
 
-colaRouter.get('/cola', async (req, res) => {
+colaRouter.get('/beverage', async (req, res) => {
   try {
     const getCola = await Cola.find({});
     // 가져온 콜라 목록 확인
@@ -14,7 +14,7 @@ colaRouter.get('/cola', async (req, res) => {
   }
 });
 
-colaRouter.post('/cola', async (req, res) => {
+colaRouter.post('/beverage', async (req, res) => {
   try {
     const newCola = await Cola.create({
       // 더미 데이터
