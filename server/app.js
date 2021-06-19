@@ -45,6 +45,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.json());
 
 app.use('/api/v1/', userRouter);
+app.use('/', colaRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
