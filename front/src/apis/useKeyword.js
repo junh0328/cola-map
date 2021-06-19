@@ -60,5 +60,14 @@ export default function useKeyword(searchValue) {
       );
       infowindow.open(map, marker);
     });
+
+    kakao.maps.event.addListener(marker, 'click', () => {
+      if (place.place_name) {
+        console.log('place_name:', place.place_name);
+        return (location.href = `store/${place.place_name}`);
+      } else {
+        console.log('이동 불가능한 마커입니다 \nmaker:', marker);
+      }
+    });
   }
 }

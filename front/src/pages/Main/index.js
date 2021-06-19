@@ -11,7 +11,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function Main() {
   const selectInfo = useCallback((id, title) => {
-    console.log(`${title}의 id는 ${id}입니다`);
+    // console.log(`${title}의 id는 ${id}입니다`);
   }, []);
 
   const positions = [
@@ -69,9 +69,15 @@ export default function Main() {
                 <SlideImgWrapper>
                   <img src={item.img} />
                 </SlideImgWrapper>
-                <NavLink key={item.id} to={`/store/${item.title}`} style={{ color: 'white' }}>
+                {/* 내 위치가 1이 아닐 때만 NavLink로 이동 가능하도록 조건문을 줌 */}
+                {item.id !== 1 ? (
+                  <NavLink key={item.id} to={`/store/${item.title}`} style={{ color: 'white' }}>
+                    {' '}
+                    <SlideName>{item.title}</SlideName>
+                  </NavLink>
+                ) : (
                   <SlideName>{item.title}</SlideName>
-                </NavLink>
+                )}
               </SlideMainWrapper>
             );
           })}
