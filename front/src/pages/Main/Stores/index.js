@@ -1,10 +1,23 @@
-import React from 'react';
+import { LeftOutlined } from '@ant-design/icons';
+import React, { useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import { CategoryHeader, CloseModalButton } from './style';
 
 const Store = () => {
   const { title } = useParams();
 
-  return <div>{title}에 대한 세부 페이지입니다</div>;
+  const goToCategories = useCallback(() => {
+    return history.go(-1);
+  }, []);
+
+  return (
+    <CategoryHeader>
+      <CloseModalButton onClick={goToCategories}>
+        <LeftOutlined />
+      </CloseModalButton>
+      <span>{title}</span>
+    </CategoryHeader>
+  );
 };
 
 export default Store;

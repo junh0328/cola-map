@@ -56,10 +56,14 @@ export function useGetMyLoc() {
       // 지도 중심좌표를 접속위치로 변경합니다
       map.setCenter(positions[0].latlng, marker);
 
+      console.log(marker);
+
       kakao.maps.event.addListener(marker, 'click', () => {
         console.log('maker:', marker);
         console.log('marker.Fb:', marker.Fb);
-        return (location.href = `/store/${marker.Fb}`);
+        if (marker.Fb !== '내 위치') {
+          return (location.href = `/store/${marker.Fb}`);
+        }
       });
     }
   }
