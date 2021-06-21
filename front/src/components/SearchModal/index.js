@@ -75,7 +75,7 @@ const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, 
       <div>
         <ul style={ulStyle}>
           {searchValue && (
-            <li style={{ marginBottom: 15 }}>
+            <li style={{ margin: '15px 0' }}>
               <b style={{ fontSize: '1.2rem' }}>{searchValue}</b> 에 대한 검색 결과입니다
             </li>
           )}
