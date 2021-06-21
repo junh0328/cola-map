@@ -10,7 +10,7 @@ import {
   SearchModalInput,
   SearchModalMain,
 } from './style';
-import useKeyword from 'apis/useKeyword';
+import { useKeyword } from 'apis/useKeyword';
 import PropTypes from 'prop-types';
 
 const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, show, onCloseModal }) => {
