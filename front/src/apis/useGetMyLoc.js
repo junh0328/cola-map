@@ -56,7 +56,7 @@ export function useGetMyLoc() {
       // 지도 중심좌표를 접속위치로 변경합니다
       map.setCenter(positions[0].latlng, marker);
 
-      console.log(marker);
+      // console.log(marker);
 
       kakao.maps.event.addListener(marker, 'click', () => {
         console.log('maker:', marker);
@@ -77,7 +77,7 @@ export function useGetMyLoc() {
     },
     {
       id: 2,
-      title: '내손 의왕 메가커피',
+      title: '메가커피 의왕내손점',
       latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
       img: coca,
     },
