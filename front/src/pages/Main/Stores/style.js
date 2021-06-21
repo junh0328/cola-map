@@ -8,6 +8,7 @@ export const CategoryHeader = styled.div`
   align-items: center;
   background-color: white;
   padding: 20px 0;
+  box-shadow: 5px 6px 5px 1px rgb(0 0 0 / 10%);
 
   & span {
     font-size: 1.3rem;
@@ -32,18 +33,68 @@ export const RemoveRequestButton = styled.div`
 export const StoreMain = styled.div`
   overflow: auto;
   height: 90vh;
+  background-color: rgb(249, 249, 249);
+`;
+
+export const StoreMap = styled.div`
+  height: 40vh;
 `;
 
 export const StoreContent = styled.div`
+  align-items: center;
   background-color: rgb(249, 249, 249);
-  height: 50vh;
-  color: white;
-  font-size: 2rem;
-  display: flex;
-  justify-content: center;
+  height: auto;
+  color: black;
+  font-size: 1.2rem;
+  padding: 0 6%;
+  padding-bottom: 20px;
+`;
 
-  & span {
-    display: flex;
-    align-items: center;
+export const StoreContentHeader = styled.div`
+  display: flex;
+  padding: 4% 0;
+  position: relative;
+  align-items: center;
+
+  & button {
+    border: none;
+    position: absolute;
+    right: 0;
+    padding: 10px 20px;
+    background-color: salmon;
+    color: white;
+    border-radius: 32px;
+    cursor: pointer;
   }
+`;
+
+export const StoreContentHeaderMain = styled.div`
+  font-size: 1.5rem;
+  font-weight: bolder;
+`;
+
+export const StoreContentHeaderSub = styled.div`
+  margin-left: 10px;
+  font-size: 1.5rem;
+  font-weight: bolder;
+`;
+
+export const StoreContentMain = styled.div`
+  background-color: white;
+  font-weight: bolder;
+  border-radius: 20px;
+  box-shadow: 4px 5px 4px 0px rgb(0 0 0 / 10%);
+`;
+
+export const StoreContentCategory = styled.div`
+  position: relative;
+  display: flex;
+  padding: 20px;
+`;
+
+export const StoreContentCategoryHeader = styled.div``;
+
+export const StoreContentCategoryMain = styled.div`
+  position: absolute;
+  right: 20px;
 `;
