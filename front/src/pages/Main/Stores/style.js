@@ -61,7 +61,7 @@ export const StoreContentHeader = styled.div`
     position: absolute;
     right: 0;
     padding: 10px 20px;
-    background-color: salmon;
+    background-color: #0f4c82;
     color: white;
     border-radius: 32px;
     cursor: pointer;
@@ -95,6 +95,7 @@ export const StoreContentCategory = styled.div`
 export const StoreContentCategoryHeader = styled.div``;
 
 export const StoreContentCategoryMain = styled.div`
+  font-weight: normal;
   position: absolute;
   right: 20px;
 `;
