@@ -1,11 +1,12 @@
 import { LeftOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getLocation, setAddress } from 'reducers/map';
+import { getLocation } from 'reducers/map';
 import {
   CategoryHeader,
   CloseModalButton,
+  MyCard,
   RemoveRequestButton,
   StoreContent,
   StoreContentCategory,
@@ -15,10 +16,13 @@ import {
   StoreContentHeaderMain,
   StoreContentHeaderSub,
   StoreContentMain,
+  StoreContentReview,
+  StoreContentReviewWrap,
   StoreMain,
   StoreMap,
 } from './style';
 import { useKeyword } from 'apis/useKeyword';
+import { Card, Skeleton } from 'antd';
 
 const Store = () => {
   /*
@@ -26,6 +30,8 @@ const Store = () => {
   후에 이 페이지에서 직접 useKeyword 요청을 보내는 것이 아닌 dispatch를 통해 서버에 저장되어 있는 store 정보가 있을 경우 state를 변경한다
   해당 가게에 대한 값(정보)이 있을 경우에는 삭제 요청을 보여지도록 하고, 없을 경우에는 제보요청이 보여지도록 조건문을 준다
   */
+
+  const [storeReview, setStoreReview] = useState([]);
   const [storeInfo, setStoreInfo] = useState(false);
   const { title } = useParams();
   const history = useHistory();
@@ -82,20 +88,47 @@ const Store = () => {
           <StoreContentMain>
             <StoreContentCategory>
               <StoreContentCategoryHeader>카테고리 및 메뉴</StoreContentCategoryHeader>
-              <StoreContentCategoryMain>0개</StoreContentCategoryMain>
+              <StoreContentCategoryMain>1개</StoreContentCategoryMain>
             </StoreContentCategory>
             <StoreContentCategory>
-              <StoreContentCategoryHeader>문어빵</StoreContentCategoryHeader>
-              <StoreContentCategoryMain>상세 메뉴 없음</StoreContentCategoryMain>
+              <StoreContentCategoryHeader>포테킹 후라이드</StoreContentCategoryHeader>
+              <StoreContentCategoryMain>펩시 1.25L로 변경</StoreContentCategoryMain>
             </StoreContentCategory>
           </StoreContentMain>
         </StoreContent>
         <StoreContent>
           <StoreContentHeader>
             <StoreContentHeaderMain>리뷰 </StoreContentHeaderMain>
-            <StoreContentHeaderSub>0개</StoreContentHeaderSub>
+
+            <StoreContentHeaderSub>{storeReview.length ? <span>3개</span> : <span>0개</span>}</StoreContentHeaderSub>
+            {storeReview.length ? (
+              <button style={{ right: '17%' }} onClick={() => onClickEvent()}>
+                더보기
+              </button>
+            ) : null}
             <button onClick={() => onClickEvent()}>리뷰쓰기</button>
           </StoreContentHeader>
+          {storeReview.length ? (
+            <StoreContentReview>
+              <StoreContentReviewWrap>
+                <MyCard title="윤성님" bordered={false}>
+                  <p>존맛탱 가게입니다 추천해요</p>
+                </MyCard>
+              </StoreContentReviewWrap>
+              <StoreContentReviewWrap>
+                <MyCard title="도해님" bordered={false}>
+                  <p>튀김이 바삭바삭해용</p>
+                </MyCard>
+              </StoreContentReviewWrap>
+              <StoreContentReviewWrap>
+                <MyCard title="진수님" bordered={false}>
+                  <p>여긴 왜 제로콜라 없나요?</p>
+                </MyCard>
+              </StoreContentReviewWrap>
+            </StoreContentReview>
+          ) : (
+            <Skeleton></Skeleton>
+          )}
         </StoreContent>
       </StoreMain>
     </div>
