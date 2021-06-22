@@ -1,7 +1,7 @@
 import { LeftOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getLocation, setAddress } from 'reducers/map';
 import {
   CategoryHeader,
@@ -28,6 +28,7 @@ const Store = () => {
   */
   const [storeInfo, setStoreInfo] = useState(false);
   const { title } = useParams();
+  const history = useHistory();
 
   const goToCategories = useCallback(() => {
     return history.go(-1);

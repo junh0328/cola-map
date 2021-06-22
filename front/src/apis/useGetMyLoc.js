@@ -95,7 +95,7 @@ export function useGetMyLoc() {
     },
     {
       id: 5,
-      title: '범계 베스킨라빈스',
+      title: '배스킨라빈스 평촌범계2점',
       latlng: new kakao.maps.LatLng(37.39050367826452, 126.95222998928415),
       img: coca,
     },
