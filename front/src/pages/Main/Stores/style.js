@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Card } from 'antd';
 
 export const CategoryHeader = styled.div`
   position: relative;
@@ -31,6 +32,7 @@ export const RemoveRequestButton = styled.div`
 `;
 
 export const StoreMain = styled.div`
+  overflow-x: hidden !important;
   overflow: auto;
   height: 90vh;
   background-color: rgb(249, 249, 249);
@@ -84,6 +86,21 @@ export const StoreContentMain = styled.div`
   font-weight: bolder;
   border-radius: 20px;
   box-shadow: 4px 5px 4px 0px rgb(0 0 0 / 10%);
+`;
+
+//  display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)'
+export const StoreContentReview = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding-bottom: 4%;
+`;
+
+export const StoreContentReviewWrap = styled.div`
+  margin-right: 10px;
+`;
+
+export const MyCard = styled(Card)`
+  height: 170px;
 `;
 
 export const StoreContentCategory = styled.div`
