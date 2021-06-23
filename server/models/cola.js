@@ -17,7 +17,15 @@ const colaSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-});
+  report: {
+    type: Number,
+    default:0,
+  },
+},
+{
+  timestamps: true
+}
+);
 
 const Cola = mongoose.model('Cola', colaSchema);
 
