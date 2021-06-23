@@ -17,7 +17,7 @@ const swaggerSpec = swaggerJsdoc(swagger);
 
 // Router
 const userRouter = require('./routers/userRouter');
-const colaRouter = require('./routers/colaRouter');
+const storeRouter = require('./routers/storeRouter');
 
 // Proxy set
 app.set('trust proxy', 1);
@@ -46,7 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded( {extended : false } ));
 
 app.use('/api/v1/', userRouter);
-app.use('/', colaRouter);
+app.use('/cola', storeRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
