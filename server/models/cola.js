@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const colaSchema = new mongoose.Schema({
-  name: {
+  storeName: {
     type: String,
     required: true,
   },
