@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
   token: {
     type: String,
   },
+  store: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'store',
+    },
+  ],
 });
 
 userSchema.methods.generateAuthToken = async function () {
