@@ -16,12 +16,14 @@ colaRouter.get('/beverage', async (req, res) => {
 
 colaRouter.post('/beverage', async (req, res) => {
   try {
+    const {
+      body:{ storeName, category, latitude, longitude },
+    } = req;
     const newCola = await Cola.create({
-      // 더미 데이터
-      name: "Yuseong-gu mom's touch",
-      category: 'coca-cola',
-      latitude: 36.354550634149405,
-      longitude: 127.33991019967712,
+      storeName,
+      category,
+      latitude,
+      longitude,
     });
     // 생성한 데이터 확인
     res.json({
