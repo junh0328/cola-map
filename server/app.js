@@ -43,10 +43,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(express.json());
-app.use(express.urlencoded( {extended : false } ));
+app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/v1/', userRouter);
-app.use('/cola', storeRouter);
+app.use('/store', storeRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
