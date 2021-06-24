@@ -5,35 +5,22 @@ const jwt = require('jsonwebtoken');
 mongoose.set('useCreateIndex', true);
 
 const userSchema = new mongoose.Schema({
-  email: {
+  uniq_id: {
     type: String,
     unique: true,
     required: true,
     trim: true,
   },
-  password: {
+  nickname: {
     type: String,
     required: true,
-    minlength: 7,
     trim: true,
-  },
-  token: {
-    type: String,
-  },
-  store: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'store',
-    },
-  ],
+  }
 });
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
-  user.token = token;
-
-  await user.save();
 
   return token;
 };
