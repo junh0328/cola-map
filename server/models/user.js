@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 mongoose.set('useCreateIndex', true);
 
 const userSchema = new mongoose.Schema({
-  uniq_id: {
+  uniqId: {
     type: String,
     unique: true,
     required: true,
