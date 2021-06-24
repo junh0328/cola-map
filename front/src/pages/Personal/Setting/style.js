@@ -14,10 +14,6 @@ export const PersonalContentBox = styled.div`
   padding: 0 2em;
 `;
 
-export const PersonalContentBoxWrap = styled.div`
-  padding-top: 50px;
-`;
-
 export const PersonalLinkBox = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -50,8 +46,30 @@ export const PersonalLinkBox = styled.div`
   }
 `;
 
-export const CardWrap = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding-top: 10;
+export const UserInfoWrapper = styled.div`
+  padding: 1em;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.2rem;
+  color: #0f4c82;
+`;
+
+export const UserInfoWrapperMain = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  border: 3px solid #0f4c82;
+  padding: 10px;
+  padding-left: 3%;
+  border-radius: 30px;
+
+  & span {
+    display: flex;
+    font-weight: bolder;
+  }
+
+  & a {
+    display: flex;
+    align-items: center;
+    color: #0f4c82;
+  }
 `;

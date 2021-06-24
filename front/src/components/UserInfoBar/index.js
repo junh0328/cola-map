@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { UserInfoWrapper, UserInfoWrapperMain } from './style';
-import { LogoutOutlined } from '@ant-design/icons';
+import { SettingOutlined } from '@ant-design/icons';
 import { useMemo } from 'react';
 
 const UserInfoBar = () => {
@@ -9,7 +10,9 @@ const UserInfoBar = () => {
     <UserInfoWrapper>
       <UserInfoWrapperMain>
         <span title="UserName">홍길동</span>
-        <LogoutOutlined style={style} title="로그아웃" onClick={() => alert('로그아웃 되었습니다!')} />
+        <Link to={'/personal/setting'}>
+          <SettingOutlined style={style} title="로그아웃" />
+        </Link>
       </UserInfoWrapperMain>
     </UserInfoWrapper>
   );

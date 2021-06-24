@@ -14,6 +14,7 @@ import MyReview from 'pages/Personal/MyReview';
 import Qna from 'pages/Personal/Qna';
 import Question from 'pages/Personal/Question';
 import Quit from 'pages/Personal/Quit';
+import Setting from 'pages/Personal/Setting';
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
         <Route path="/categories" exact component={Categories} />
         <Route path="/categories/category/:name" exact component={Category} />
         <Route path="/apply" component={Apply} />
-        <Route path="/personal" component={Personal} />
+        <Route path="/personal" exact component={Personal} />
+        <Route path="/personal/setting" component={Setting} />
         <Route path="/myapply" component={MyApply} />
         <Route path="/myreview" component={MyReview} />
         <Route path="/qna" component={Qna} />
