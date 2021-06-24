@@ -17,6 +17,13 @@ export const UserInfoWrapperMain = styled.div`
   border-radius: 30px;
 
   & span {
+    display: flex;
     font-weight: bolder;
+  }
+
+  & a {
+    display: flex;
+    align-items: center;
+    color: #0f4c82;
   }
 `;

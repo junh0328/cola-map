@@ -31,7 +31,7 @@ const Store = () => {
   해당 가게에 대한 값(정보)이 있을 경우에는 삭제 요청을 보여지도록 하고, 없을 경우에는 제보요청이 보여지도록 조건문을 준다
   */
 
-  const [storeReview, setStoreReview] = useState([]);
+  const [storeReview, setStoreReview] = useState([1]);
   const [storeInfo, setStoreInfo] = useState(false);
   const { title } = useParams();
   const history = useHistory();
