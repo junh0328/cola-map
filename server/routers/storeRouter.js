@@ -1,4 +1,5 @@
 const express = require('express');
+const Post = require('../models/post');
 const storeRouter = express.Router();
 const Store = require('../models/store');
 
@@ -17,7 +18,9 @@ storeRouter.get('/', async (req, res) => {
 // 제보 확인
 storeRouter.get('/:id', async (req, res) => {
   try {
-    const getStore = await Store.findById({ _id: id });
+    const getStore = await Store.findById({ _id: req.params.id }).lean();
+    const post = await Post.find({ store: getStore._id })
+    getStore.post = post
     res.json({
       Store: getStore,
     });
