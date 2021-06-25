@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Card } from 'antd';
 
 export const PersonalWrapper = styled.div`
   width: 100%;
@@ -48,6 +49,12 @@ export const PersonalLinkBox = styled.div`
     color: #0f4c82;
     cursor: pointer;
   }
+
+  @media (max-width: 580px) {
+    & button {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 export const CardWrap = styled.div`
@@ -58,8 +65,11 @@ export const CardWrap = styled.div`
   @media (max-width: 580px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
   @media (max-width: 400px) {
     grid-template-columns: repeat(1, 1fr);
   }
+`;
+
+export const MyCard = styled(Card)`
+  margin: 3px;
 `;
