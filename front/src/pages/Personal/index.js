@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Skeleton, Card } from 'antd';
 
 const Personal = () => {
-  const [userInfo, setUserInfo] = useState(false);
+  const [userInfo, setUserInfo] = useState(true);
 
   return (
     <PersonalWrapper>
@@ -14,8 +14,14 @@ const Personal = () => {
         <PersonalContentBoxWrap>
           <PersonalLinkBox>
             <Link to="/myapply">
-              {userInfo ? <div>내가 제보한 가게</div> : <span>제보한 가게가 없어요</span>}
-              <button>전체보기</button>
+              {userInfo ? (
+                <>
+                  <div>내가 제보한 가게</div>
+                  <button>전체보기</button>
+                </>
+              ) : (
+                <span>제보한 가게가 없어요</span>
+              )}
             </Link>
           </PersonalLinkBox>
           {!userInfo ? (
@@ -56,8 +62,14 @@ const Personal = () => {
         <PersonalContentBoxWrap>
           <PersonalLinkBox>
             <Link to="/myreview">
-              {userInfo ? <div>내가 쓴 리뷰</div> : <span>내가 쓴 리뷰가 없어요.</span>}
-              <button>전체보기</button>
+              {userInfo ? (
+                <>
+                  <div>내가 제보한 가게</div>
+                  <button>전체보기</button>
+                </>
+              ) : (
+                <span>내가 쓴 리뷰가 없어요.</span>
+              )}
             </Link>
           </PersonalLinkBox>
           {!userInfo ? (
