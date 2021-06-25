@@ -1,5 +1,12 @@
 import { Link } from 'react-router-dom';
-import { PersonalWrapper, PersonalContentBox, PersonalLinkBox, CardWrap, PersonalContentBoxWrap } from './style';
+import {
+  PersonalWrapper,
+  PersonalContentBox,
+  PersonalLinkBox,
+  CardWrap,
+  PersonalContentBoxWrap,
+  MyCard,
+} from './style';
 import UserInfoBar from 'components/UserInfoBar';
 import { useState } from 'react';
 import { Skeleton, Card } from 'antd';
@@ -38,24 +45,24 @@ const Personal = () => {
             </CardWrap>
           ) : (
             <CardWrap>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
+              </MyCard>
             </CardWrap>
           )}
         </PersonalContentBoxWrap>
@@ -86,24 +93,24 @@ const Personal = () => {
             </CardWrap>
           ) : (
             <CardWrap>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
-              <Card title="의왕내손 메가커피" style={{ height: '15vh', margin: 10 }}>
+              </MyCard>
+              <MyCard title="의왕내손 메가커피">
                 <p>펩시 절대 안팔쥬</p>
-              </Card>
+              </MyCard>
             </CardWrap>
           )}
         </PersonalContentBoxWrap>

@@ -7,7 +7,7 @@ import {
   UserInfoWrapperSub,
   UserInfoWrapperSubBtn,
 } from './style';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
   AlertOutlined,
   FileTextOutlined,
@@ -20,6 +20,17 @@ import { Link } from 'react-router-dom';
 
 const Setting = () => {
   const style = useMemo(() => ({ cursor: 'pointer', position: 'absolute', left: '3%' }), []);
+  const [nickname, setNickname] = useState('홍길동');
+
+  const UpdateNickname = useCallback(() => {
+    const result = window.prompt('변경할 닉네임을 입력해주세요\n한글로만 사용이 가능합니다');
+    if (result.trim() !== '') {
+      alert(`${result}로 닉네임이 변경되었습니다.`);
+    } else {
+      alert('올바른 닉네임을 입력해주세요');
+    }
+    setNickname(result);
+  }, []);
 
   return (
     <PersonalWrapper>
@@ -28,8 +39,8 @@ const Setting = () => {
           <span title="UserName">설정</span>
           <LeftOutlined style={style} title="뒤로가기" onClick={() => history.go(-1)} />
         </UserInfoWrapperMain>
-        <UserInfoWrapperSub onClick={() => window.prompt('변경할 닉네임을 입력해주세요\n한글로만 사용이 가능합니다')}>
-          <span>홍길동</span>
+        <UserInfoWrapperSub onClick={UpdateNickname}>
+          <span>{nickname}</span>
           <UserInfoWrapperSubBtn>
             <HighlightOutlined />
             <div>닉네임 수정</div>
