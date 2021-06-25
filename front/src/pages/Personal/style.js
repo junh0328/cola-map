@@ -11,11 +11,11 @@ export const PersonalWrapper = styled.div`
 
 export const PersonalContentBox = styled.div`
   width: 100%;
-  padding: 0 2em;
+  padding: 0 1%;
 `;
 
 export const PersonalContentBoxWrap = styled.div`
-  padding-top: 50px;
+  padding-top: 4%;
 `;
 
 export const PersonalLinkBox = styled.div`
@@ -33,7 +33,7 @@ export const PersonalLinkBox = styled.div`
     /* color: #fff; */
     color: #000;
     font-weight: bold;
-    font-size: 1.5rem;
+    /* font-size: 1.5rem; */
     text-decoration: none;
     display: block;
     display: flex;
@@ -53,5 +53,13 @@ export const PersonalLinkBox = styled.div`
 export const CardWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding-top: 10;
+  padding-top: 1%;
+
+  @media (max-width: 580px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
