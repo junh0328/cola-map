@@ -7,22 +7,22 @@ const storeSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    category: {
+    kakaoId: {
       type: String,
       required: true,
+      unique: true,
     },
-    latitude: {
+    addressX: {
       type: Number,
       required: true,
     },
-    longitude: {
+    addressY: {
       type: Number,
       required: true,
     },
-    report: {
-      type: Number,
-      default: 0,
-    },
+    mostPosted: {
+      type: String,
+    }
   },
   {
     timestamps: true,

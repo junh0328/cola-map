@@ -20,6 +20,9 @@ storeRouter.get('/:id', async (req, res) => {
   try {
     const getStore = await Store.findById({ _id: req.params.id }).lean();
     const post = await Post.find({ store: getStore._id })
+      .populate('user')
+      .sort({ createdAt: -1 })
+
     getStore.post = post
     res.json({
       Store: getStore,
