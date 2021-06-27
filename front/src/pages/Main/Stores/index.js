@@ -32,7 +32,7 @@ const Store = () => {
   */
 
   const [storeReview, setStoreReview] = useState([1]);
-  const [storeInfo, setStoreInfo] = useState(false);
+  const [storeInfo, setStoreInfo] = useState(true);
   const { title } = useParams();
   const history = useHistory();
 

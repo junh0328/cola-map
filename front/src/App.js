@@ -16,6 +16,7 @@ import Question from 'pages/Personal/Question';
 import Quit from 'pages/Personal/Quit';
 import Setting from 'pages/Personal/Setting';
 import PageNotFound from 'pages/PageNotFound';
+import Immsi from 'pages/Immsi';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route path="/qna" component={Qna} />
           <Route path="/question" component={Question} />
           <Route path="/quit" component={Quit} />
+          <Route path="/immsi" exact component={Immsi} />
           <Route component={PageNotFound} />
         </AppLayout>
       </Switch>
