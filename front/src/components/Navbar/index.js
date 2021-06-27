@@ -1,23 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { LinkWrapper } from './style';
 import { BarsOutlined, FormOutlined, HomeOutlined, SmileOutlined } from '@ant-design/icons';
 
 const Navbar = () => {
+  const activeStyle = {
+    color: '#0f4c82',
+  };
+
   return (
     <LinkWrapper>
-      <Link to="/">
+      <NavLink to="/" exact activeStyle={activeStyle}>
         <HomeOutlined />
-      </Link>
-      <Link to="/categories">
+      </NavLink>
+      <NavLink to="/categories" activeStyle={activeStyle}>
         <BarsOutlined />
-      </Link>
-      <Link to="/apply">
+      </NavLink>
+      <NavLink to="/apply" activeStyle={activeStyle}>
         <FormOutlined />
-      </Link>
-      <Link to="/personal">
+      </NavLink>
+      <NavLink to="/personal" activeStyle={activeStyle}>
         <SmileOutlined />
-      </Link>
+      </NavLink>
     </LinkWrapper>
   );
 };

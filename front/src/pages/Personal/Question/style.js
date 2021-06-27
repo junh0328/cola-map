@@ -15,8 +15,4 @@ export const SubmitButton = styled.button`
   cursor: pointer;
   border: none;
   background-color: #f5f5f5;
-  transition: 0.3s;
-  &:hover {
-    box-shadow: inset 0 3px 7px 2px #eee;
-  }
 `;

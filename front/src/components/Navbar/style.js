@@ -12,7 +12,7 @@ export const LinkWrapper = styled.div`
     align-items: center;
     width: 25%;
     text-decoration: none;
-    color: #0f4c82;
+    color: #414141;
     margin-right: 10px;
     text-align: center;
     font-size: 1rem;

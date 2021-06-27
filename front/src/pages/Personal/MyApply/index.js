@@ -4,20 +4,24 @@ import ApplyItem from 'components/ApplyItem';
 
 const tmpStoreData = [
   {
-    pk: 0,
-    storeName: 'bhc',
-  },
-  {
     pk: 1,
-    storeName: 'bbq',
+    storeName: 'bhc',
+    category: '펩시',
   },
   {
     pk: 2,
-    storeName: '푸라닭',
+    storeName: 'bbq',
+    category: '코카콜라',
   },
   {
     pk: 3,
+    storeName: '푸라닭',
+    category: '펩시',
+  },
+  {
+    pk: 4,
     storeName: '엽기떡볶이',
+    category: '펩시',
   },
 ];
 

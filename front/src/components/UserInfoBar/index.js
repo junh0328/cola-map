@@ -1,11 +1,17 @@
-import { UserInfoWrapper } from './style';
-import { LogoutOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import { CustomSettingOutlined, UserInfoWrapper, UserInfoWrapperMain } from './style';
+
+import { useMemo } from 'react';
 
 const UserInfoBar = () => {
   return (
     <UserInfoWrapper>
-      <b title="UserName">UserName</b>
-      <LogoutOutlined style={{ cursor: 'pointer' }} title="로그아웃" />
+      <UserInfoWrapperMain>
+        <span title="UserName">홍길동</span>
+        <Link to={'/personal/setting'}>
+          <CustomSettingOutlined />
+        </Link>
+      </UserInfoWrapperMain>
     </UserInfoWrapper>
   );
 };
