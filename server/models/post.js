@@ -10,10 +10,13 @@ const postSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'User'
     },
-    beverage: {
+    drink: {
       type: String,
       required: true,
     },
+    comment: {
+      type: String,
+    }
   },
   {
     timestamps: true,
