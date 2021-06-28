@@ -1,0 +1,85 @@
+paths:
+  /post:
+    post:
+      tags:
+      - post
+      summary: WRITE POST
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                storeName: 
+                  type: string
+                  required: true
+                  example: "BHC 서울점"
+                kakaoId: 
+                  type: string
+                  required: true
+                  example: "123456"
+                addressX: 
+                  type: number
+                  required: true
+                  example: 1234.567
+                addressY: 
+                  type: number
+                  required: true
+                  example: 1234.567
+                drink:
+                  type: string
+                  required: true
+                  example: "코카콜라"
+                comment:
+                  type: string
+                  required: true
+                  example: "코카콜라가 왔네요 !"
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+  /post/store/{storeId}:
+    get:
+      tags:
+      - post
+      summary: GET STORE'S POST
+      parameters: 
+        - in: path  
+          name: storeId
+          required: true
+          schema: 
+            type: string
+            default: '60d8791b2219231ff4cfb8c0'      
+      responses:
+        '200':
+          description: OK
+
+  /post/user:
+    get:
+      tags:
+      - post
+      summary: GET USER'S POST
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+  /post/{postId}:
+    delete:
+      tags:
+      - post
+      summary: DELETE POST
+      parameters: 
+        - in: path
+          name: postId
+          required: true
+          schema: 
+            type: string            
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK

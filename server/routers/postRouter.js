@@ -59,9 +59,9 @@ postRouter.post('/', auth, async (req, res) => {
 })
 
 // 특정 Store에 제보목록 받기
-postRouter.get('/store', async (req, res) => {
+postRouter.get('/store/:storeId', async (req, res) => {
   try {
-    const store = req.query.store
+    const store = req.params.storeId
     const posts = await Post.find({ store: store })
       .populate('store')
       .populate('user')
@@ -88,7 +88,7 @@ postRouter.get('/user', auth, async (req, res) => {
   }
 })
 
-postRouter.delete('/user/post/:postId',  async (req, res) => {
+postRouter.delete('/:postId', auth, async (req, res) => {
   try {
     const post = await Post.findOneAndDelete({ user: req.user, _id: req.params.postId })
     const mostPosted = await getMostPosted(post.store)
