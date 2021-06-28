@@ -4,36 +4,42 @@ paths:
       tags:
       - post
       summary: WRITE POST
-      requestBody: 
+      requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                storeName: 
-                  type: string
-                  required: true
-                  example: "BHC 서울점"
+                store:
+                  type: string    
+                storeName:
+                  type: string    
                 kakaoId: 
-                  type: string
-                  required: true
-                  example: "123456"
-                addressX: 
+                  type: string    
+                addressX:
+                  type: number    
+                addressY:
                   type: number
-                  required: true
-                  example: 1234.567
-                addressY: 
-                  type: number
-                  required: true
-                  example: 1234.567
                 drink:
-                  type: string
-                  required: true
-                  example: "코카콜라"
+                  type: string    
                 comment:
-                  type: string
-                  required: true
-                  example: "코카콜라가 왔네요 !"
+                  type: string    
+            examples:
+              store does not exists:
+                  summary: store does not exists
+                  value:
+                    storeName: BHC 상암동
+                    kakaoId: 123456
+                    addressX: 123.456
+                    addressY: 123.456
+                    drink: 코카콜라
+                    comment: 코카콜라가 왔어요 !
+              store alreay exists:
+                  summary: store alreay exists
+                  value:
+                    store: 60d98d045437b83d4c8826db
+                    drink: 코카콜라
+                    comment: 코카콜라가 왔어요 !
       security:
         - bearerAuth: []
       responses:
