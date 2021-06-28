@@ -3,6 +3,7 @@ const auth = require('../middleware/auth')
 const postRouter = express.Router();
 const Post = require('../models/post');
 const Store = require('../models/store');
+const getMostPosted = require('../util/getMostPosted');
 
 // 제보하기
 postRouter.post('/', auth, async (req, res) => {
@@ -87,20 +88,18 @@ postRouter.get('/user', auth, async (req, res) => {
   }
 })
 
-// postRouter.delete('/user/post/:postId', auth, async (req, res) => {
-//   try {
-//     await Post.findOneAndDelete({ user: req.user, _id: req.params.postId })
-//     const cocaCount = await Post.countDocuments({drink: '코카콜라'})
-//     const pepsiCount = await Post.countDocuments({drink: '펩시콜라'})
+postRouter.delete('/user/post/:postId',  async (req, res) => {
+  try {
+    const post = await Post.findOneAndDelete({ user: req.user, _id: req.params.postId })
+    const mostPosted = await getMostPosted(post.store)
+    
+    await Store.findOneAndUpdate({_id: post.store}, {mostPosted: mostPosted})
+    
+    res.status(200).send({message: 'success'});
 
-//     if(cocaCount> pepsiCount) {
-
-//     }
-
-
-//   } catch (e) {
-//     res.status(500).send(e.message)
-//   }
-// })
+  } catch (e) {
+    res.status(500).send(e.message)
+  }
+})
 
 module.exports = postRouter;
