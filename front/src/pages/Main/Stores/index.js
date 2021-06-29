@@ -1,12 +1,16 @@
 import { LeftOutlined } from '@ant-design/icons';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getLocation } from 'reducers/map';
 import {
   CategoryHeader,
   CloseModalButton,
+  CustomBtn,
+  FormCategoryMain,
+  FormCategoryWrap,
   MyCard,
+  MyGraph,
   RemoveRequestButton,
   StoreContent,
   StoreContentCategory,
@@ -23,6 +27,8 @@ import {
 } from './style';
 import { useKeyword } from 'apis/useKeyword';
 import { Card, Skeleton } from 'antd';
+import pepsi from 'apis/license/pepsi.png';
+import coca from 'apis/license/coca.png';
 
 const Store = () => {
   /*
@@ -31,15 +37,16 @@ const Store = () => {
   해당 가게에 대한 값(정보)이 있을 경우에는 삭제 요청을 보여지도록 하고, 없을 경우에는 제보요청이 보여지도록 조건문을 준다
   */
 
+  // 리뷰 갯수 표현 state
   const [storeReview, setStoreReview] = useState([1]);
+  // 가게 정보 요청 (삭제요청/ 제보요청)
   const [storeInfo, setStoreInfo] = useState(true);
-  const { title } = useParams();
+  // 카테고리 관리
+  const [inputStatus, setInputStatus] = useState('');
+
+  const { title, id } = useParams();
   const history = useHistory();
-
-  const goToCategories = useCallback(() => {
-    return history.go(-1);
-  }, []);
-
+  const commentRef = useRef();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,9 +54,34 @@ const Store = () => {
     useKeyword(title);
   }, []);
 
+  const handleClickRadioButton = useCallback((radioBtnName) => {
+    setInputStatus(radioBtnName);
+  }, []);
+
+  const onSubmitForm = useCallback(
+    (e) => {
+      e.preventDefault();
+      const comment = commentRef.current;
+      if (comment.value.trim() === '' || inputStatus === '') {
+        alert('게시글을 입력 또는 카테고리 선택을 완료해야 합니다');
+        comment.focus();
+        return;
+      }
+      alert(
+        `가게id: ${id} \n가게이름: ${title}\n커멘트: ${comment.value}\n카테고리: ${inputStatus ? inputStatus : '없음'}`,
+      );
+      comment.value = '';
+    },
+    [inputStatus],
+  );
+
   const onClickEvent = useCallback(() => {
     alert('clicked!');
   }, []);
+
+  const goToCategories = useCallback(() => {
+    return history.go(-1);
+  }, [inputStatus]);
 
   return (
     <div>
@@ -71,7 +103,7 @@ const Store = () => {
         <StoreContent>
           <StoreContentHeader>
             <StoreContentHeaderMain>가게 정보</StoreContentHeaderMain>
-            <button onClick={() => onClickEvent()}>정보수정</button>
+            <CustomBtn onClick={() => onClickEvent()}>정보수정</CustomBtn>
           </StoreContentHeader>
           <StoreContentMain>
             <StoreContentCategory>
@@ -85,28 +117,47 @@ const Store = () => {
           </StoreContentMain>
         </StoreContent>
         <StoreContent>
-          <StoreContentMain>
-            <StoreContentCategory>
-              <StoreContentCategoryHeader>카테고리 및 메뉴</StoreContentCategoryHeader>
-              <StoreContentCategoryMain>1개</StoreContentCategoryMain>
-            </StoreContentCategory>
-            <StoreContentCategory>
-              <StoreContentCategoryHeader>포테킹 후라이드</StoreContentCategoryHeader>
-              <StoreContentCategoryMain>펩시 1.25L로 변경</StoreContentCategoryMain>
-            </StoreContentCategory>
-          </StoreContentMain>
+          <form onSubmit={onSubmitForm}>
+            <MyGraph />
+            <FormCategoryWrap>
+              <FormCategoryMain>
+                <input
+                  type="radio"
+                  name="category"
+                  value="pepsi"
+                  defaultChecked={inputStatus === 'pepsi'}
+                  onClick={() => handleClickRadioButton('pepsi')}
+                />
+                <img src={pepsi} />
+                <span>98%</span>
+              </FormCategoryMain>
+              <FormCategoryMain>
+                <span>VS</span>
+              </FormCategoryMain>
+              <FormCategoryMain>
+                <span>2%</span>
+                <img src={coca} />
+                <input
+                  type="radio"
+                  name="category"
+                  value="coca"
+                  defaultChecked={inputStatus === 'coca'}
+                  onClick={() => handleClickRadioButton('coca')}
+                />
+              </FormCategoryMain>
+            </FormCategoryWrap>
+            <div>
+              <MyCard title="홍길동" style={{ margin: '6% 0' }}>
+                <input ref={commentRef} style={{ padding: 10, width: '100%', border: 'none', outline: 'none' }} />
+              </MyCard>
+              <CustomBtn>리뷰쓰기</CustomBtn>
+            </div>
+          </form>
         </StoreContent>
         <StoreContent>
           <StoreContentHeader>
             <StoreContentHeaderMain>리뷰 </StoreContentHeaderMain>
-
             <StoreContentHeaderSub>{storeReview.length ? <span>3개</span> : <span>0개</span>}</StoreContentHeaderSub>
-            {storeReview.length ? (
-              <button style={{ right: '17%' }} onClick={() => onClickEvent()}>
-                더보기
-              </button>
-            ) : null}
-            <button onClick={() => onClickEvent()}>리뷰쓰기</button>
           </StoreContentHeader>
           {storeReview.length ? (
             <StoreContentReview>

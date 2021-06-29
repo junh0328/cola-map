@@ -14,6 +14,12 @@ export const CategoryHeader = styled.div`
   & span {
     font-size: 1.3rem;
   }
+
+  @media (max-width: 425px) {
+    & span {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const CloseModalButton = styled.div`
@@ -21,6 +27,8 @@ export const CloseModalButton = styled.div`
   left: 6%;
   font-size: 1.5rem;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 `;
 
 export const RemoveRequestButton = styled.div`
@@ -29,6 +37,10 @@ export const RemoveRequestButton = styled.div`
   right: 6%;
   font-size: 1rem;
   cursor: pointer;
+
+  @media (max-width: 425px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export const StoreMain = styled.div`
@@ -48,8 +60,12 @@ export const StoreContent = styled.div`
   height: auto;
   color: black;
   font-size: 1.2rem;
-  padding: 0 6%;
+  padding: 6%;
   padding-bottom: 20px;
+
+  @media (max-width: 425px) {
+    padding: 6%;
+  }
 `;
 
 export const StoreContentHeader = styled.div`
@@ -68,17 +84,31 @@ export const StoreContentHeader = styled.div`
     border-radius: 32px;
     cursor: pointer;
   }
+
+  @media (max-width: 425px) {
+    & button {
+      padding: 5px 10px;
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const StoreContentHeaderMain = styled.div`
   font-size: 1.5rem;
   font-weight: bolder;
+
+  @media (max-width: 425px) {
+    font-size: 1rem;
+  }
 `;
 
 export const StoreContentHeaderSub = styled.div`
   margin-left: 10px;
   font-size: 1.5rem;
   font-weight: bolder;
+  @media (max-width: 425px) {
+    font-size: 1rem;
+  }
 `;
 
 export const StoreContentMain = styled.div`
@@ -91,16 +121,17 @@ export const StoreContentMain = styled.div`
 //  display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)'
 export const StoreContentReview = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   padding-bottom: 4%;
 `;
 
 export const StoreContentReviewWrap = styled.div`
-  margin-right: 10px;
+  margin-bottom: 3%;
 `;
 
 export const MyCard = styled(Card)`
   height: 170px;
+  border-radius: 15px;
 `;
 
 export const StoreContentCategory = styled.div`
@@ -109,10 +140,74 @@ export const StoreContentCategory = styled.div`
   padding: 20px;
 `;
 
-export const StoreContentCategoryHeader = styled.div``;
+export const StoreContentCategoryHeader = styled.div`
+  @media (max-width: 425px) {
+    font-size: 1rem;
+  }
+`;
 
 export const StoreContentCategoryMain = styled.div`
   font-weight: normal;
   position: absolute;
   right: 20px;
+  @media (max-width: 425px) {
+    font-size: 1rem;
+  }
+`;
+
+// 중간 막대 그래프와 form 태그 관련
+
+export const MyGraph = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  background-color: crimson;
+  border-radius: 20px;
+  padding: 5px;
+`;
+
+export const FormCategoryWrap = styled.div`
+  padding-top: 10%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`;
+
+export const FormCategoryMain = styled.div`
+  display: flex;
+  align-items: center;
+
+  & img {
+    width: 100px;
+  }
+  & span {
+    font-weight: 400;
+    font-size: 2rem;
+  }
+
+  @media (max-width: 425px) {
+    & img {
+      width: 50px;
+    }
+    & span {
+      font-weight: 400;
+      font-size: 1rem;
+    }
+  }
+`;
+
+export const FormCategorySub = styled.div``;
+
+export const CustomBtn = styled.button`
+  display: flex;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #0f4c82;
+  color: white;
+  border-radius: 32px;
+  cursor: pointer;
+
+  @media (max-width: 425px) {
+    padding: 5px 10px;
+    font-size: 1rem;
+  }
 `;
