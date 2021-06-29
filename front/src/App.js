@@ -25,7 +25,7 @@ function App() {
         <AppLayout>
           <Global styles={reset} />
           <Route path="/" exact component={Main} />
-          <Route path="/store/:title" component={Store} />
+          <Route path="/store/:title/:id" component={Store} />
           <Route path="/categories" exact component={Categories} />
           <Route path="/categories/category/:name" component={Category} />
           <Route path="/apply" component={Apply} />

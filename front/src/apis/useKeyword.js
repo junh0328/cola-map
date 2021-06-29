@@ -62,9 +62,9 @@ export function useKeyword(searchValue) {
     });
 
     kakao.maps.event.addListener(marker, 'click', () => {
-      if (place.place_name) {
+      if (place.place_name && place.id) {
         console.log('place_name:', place.place_name);
-        return (location.href = `store/${place.place_name}`);
+        return (location.href = `store/${place.place_name}/${place.id}`);
       } else {
         console.log('이동 불가능한 마커입니다 \nmaker:', marker);
       }
