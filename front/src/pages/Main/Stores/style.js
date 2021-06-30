@@ -185,9 +185,16 @@ export const StoreContentCategoryMain = styled.div`
 export const MyGraph = styled.div`
   width: 80%;
   margin: 0 auto;
-  background-color: crimson;
+  background-color: #ffcdd2;
   border-radius: 20px;
-  padding: 5px;
+`;
+
+// width를 props로 전달받음
+export const InnerGraph = styled.div`
+  background: #bbdefb;
+  width: ${(props) => props.width}%;
+  padding: 8px;
+  border-radius: 20px;
 `;
 
 export const FormCategoryWrap = styled.div`

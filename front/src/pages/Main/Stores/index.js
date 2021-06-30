@@ -9,6 +9,7 @@ import {
   CustomBtn,
   FormCategoryMain,
   FormCategoryWrap,
+  InnerGraph,
   MyCard,
   MyGraph,
   RemoveRequestButton,
@@ -43,6 +44,8 @@ const Store = () => {
   const [storeInfo, setStoreInfo] = useState(true);
   // 카테고리 관리
   const [inputStatus, setInputStatus] = useState('');
+  // 카테고리 비율
+  const [categoryRate, setCategoryRate] = useState(100);
 
   // 해당 가게에 대한 리뷰 리스트
   const reviewList = [
@@ -84,6 +87,34 @@ const Store = () => {
   useEffect(() => {
     dispatch(getLocation());
     useKeyword(title);
+  }, []);
+
+  // 카테고리 비율을 계산할 함수 calCategory() 실행 후 결과 값을 CategoryRate state에 담고 props로 전달
+  useEffect(() => {
+    const categoryResult = calCategory(reviewList);
+    // console.log(categoryResult);
+    setCategoryRate(categoryResult);
+  }, [reviewList]);
+
+  const calCategory = useCallback((reviewList) => {
+    // 펩시 개수, 콜라 개수
+    let pepsiArr = [];
+    let cocaArr = [];
+    let result;
+
+    reviewList.map((r) => {
+      // console.log(r.id, r.category);
+      if (r.category === '펩시') {
+        pepsiArr.push(r.category);
+      } else if (r.category === '코카콜라') {
+        cocaArr.push(r.category);
+      }
+    });
+
+    // console.log('pepsiArr :', pepsiArr, pepsiArr.length);
+    // console.log('cocaArr :', cocaArr, cocaArr.length);
+    // console.log('result: ', result);
+    return (result = Math.floor((pepsiArr.length / reviewList.length) * 100));
   }, []);
 
   const handleClickRadioButton = useCallback((radioBtnName) => {
@@ -132,6 +163,7 @@ const Store = () => {
       </CategoryHeader>
       <StoreMain>
         <StoreMap id="Map" />
+        {/* 가게 정보 관련 */}
         <StoreContent>
           <StoreContentHeader>
             <StoreContentHeaderMain>가게 정보</StoreContentHeaderMain>
@@ -148,9 +180,12 @@ const Store = () => {
             </StoreContentCategory>
           </StoreContentMain>
         </StoreContent>
+        {/* 리뷰 작성하기 관련 */}
         <StoreContent>
           <form onSubmit={onSubmitForm}>
-            <MyGraph />
+            <MyGraph>
+              <InnerGraph width={categoryRate} />
+            </MyGraph>
             <FormCategoryWrap>
               <FormCategoryMain>
                 <input
@@ -161,13 +196,13 @@ const Store = () => {
                   onClick={() => handleClickRadioButton('pepsi')}
                 />
                 <img src={pepsi} />
-                <span>98%</span>
+                <span>{categoryRate}%</span>
               </FormCategoryMain>
               <FormCategoryMain>
                 <span>VS</span>
               </FormCategoryMain>
               <FormCategoryMain>
-                <span>2%</span>
+                <span>{100 - categoryRate}%</span>
                 <img src={coca} />
                 <input
                   type="radio"
@@ -186,6 +221,7 @@ const Store = () => {
             </div>
           </form>
         </StoreContent>
+        {/* 리뷰 리스트 관련 */}
         <StoreContent>
           <StoreContentHeader>
             <StoreContentHeaderMain>리뷰 </StoreContentHeaderMain>
