@@ -132,6 +132,31 @@ export const StoreContentReviewWrap = styled.div`
 export const MyCard = styled(Card)`
   height: 170px;
   border-radius: 15px;
+  background: white;
+  background-color: ${(props) => props.category === '펩시' && '#e1f5fe'};
+  background-color: ${(props) => props.category === '코카콜라' && '#fce4ec'};
+  display: grid;
+  position: relative;
+
+  & p {
+    display: flex;
+    align-items: center;
+    width: 70%;
+  }
+
+  & img {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 90px;
+  }
+
+  @media (max-width: 425px) {
+    & img {
+      bottom: 10%;
+      width: 20%;
+    }
+  }
 `;
 
 export const StoreContentCategory = styled.div`

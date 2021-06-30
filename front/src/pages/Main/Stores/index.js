@@ -44,6 +44,38 @@ const Store = () => {
   // 카테고리 관리
   const [inputStatus, setInputStatus] = useState('');
 
+  // 해당 가게에 대한 리뷰 리스트
+  const reviewList = [
+    {
+      id: 1,
+      storeName: '헤반트 범계점',
+      userName: '윤성님',
+      comment: '존맛탱 가게입니다 추천해요',
+      category: '펩시',
+    },
+    {
+      id: 2,
+      storeName: '헤반트 범계점',
+      userName: '도해님',
+      comment: '튀김이 바삭바삭해용.튀김이 바삭바삭해용',
+      category: '코카콜라',
+    },
+    {
+      id: 3,
+      storeName: '헤반트 범계점',
+      userName: '진수님',
+      comment: '여긴 왜 제로콜라 없나요?',
+      category: '펩시',
+    },
+    {
+      id: 4,
+      storeName: '헤반트 범계점',
+      userName: '준희님',
+      comment: '펩시 제로 라임맛 최고',
+      category: '펩시',
+    },
+  ];
+
   const { title, id } = useParams();
   const history = useHistory();
   const commentRef = useRef();
@@ -157,25 +189,20 @@ const Store = () => {
         <StoreContent>
           <StoreContentHeader>
             <StoreContentHeaderMain>리뷰 </StoreContentHeaderMain>
-            <StoreContentHeaderSub>{storeReview.length ? <span>3개</span> : <span>0개</span>}</StoreContentHeaderSub>
+            <StoreContentHeaderSub>
+              {reviewList.length ? <span>{reviewList.length}개</span> : <span>0개</span>}
+            </StoreContentHeaderSub>
           </StoreContentHeader>
           {storeReview.length ? (
             <StoreContentReview>
-              <StoreContentReviewWrap>
-                <MyCard title="윤성님" bordered={false}>
-                  <p>존맛탱 가게입니다 추천해요</p>
-                </MyCard>
-              </StoreContentReviewWrap>
-              <StoreContentReviewWrap>
-                <MyCard title="도해님" bordered={false}>
-                  <p>튀김이 바삭바삭해용</p>
-                </MyCard>
-              </StoreContentReviewWrap>
-              <StoreContentReviewWrap>
-                <MyCard title="진수님" bordered={false}>
-                  <p>여긴 왜 제로콜라 없나요?</p>
-                </MyCard>
-              </StoreContentReviewWrap>
+              {reviewList.map((review) => (
+                <StoreContentReviewWrap key={review.id}>
+                  <MyCard title={review.userName} bordered={false} category={review.category.toString()}>
+                    <p>{review.comment}</p>
+                    <p>{review.category === '펩시' ? <img src={pepsi} /> : <img src={coca} />}</p>
+                  </MyCard>
+                </StoreContentReviewWrap>
+              ))}
             </StoreContentReview>
           ) : (
             <Skeleton></Skeleton>
