@@ -22,27 +22,10 @@ export default function Main() {
     },
     {
       id: 2,
-      title: '내손 의왕 메가커피',
+      title: '메가커피 의왕내손점',
       latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
       img: coca,
-    },
-    {
-      id: 3,
-      title: '평촌동 두산벤쳐다임',
-      latlng: new kakao.maps.LatLng(37.39124205567942, 126.97296865595483),
-      img: pepsi,
-    },
-    {
-      id: 4,
-      title: '내손 의왕 스타벅스',
-      latlng: new kakao.maps.LatLng(37.38903279939199, 126.97623476944985),
-      img: coca,
-    },
-    {
-      id: 5,
-      title: '범계 베스킨라빈스',
-      latlng: new kakao.maps.LatLng(37.39050367826452, 126.95222998928415),
-      img: coca,
+      storeId: 940929140,
     },
   ];
 
@@ -71,7 +54,7 @@ export default function Main() {
                 </SlideImgWrapper>
                 {/* 내 위치가 1이 아닐 때만 NavLink로 이동 가능하도록 조건문을 줌 */}
                 {item.id !== 1 ? (
-                  <NavLink key={item.id} to={`/store/${item.title}`} style={{ color: 'white' }}>
+                  <NavLink key={item.id} to={`/store/${item.title}/${item.storeId}`} style={{ color: 'white' }}>
                     {' '}
                     <SlideName>{item.title}</SlideName>
                   </NavLink>
