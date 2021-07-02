@@ -60,10 +60,9 @@ export function useGetMyLoc() {
 
       kakao.maps.event.addListener(marker, 'click', () => {
         console.log('maker:', marker);
-        console.log('marker.Fb:', marker.Fb);
-        if (marker.Fb !== '내 위치') {
-          return (location.href = `/store/${marker.Fb}`);
-        }
+        // if (marker.Fb !== '내 위치') {
+        //   return (location.href = `/store/${marker.Fb}`);
+        // }
       });
     }
   }
@@ -80,24 +79,7 @@ export function useGetMyLoc() {
       title: '메가커피 의왕내손점',
       latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
       img: coca,
-    },
-    {
-      id: 3,
-      title: '평촌동 두산벤쳐다임',
-      latlng: new kakao.maps.LatLng(37.39124205567942, 126.97296865595483),
-      img: pepsi,
-    },
-    {
-      id: 4,
-      title: '내손 의왕 스타벅스',
-      latlng: new kakao.maps.LatLng(37.38903279939199, 126.97623476944985),
-      img: coca,
-    },
-    {
-      id: 5,
-      title: '배스킨라빈스 평촌범계2점',
-      latlng: new kakao.maps.LatLng(37.39050367826452, 126.95222998928415),
-      img: coca,
+      storeId: 940929140,
     },
   ];
   return { map };

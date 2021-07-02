@@ -30,6 +30,7 @@ import { useKeyword } from 'apis/useKeyword';
 import { Card, Skeleton } from 'antd';
 import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
+import StoreModal from 'components/StoreModal';
 
 const Store = () => {
   /*
@@ -46,6 +47,8 @@ const Store = () => {
   const [inputStatus, setInputStatus] = useState('');
   // 카테고리 비율
   const [categoryRate, setCategoryRate] = useState(100);
+  // 모달 요청
+  const [onModal, setOnModal] = useState(false);
 
   // 해당 가게에 대한 리뷰 리스트
   const reviewList = [
@@ -77,6 +80,13 @@ const Store = () => {
       comment: '펩시 제로 라임맛 최고',
       category: '펩시',
     },
+    {
+      id: 5,
+      storeName: '헤반트 범계점',
+      userName: '준희님',
+      comment: '펩시 제로 라임맛 최고',
+      category: '코카콜라',
+    },
   ];
 
   const { title, id } = useParams();
@@ -100,7 +110,6 @@ const Store = () => {
     // 펩시 개수, 콜라 개수
     let pepsiArr = [];
     let cocaArr = [];
-    let result;
 
     reviewList.map((r) => {
       // console.log(r.id, r.category);
@@ -114,7 +123,7 @@ const Store = () => {
     // console.log('pepsiArr :', pepsiArr, pepsiArr.length);
     // console.log('cocaArr :', cocaArr, cocaArr.length);
     // console.log('result: ', result);
-    return (result = Math.floor((pepsiArr.length / reviewList.length) * 100));
+    return Math.floor((pepsiArr.length / reviewList.length) * 100);
   }, []);
 
   const handleClickRadioButton = useCallback((radioBtnName) => {
@@ -142,110 +151,111 @@ const Store = () => {
     alert('clicked!');
   }, []);
 
+  const onClickModal = useCallback(() => {
+    setOnModal((prev) => !prev);
+  }, []);
+
+  const onCloseModal = useCallback(() => {
+    setOnModal(false);
+  });
+
   const goToCategories = useCallback(() => {
     return history.go(-1);
   }, [inputStatus]);
 
   return (
-    <div>
-      <CategoryHeader>
-        <CloseModalButton onClick={goToCategories}>
-          <LeftOutlined />
-        </CloseModalButton>
-        <span>{title}</span>
-        {storeInfo ? (
-          <RemoveRequestButton onClick={() => alert('삭제요청을 보내시겠습니까?')}>삭제요청</RemoveRequestButton>
-        ) : (
-          <RemoveRequestButton onClick={() => alert('해당 페이지에 대해 제보하시겠습니까?')}>
-            제보요청
-          </RemoveRequestButton>
-        )}
-      </CategoryHeader>
-      <StoreMain>
-        <StoreMap id="Map" />
-        {/* 가게 정보 관련 */}
-        <StoreContent>
-          <StoreContentHeader>
-            <StoreContentHeaderMain>가게 정보</StoreContentHeaderMain>
-            <CustomBtn onClick={() => onClickEvent()}>정보수정</CustomBtn>
-          </StoreContentHeader>
-          <StoreContentMain>
-            <StoreContentCategory>
-              <StoreContentCategoryHeader>음료 정보</StoreContentCategoryHeader>
-              <StoreContentCategoryMain>펩시</StoreContentCategoryMain>
-            </StoreContentCategory>
-            <StoreContentCategory>
-              <StoreContentCategoryHeader>전화번호</StoreContentCategoryHeader>
-              <StoreContentCategoryMain>070-5252-8282</StoreContentCategoryMain>
-            </StoreContentCategory>
-          </StoreContentMain>
-        </StoreContent>
-        {/* 리뷰 작성하기 관련 */}
-        <StoreContent>
-          <form onSubmit={onSubmitForm}>
-            <MyGraph>
-              <InnerGraph width={categoryRate} />
-            </MyGraph>
-            <FormCategoryWrap>
-              <FormCategoryMain>
-                <input
-                  type="radio"
-                  name="category"
-                  value="pepsi"
-                  defaultChecked={inputStatus === 'pepsi'}
-                  onClick={() => handleClickRadioButton('pepsi')}
-                />
-                <img src={pepsi} />
-                <span>{categoryRate}%</span>
-              </FormCategoryMain>
-              <FormCategoryMain>
-                <span>VS</span>
-              </FormCategoryMain>
-              <FormCategoryMain>
-                <span>{100 - categoryRate}%</span>
-                <img src={coca} />
-                <input
-                  type="radio"
-                  name="category"
-                  value="coca"
-                  defaultChecked={inputStatus === 'coca'}
-                  onClick={() => handleClickRadioButton('coca')}
-                />
-              </FormCategoryMain>
-            </FormCategoryWrap>
-            <div>
-              <MyCard title="홍길동" style={{ margin: '6% 0' }}>
-                <input ref={commentRef} style={{ padding: 10, width: '100%', border: 'none', outline: 'none' }} />
-              </MyCard>
-              <CustomBtn>리뷰쓰기</CustomBtn>
-            </div>
-          </form>
-        </StoreContent>
-        {/* 리뷰 리스트 관련 */}
-        <StoreContent>
-          <StoreContentHeader>
-            <StoreContentHeaderMain>리뷰 </StoreContentHeaderMain>
-            <StoreContentHeaderSub>
-              {reviewList.length ? <span>{reviewList.length}개</span> : <span>0개</span>}
-            </StoreContentHeaderSub>
-          </StoreContentHeader>
-          {storeReview.length ? (
-            <StoreContentReview>
-              {reviewList.map((review) => (
-                <StoreContentReviewWrap key={review.id}>
-                  <MyCard title={review.userName} bordered={false} category={review.category.toString()}>
-                    <p>{review.comment}</p>
-                    <p>{review.category === '펩시' ? <img src={pepsi} /> : <img src={coca} />}</p>
-                  </MyCard>
-                </StoreContentReviewWrap>
-              ))}
-            </StoreContentReview>
-          ) : (
-            <Skeleton></Skeleton>
-          )}
-        </StoreContent>
-      </StoreMain>
-    </div>
+    <>
+      <div>
+        <CategoryHeader>
+          <CloseModalButton onClick={goToCategories}>
+            <LeftOutlined />
+          </CloseModalButton>
+          <span>{title}</span>
+          {storeInfo && <RemoveRequestButton onClick={onClickModal}>삭제요청</RemoveRequestButton>}
+        </CategoryHeader>
+        <StoreMain>
+          <StoreMap id="Map" />
+          {/* 가게 정보 관련 */}
+          <StoreContent>
+            <StoreContentHeader>
+              <StoreContentHeaderMain>가게 정보</StoreContentHeaderMain>
+            </StoreContentHeader>
+            <StoreContentMain>
+              <StoreContentCategory>
+                <StoreContentCategoryHeader>
+                  <span>{title}</span>의 최애 음료수는?
+                </StoreContentCategoryHeader>
+              </StoreContentCategory>
+            </StoreContentMain>
+          </StoreContent>
+          {/* 리뷰 작성하기 관련 */}
+          <StoreContent>
+            <form onSubmit={onSubmitForm}>
+              <MyGraph>
+                <InnerGraph width={categoryRate} />
+              </MyGraph>
+              <FormCategoryWrap>
+                <FormCategoryMain>
+                  <input
+                    type="radio"
+                    name="category"
+                    value="pepsi"
+                    defaultChecked={inputStatus === 'pepsi'}
+                    onClick={() => handleClickRadioButton('pepsi')}
+                  />
+                  <img src={pepsi} />
+                  <span>{categoryRate}%</span>
+                </FormCategoryMain>
+                <FormCategoryMain>
+                  <span>VS</span>
+                </FormCategoryMain>
+                <FormCategoryMain>
+                  <span>{100 - categoryRate}%</span>
+                  <img src={coca} />
+                  <input
+                    type="radio"
+                    name="category"
+                    value="coca"
+                    defaultChecked={inputStatus === 'coca'}
+                    onClick={() => handleClickRadioButton('coca')}
+                  />
+                </FormCategoryMain>
+              </FormCategoryWrap>
+              <div>
+                <MyCard title="이준희" style={{ margin: '6% 0' }}>
+                  <input ref={commentRef} style={{ padding: 10, width: '100%', border: 'none', outline: 'none' }} />
+                </MyCard>
+                <CustomBtn>리뷰쓰기</CustomBtn>
+              </div>
+            </form>
+          </StoreContent>
+          {/* 리뷰 리스트 관련 */}
+          <StoreContent>
+            <StoreContentHeader>
+              <StoreContentHeaderMain>리뷰 </StoreContentHeaderMain>
+              <StoreContentHeaderSub>
+                {reviewList.length ? <span>{reviewList.length}개</span> : <span>0개</span>}
+              </StoreContentHeaderSub>
+            </StoreContentHeader>
+            {storeReview.length ? (
+              <StoreContentReview>
+                {reviewList.map((review) => (
+                  <StoreContentReviewWrap key={review.id}>
+                    <MyCard title={review.userName} bordered={false} category={review.category.toString()}>
+                      <p>{review.comment}</p>
+                      <p>{review.category === '펩시' ? <img src={pepsi} /> : <img src={coca} />}</p>
+                    </MyCard>
+                  </StoreContentReviewWrap>
+                ))}
+              </StoreContentReview>
+            ) : (
+              <Skeleton></Skeleton>
+            )}
+          </StoreContent>
+        </StoreMain>
+      </div>
+      {onModal && <StoreModal onClose={onCloseModal} />}
+    </>
   );
 };
 

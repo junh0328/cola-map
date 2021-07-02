@@ -30,7 +30,7 @@ export function useKeyword(searchValue) {
         displayMarker(data[i]);
         bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         // 데이터 결과물을 확인하기 위한 로그
-        // console.log('useKeyword, 내부 결과 출력:', data[0]);
+        console.log('useKeyword, 내부 결과 출력:', data[0]);
       }
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.setBounds(bounds);

@@ -162,10 +162,17 @@ export const MyCard = styled(Card)`
 export const StoreContentCategory = styled.div`
   position: relative;
   display: flex;
+  justify-content: center;
   padding: 20px;
 `;
 
 export const StoreContentCategoryHeader = styled.div`
+  display: flex;
+  font-weight: normal;
+
+  & span {
+    font-weight: bolder;
+  }
   @media (max-width: 425px) {
     font-size: 1rem;
   }
@@ -198,7 +205,7 @@ export const InnerGraph = styled.div`
 `;
 
 export const FormCategoryWrap = styled.div`
-  padding-top: 10%;
+  padding-top: 6%;
   display: flex;
   justify-content: space-around;
   align-items: center;
