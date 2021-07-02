@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { MapWrapper, MySlider, SlideImgWrapper, SlideMainWrapper, SlideName, SlideWrapper } from './style';
+import { MySlider, SlideImgWrapper, SlideMainWrapper, SlideName, SlideWrapper } from './style';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import AimButton from 'components/AimButtonn';
@@ -9,16 +8,11 @@ import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import ApplyButton from 'components/ApplyButton';
 
 export default function Main() {
   // 검색 결과를 담을 initialState
-  const { searchAddress } = useSelector((state) => state.map);
-
-  useEffect(() => {
-    if (searchAddress) {
-      console.log('searchAddress: ', searchAddress);
-    }
-  }, [searchAddress]);
+  const { searchAddress, serachAddressDone } = useSelector((state) => state.map);
 
   const positions = [
     {
@@ -49,12 +43,13 @@ export default function Main() {
     <>
       <Map />
       <SearchInput />
+      {serachAddressDone && <ApplyButton data={searchAddress} />}
       <AimButton />
       <SlideWrapper>
         <MySlider {...settings} style={{ height: '100%' }}>
           {positions.map((item) => {
             return (
-              <SlideMainWrapper key={item.id} onClick={() => selectInfo(item.id, item.title)}>
+              <SlideMainWrapper key={item.id}>
                 <SlideImgWrapper>
                   <img src={item.img} />
                 </SlideImgWrapper>
