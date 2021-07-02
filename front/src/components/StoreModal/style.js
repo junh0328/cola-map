@@ -56,16 +56,25 @@ export const StoreModalHeaderSub = styled.div`
 
 export const FormContentWrap = styled.div`
   width: 100%;
+`;
 
-  & button {
-    cursor: pointer;
-    display: block;
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid gray;
-    border-radius: 20px;
-    background: white;
+// 컴포넌트로 만들 상태여만 props가 전달된다.
+export const MyBtn = styled.input`
+  cursor: pointer;
+  margin: 0 auto;
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid gray;
+  border-radius: 20px;
+  background: white;
+  outline: none;
+  font-size: 1rem;
+
+  &:focus {
+    background-color: #0f4c82;
+    color: white;
   }
 `;
 
@@ -78,18 +87,11 @@ export const FormApplyWrap = styled.div`
     padding: 15px;
     border: none;
     border-radius: 20px;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: #0f4c82;
+      color: white;
+    }
   }
 `;
-
-// style={{ marginTop: 10 }}
-/**
- * 
- *            style={{
-                  cursor: 'pointer',
-                  display: 'block',
-                  width: '100%',
-                  padding: 15,
-                  border: 'none',
-                  borderRadius: '20px',
-                }}
- */

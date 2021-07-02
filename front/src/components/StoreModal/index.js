@@ -1,8 +1,9 @@
 import { CloseOutlined } from '@ant-design/icons';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   FormApplyWrap,
   FormContentWrap,
+  MyBtn,
   StoreModalBackground,
   StoreModalHeader,
   StoreModalHeaderBtn,
@@ -14,6 +15,7 @@ import {
 
 const StoreModal = (props) => {
   const { onClose } = props;
+  const [report, setReport] = useState('');
   const BtnStyle = useMemo(
     () => ({
       cursor: 'pointer',
@@ -25,9 +27,22 @@ const StoreModal = (props) => {
     [],
   );
 
-  const onClick = useCallback((e) => {
-    e.preventDefault();
+  useEffect(() => {
+    console.log('report: ', report);
+  }, [report]);
+
+  const handleClickButton = useCallback((value) => {
+    setReport(value);
   }, []);
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      alert(`report: ${report}`);
+      onClose();
+    },
+    [report],
+  );
 
   return (
     <StoreModalBackground>
@@ -40,14 +55,22 @@ const StoreModal = (props) => {
             <StoreModalHeaderMain>삭제요청 하시는 이유가 궁금해요!</StoreModalHeaderMain>
             <StoreModalHeaderSub> 3건 이상의 요청이 들어오면 자동 삭제됩니다.</StoreModalHeaderSub>
           </StoreModalHeader>
-          <form>
+          <form onSubmit={onSubmit}>
             <FormContentWrap>
-              <button onClick={onClick}>없어진 가게에요.</button>
-              <button onClick={onClick}>부적절한 내용이 있어요.</button>
-              <button onClick={onClick}>중복 제보된 가게에요.</button>
+              <MyBtn onClick={() => handleClickButton('없어진 가게에요')} readOnly value="없어진 가게에요"></MyBtn>
+              <MyBtn
+                onClick={() => handleClickButton('부적절한 내용이 있어요')}
+                readOnly
+                value="부적절한 내용이 있어요"
+              ></MyBtn>
+              <MyBtn
+                onClick={() => handleClickButton('중복 제보된 가게에요')}
+                readOnly
+                value="중복 제보된 가게에요"
+              ></MyBtn>
             </FormContentWrap>
             <FormApplyWrap>
-              <button onClick={onClick}>신고하기</button>
+              <button>신고하기</button>
             </FormApplyWrap>
           </form>
         </StoreModalMain>
