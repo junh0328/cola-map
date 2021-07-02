@@ -4,12 +4,19 @@ export const initialState = {
   // map에 대한 상태 관리를 할 객체, maskMap
   colaMap: null,
   userAddress: {},
+  searchAddress: {},
+
   fetchMapLoading: false,
   fetchMapDone: false,
   fetchMapError: null,
+
   getLocationLoading: false,
   getLocationDone: false,
   getLocationError: null,
+
+  serachAddressLoading: false,
+  serachAddressDone: false,
+  serachAddressError: null,
 };
 export const RESET_MAP_STATE = 'RESET_MAP_STATE';
 export const FETCH_MAP_REQUEST = 'FETCH_MAP_REQUEST';
@@ -23,6 +30,10 @@ export const GET_LOCATION_FAILURE = 'GET_LOCATION_FAILURE';
 export const SET_ADDRESS_REQEUST = 'SET_ADDRESS_REQEUST';
 export const SET_ADDRESS_SUCCESS = 'SET_ADDRESS_SUCCESS';
 export const SET_ADDRESS_FAILURE = 'SET_ADDRESS_FAILURE';
+
+export const SEARCH_ADDRESS_REQUEST = 'SEARCH_ADDRESS_REQUEST';
+export const SEARCH_ADDRESS_SUCCESS = 'SEARCH_ADDRESS_SUCCESS';
+export const SEARCH_ADDRESS_FAILURE = 'SEARCH_ADDRESS_FAILURE';
 
 export const fetchMap = () => {
   return {
@@ -41,6 +52,13 @@ export const setAddress = (address, status) => {
     type: SET_ADDRESS_REQEUST,
     address,
     status,
+  };
+};
+
+export const searchAddress = (data) => {
+  return {
+    type: SEARCH_ADDRESS_REQUEST,
+    data,
   };
 };
 
@@ -84,6 +102,22 @@ const map = (state = initialState, action) =>
         break;
       }
       case SET_ADDRESS_FAILURE: {
+        break;
+      }
+      case SEARCH_ADDRESS_REQUEST: {
+        draft.serachAddressLoading = true;
+        draft.serachAddressDone = false;
+        break;
+      }
+      case SEARCH_ADDRESS_SUCCESS: {
+        draft.serachAddressLoading = false;
+        draft.serachAddressDone = true;
+        draft.searchAddress = action.data;
+        break;
+      }
+      case SEARCH_ADDRESS_FAILURE: {
+        draft.serachAddressLoading = false;
+        draft.searchAddressError = action.error;
         break;
       }
       default:

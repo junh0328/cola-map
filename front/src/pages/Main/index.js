@@ -8,11 +8,17 @@ import Map from 'components/Map';
 import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function Main() {
-  const selectInfo = useCallback((id, title) => {
-    // console.log(`${title}의 id는 ${id}입니다`);
-  }, []);
+  // 검색 결과를 담을 initialState
+  const { searchAddress } = useSelector((state) => state.map);
+
+  useEffect(() => {
+    if (searchAddress) {
+      console.log('searchAddress: ', searchAddress);
+    }
+  }, [searchAddress]);
 
   const positions = [
     {
@@ -55,7 +61,6 @@ export default function Main() {
                 {/* 내 위치가 1이 아닐 때만 NavLink로 이동 가능하도록 조건문을 줌 */}
                 {item.id !== 1 ? (
                   <NavLink key={item.id} to={`/store/${item.title}/${item.storeId}`} style={{ color: 'white' }}>
-                    {' '}
                     <SlideName>{item.title}</SlideName>
                   </NavLink>
                 ) : (
