@@ -14,7 +14,7 @@ import {
 } from './style';
 
 const StoreModal = (props) => {
-  const { onClose } = props;
+  const { onClose, title, id } = props;
   const [report, setReport] = useState('');
   const BtnStyle = useMemo(
     () => ({
@@ -38,7 +38,7 @@ const StoreModal = (props) => {
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      alert(`report: ${report}`);
+      alert(`report: \n가게 명: ${title}, \n가게 아이디: ${id}, \n신고 내용: ${report}`);
       onClose();
     },
     [report],

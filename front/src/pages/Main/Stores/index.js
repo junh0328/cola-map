@@ -254,7 +254,7 @@ const Store = () => {
           </StoreContent>
         </StoreMain>
       </div>
-      {onModal && <StoreModal onClose={onCloseModal} />}
+      {onModal && <StoreModal title={title} id={id} onClose={onCloseModal} />}
     </>
   );
 };
