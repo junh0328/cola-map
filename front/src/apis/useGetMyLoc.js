@@ -74,13 +74,13 @@ export function useGetMyLoc() {
       title: '내 위치',
       latlng: null,
     },
-    {
-      id: 2,
-      title: '메가커피 의왕내손점',
-      latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
-      img: coca,
-      storeId: 940929140,
-    },
+    // {
+    //   id: 2,
+    //   title: '메가커피 의왕내손점',
+    //   latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
+    //   img: coca,
+    //   storeId: 940929140,
+    // },
   ];
   return { map };
 }
