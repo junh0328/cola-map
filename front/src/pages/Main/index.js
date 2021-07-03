@@ -15,18 +15,18 @@ export default function Main() {
   const { searchAddress, serachAddressDone } = useSelector((state) => state.map);
 
   const positions = [
-    {
-      id: 1,
-      title: '내 위치',
-      latlng: null,
-    },
-    {
-      id: 2,
-      title: '메가커피 의왕내손점',
-      latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
-      img: coca,
-      storeId: 940929140,
-    },
+    //   {
+    //     id: 1,
+    //     title: '내 위치',
+    //     latlng: null,
+    //   },
+    //   {
+    //     id: 2,
+    //     title: '메가커피 의왕내손점',
+    //     latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
+    //     img: coca,
+    //     storeId: 940929140,
+    //   },
   ];
 
   const settings = {
@@ -45,27 +45,31 @@ export default function Main() {
       <SearchInput />
       {serachAddressDone && <ApplyButton data={searchAddress} />}
       <AimButton />
-      <SlideWrapper>
-        <MySlider {...settings} style={{ height: '100%' }}>
-          {positions.map((item) => {
-            return (
-              <SlideMainWrapper key={item.id}>
-                <SlideImgWrapper>
-                  <img src={item.img} />
-                </SlideImgWrapper>
-                {/* 내 위치가 1이 아닐 때만 NavLink로 이동 가능하도록 조건문을 줌 */}
-                {item.id !== 1 ? (
-                  <NavLink key={item.id} to={`/store/${item.title}/${item.storeId}`} style={{ color: 'white' }}>
+      {positions.length ? (
+        <SlideWrapper>
+          <MySlider {...settings} style={{ height: '100%' }}>
+            {positions.map((item) => {
+              return (
+                <SlideMainWrapper key={item.id}>
+                  <SlideImgWrapper>
+                    <img src={item.img} />
+                  </SlideImgWrapper>
+                  {/* 내 위치가 1이 아닐 때만 NavLink로 이동 가능하도록 조건문을 줌 */}
+                  {item.id !== 1 ? (
+                    <NavLink key={item.id} to={`/store/${item.title}/${item.storeId}`} style={{ color: 'white' }}>
+                      <SlideName>{item.title}</SlideName>
+                    </NavLink>
+                  ) : (
                     <SlideName>{item.title}</SlideName>
-                  </NavLink>
-                ) : (
-                  <SlideName>{item.title}</SlideName>
-                )}
-              </SlideMainWrapper>
-            );
-          })}
-        </MySlider>
-      </SlideWrapper>
+                  )}
+                </SlideMainWrapper>
+              );
+            })}
+          </MySlider>
+        </SlideWrapper>
+      ) : (
+        <></>
+      )}
     </>
   );
 }
