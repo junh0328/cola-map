@@ -16,7 +16,7 @@ const auth = async (req, res, next) => {
     next();
 
   } catch (e) {
-    next();
+    return res.status(500).send('로그인 해주세요')
   }
 }
 

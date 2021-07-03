@@ -1,24 +1,24 @@
 const express = require('express');
 const User = require('../models/user');
-const router = express.Router();
+const userRouter = express.Router();
 const auth = require('../middleware/auth')
 
-router.post('/user/login', async (req, res) => {
+userRouter.post('/login', async (req, res) => {
   try {
     const uniqId = req.query.uniqId
-  
-    const user = await User.find({uniq_id: uniqId})
-    if(!user) {
+
+    let user = await User.findOne({ uniqId: uniqId })
+    if (!user) {
       const userObject = new User({
-        uniq_id: uniqId,
+        uniqId: uniqId,
         nickname: req.query.nickname
       })
-      await userObject.save()
+      user = await userObject.save()
     }
     const token = await user.generateAuthToken()
     res.send({ token: token })
   } catch (e) {
-    res.status(500).send({message: e.message});
+    res.status(500).send({ message: e.message });
   }
 })
 
@@ -36,4 +36,4 @@ router.post('/user/login', async (req, res) => {
 // })
 
 
-module.exports = router;
+module.exports = userRouter;
