@@ -30,7 +30,7 @@ export function useKeyword(searchValue) {
         displayMarker(data[i]);
         bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
         // 데이터 결과물을 확인하기 위한 로그
-        console.log('useKeyword, 내부 결과 출력:', data[0]);
+        // console.log('useKeyword, 내부 결과 출력:', data[0]);
       }
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
       map.setBounds(bounds);
@@ -47,7 +47,7 @@ export function useKeyword(searchValue) {
       position: new kakao.maps.LatLng(place.y, place.x),
     });
 
-    console.log('useKeyword, marker 출력: ', marker);
+    // console.log('useKeyword, marker 출력: ', marker);
 
     // 마커에 클릭이벤트를 등록합니다
     kakao.maps.event.addListener(marker, 'click', function () {
@@ -62,9 +62,9 @@ export function useKeyword(searchValue) {
     });
 
     kakao.maps.event.addListener(marker, 'click', () => {
-      if (place.place_name) {
+      if (place.place_name && place.id) {
         console.log('place_name:', place.place_name);
-        return (location.href = `store/${place.place_name}`);
+        return (location.href = `store/${place.place_name}/${place.id}`);
       } else {
         console.log('이동 불가능한 마커입니다 \nmaker:', marker);
       }

@@ -1,3 +1,4 @@
+import { getSearchData } from 'apis/useGetSearchData';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import useFetchingMap from '../apis/useFetchingMap';
 import { useGetMyLoc } from '../apis/useGetMyLoc';
@@ -11,6 +12,9 @@ import {
   SET_ADDRESS_REQEUST,
   SET_ADDRESS_SUCCESS,
   SET_ADDRESS_FAILURE,
+  SEARCH_ADDRESS_REQUEST,
+  SEARCH_ADDRESS_SUCCESS,
+  SEARCH_ADDRESS_FAILURE,
 } from '../reducers/map';
 
 async function useFetchingMapAPI() {
@@ -75,6 +79,35 @@ function* setAddress(param) {
   }
 }
 
+async function searchAddressAPI(data) {
+  try {
+    // console.log('검색 직전 데이터: ', data);
+    const result = await getSearchData(data);
+    // console.log('키워드 돌고 나옴: ', result[0]);
+    return result[0];
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function* searchAddress(action) {
+  try {
+    // console.log('searchAddress 액션: ', action);
+    const data = yield call(searchAddressAPI, action.data);
+    // console.log('saga data 출력: ', data);
+    yield put({
+      type: SEARCH_ADDRESS_SUCCESS,
+      data: data,
+    });
+  } catch (err) {
+    console.log(err);
+    yield put({
+      type: SEARCH_ADDRESS_FAILURE,
+      error: err.response,
+    });
+  }
+}
+
 function* watchFetchMap() {
   yield takeLatest(FETCH_MAP_REQUEST, fetchMap);
 }
@@ -87,6 +120,10 @@ function* watchSetAddress() {
   yield takeLatest(SET_ADDRESS_REQEUST, setAddress);
 }
 
+function* watchSearchAddress() {
+  yield takeLatest(SEARCH_ADDRESS_REQUEST, searchAddress);
+}
+
 export default function* mapSaga() {
-  yield all([fork(watchFetchMap), fork(watchGetLocation), fork(watchSetAddress)]);
+  yield all([fork(watchFetchMap), fork(watchGetLocation), fork(watchSetAddress), fork(watchSearchAddress)]);
 }
