@@ -54,7 +54,6 @@ export default function Map() {
       'FD6', // https://apis.map.kakao.com/web/documentation/#CategoryCode
       function (result, status) {
         // callback
-        console.log(result);
         setStores(result);
       },
       {
@@ -68,13 +67,17 @@ export default function Map() {
   const addMarker = () => {
     const tmpMarkers = [];
     stores.forEach((data) => {
-      const { x, y, place_name } = data;
+      const { x, y, place_name, id } = data;
       const position = new kakao.maps.LatLng(y, x);
+      const markerItem = new kakao.maps.Marker({
+        title: place_name,
+        position: position,
+      });
+      kakao.maps.event.addListener(markerItem, 'click', () => {
+        location.href = `store/${place_name}/${id}`;
+      })
       tmpMarkers.push(
-        new kakao.maps.Marker({
-          title: place_name,
-          position: position,
-        }),
+        markerItem
       );
     });
     setMarkers(tmpMarkers);
