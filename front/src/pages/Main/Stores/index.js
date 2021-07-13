@@ -1,6 +1,6 @@
 import { LeftOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getLocation } from 'reducers/map';
 import {
@@ -33,6 +33,8 @@ import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
+import axios from 'axios';
+import { LOGIN_REQUEST } from 'reducers/personal';
 
 const Store = () => {
   /*
@@ -44,7 +46,7 @@ const Store = () => {
   // 리뷰 갯수 표현 state
   const [storeReview, setStoreReview] = useState([1]);
   // 가게 정보 요청 (삭제요청/ 제보요청)
-  const [storeInfo, setStoreInfo] = useState(false);
+  const { me } = useSelector((state) => state.personal);
   // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
   // 카테고리 관리
@@ -101,10 +103,21 @@ const Store = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('me:', me);
+  }, [me]);
+
+  useEffect(() => {
     console.log('token 감지 : ', ktoken);
     // 로그인 성공시 LoginModal에서 setKtoken으로 관리하는 token이 담긴다 후에, 서버로 해당 토큰을 전달한다.
     if (ktoken) {
-      console.log('토큰 넘길 수 있음');
+      console.log('토큰 넘길 수 있음', ktoken);
+      dispatch({
+        type: LOGIN_REQUEST,
+        data: {
+          uniqId: ktoken,
+          nickname: '준희',
+        },
+      });
     }
   }, [ktoken]);
 
@@ -280,7 +293,7 @@ const Store = () => {
           </StoreContent>
         </StoreMain>
       </div>
-      {loginModal && <LoginModal onClose={onCloseModal} ktoken={ktoken} setKtoken={setKtoken} />}
+      {loginModal && <LoginModal onClose={onCloseModal} setKtoken={setKtoken} />}
       {onModal && <StoreModal title={title} id={id} onClose={onCloseModal} />}
     </>
   );

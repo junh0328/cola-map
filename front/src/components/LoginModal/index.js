@@ -25,6 +25,17 @@ const LoginModal = (props) => {
     [],
   );
 
+  // 리다이렉트 형식의 카카오 로그인
+
+  // const loginWithKakao = useCallback(() => {
+  //   Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
+
+  //   Kakao.Auth.authorize({
+  //     redirectUri: 'http://localhost:3000',
+  //     scope: 'profile_nickname, profile_image, account_email',
+  //   });
+  // }, []);
+
   const socialLogin = useCallback(() => {
     Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
 
@@ -34,7 +45,7 @@ const LoginModal = (props) => {
       success: function (authObj) {
         // console.log('정상적으로 로그인 되었습니다.', authObj);
 
-        setKtoken(authObj);
+        setKtoken(authObj.access_token);
         onClose();
         // 카카오 서버에서 성공시 console 창에 해당 데이터 출력
         // window.Kakao.API.request({
