@@ -16,6 +16,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  avatarUrl: {
+    type: String,
+    default: '../default_avatar.jpg',
+  },
+  kakaoMail: {
+    type: String,
+    unique: true,
+  },
   // point: {
   //   type: Number,
   //   default: 0
