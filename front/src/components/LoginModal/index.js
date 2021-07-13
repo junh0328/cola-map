@@ -1,6 +1,6 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { SocialLogin } from 'apis/useSocialLogin';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+
+import React, { useCallback, useMemo } from 'react';
 import {
   FormApplyWrap,
   LoginModalBackground,
@@ -12,7 +12,7 @@ import {
 } from './style';
 
 const LoginModal = (props) => {
-  const onClose = props.onClose;
+  const { onClose, setKtoken } = props;
 
   const BtnStyle = useMemo(
     () => ({
@@ -25,10 +25,36 @@ const LoginModal = (props) => {
     [],
   );
 
-  const onSubmit = useCallback((e) => {
-    e.preventDefault();
-    alert('로그인!');
-    onClose();
+  const socialLogin = useCallback(() => {
+    Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
+
+    Kakao.Auth.login({
+      scope: 'profile_nickname, profile_image, account_email',
+
+      success: function (authObj) {
+        // console.log('정상적으로 로그인 되었습니다.', authObj);
+
+        setKtoken(authObj);
+        onClose();
+        // 카카오 서버에서 성공시 console 창에 해당 데이터 출력
+        // window.Kakao.API.request({
+        //   url: '/v2/user/me',
+        //   success: (res) => {
+        //     const kakao_account = res.kakao_account;
+        //     console.log('kakao_account:', kakao_account);
+        //   },
+        //   fail: function (err) {
+        //     console.log('에러', err);
+        //     return;
+        //   },
+        // });
+      },
+      fail: function (err) {
+        console.log('에러', err);
+        alert('로그인실패!');
+        return;
+      },
+    });
   }, []);
 
   return (
@@ -42,14 +68,7 @@ const LoginModal = (props) => {
             <LoginModalHeaderMain>소셜 계정으로 로그인하기</LoginModalHeaderMain>
           </LoginModalHeader>
           <FormApplyWrap>
-            <button
-              onClick={() => {
-                SocialLogin();
-                onClose();
-              }}
-            >
-              카카오로 로그인하기
-            </button>
+            <button onClick={socialLogin}>카카오로 로그인하기</button>
           </FormApplyWrap>
         </LoginModalMain>
       </LoginModalWrap>

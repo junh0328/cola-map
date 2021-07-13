@@ -53,6 +53,8 @@ const Store = () => {
   const [categoryRate, setCategoryRate] = useState(100);
   // 삭제 요청 모달
   const [onModal, setOnModal] = useState(false);
+  // 성공시 생기는 토큰 관리
+  const [ktoken, setKtoken] = useState(null);
 
   // 해당 가게에 대한 리뷰 리스트
   const reviewList = [
@@ -99,6 +101,14 @@ const Store = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('token 감지 : ', ktoken);
+    // 로그인 성공시 LoginModal에서 setKtoken으로 관리하는 token이 담긴다 후에, 서버로 해당 토큰을 전달한다.
+    if (ktoken) {
+      console.log('토큰 넘길 수 있음');
+    }
+  }, [ktoken]);
+
+  useEffect(() => {
     dispatch(getLocation());
     useKeyword(title);
   }, []);
@@ -116,17 +126,12 @@ const Store = () => {
     let cocaArr = [];
 
     reviewList.map((r) => {
-      // console.log(r.id, r.category);
       if (r.category === '펩시') {
         pepsiArr.push(r.category);
       } else if (r.category === '코카콜라') {
         cocaArr.push(r.category);
       }
     });
-
-    // console.log('pepsiArr :', pepsiArr, pepsiArr.length);
-    // console.log('cocaArr :', cocaArr, cocaArr.length);
-    // console.log('result: ', result);
     return Math.floor((pepsiArr.length / reviewList.length) * 100);
   }, []);
 
@@ -151,8 +156,15 @@ const Store = () => {
     [inputStatus],
   );
 
-  const onClickEvent = useCallback(() => {
-    alert('clicked!');
+  // 카카오 로그아웃
+  const logoutWithKakao = useCallback(() => {
+    if (Kakao.Auth.getAccessToken()) {
+      console.log('카카오 인증 액세스 토큰이 존재합니다.', Kakao.Auth.getAccessToken());
+      Kakao.Auth.logout(() => {
+        console.log('로그아웃 되셨습니다.', Kakao.Auth.getAccessToken());
+      });
+      setKtoken(null);
+    }
   }, []);
 
   const onClickLogin = useCallback(() => {
@@ -180,12 +192,12 @@ const Store = () => {
             <LeftOutlined />
           </CloseModalButton>
           <span>{title}</span>
-          {!storeInfo ? (
-            <RemoveRequestButton2 onClick={onClickLogin}>로그인</RemoveRequestButton2>
+          {ktoken && <RemoveRequestButton2 onClick={logoutWithKakao}>로그아웃</RemoveRequestButton2>}
+          {ktoken ? (
+            <RemoveRequestButton onClick={onClickModal}>삭제요청</RemoveRequestButton>
           ) : (
-            <RemoveRequestButton2 onClick={onClickLogin}>로그아웃</RemoveRequestButton2>
+            <RemoveRequestButton onClick={onClickLogin}>로그인</RemoveRequestButton>
           )}
-          {storeInfo && <RemoveRequestButton onClick={onClickModal}>삭제요청</RemoveRequestButton>}
         </CategoryHeader>
         <StoreMain>
           <StoreMap id="Map" />
@@ -268,7 +280,7 @@ const Store = () => {
           </StoreContent>
         </StoreMain>
       </div>
-      {loginModal && <LoginModal onClose={onCloseModal} />}
+      {loginModal && <LoginModal onClose={onCloseModal} ktoken={ktoken} setKtoken={setKtoken} />}
       {onModal && <StoreModal title={title} id={id} onClose={onCloseModal} />}
     </>
   );
