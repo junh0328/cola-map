@@ -1,16 +1,34 @@
 paths:
+  /user:
+    get:
+      tags:
+        - user
+      summary: GET ALL OF USER
+      responses:
+        '200':
+          description: OK
+
+  /user/{userId}:
+    delete:
+      tags:
+        - user
+      summary: DELETE ONE USER
+      responses:
+        '200':
+          description: OK
+
   /user/login:
     post:
       tags:
-      - user
+        - user
       summary: LOGIN
-      parameters: 
+      parameters:
         - in: query
           name: uniqId
           required: true
-          schema: 
+          schema:
             type: string
-            default: '123457' 
+            default: '123457'
       responses:
         '200':
           description: OK
