@@ -43,6 +43,19 @@ export const RemoveRequestButton = styled.div`
   }
 `;
 
+export const RemoveRequestButton2 = styled.div`
+  color: #0f4c82;
+  position: absolute;
+  right: 16%;
+  font-size: 1rem;
+  cursor: pointer;
+
+  @media (max-width: 425px) {
+    font-size: 0.8rem;
+    right: 20%;
+  }
+`;
+
 export const StoreMain = styled.div`
   overflow-x: hidden !important;
   overflow: auto;

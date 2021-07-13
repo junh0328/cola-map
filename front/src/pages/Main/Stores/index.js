@@ -13,6 +13,7 @@ import {
   MyCard,
   MyGraph,
   RemoveRequestButton,
+  RemoveRequestButton2,
   StoreContent,
   StoreContentCategory,
   StoreContentCategoryHeader,
@@ -31,6 +32,7 @@ import { Card, Skeleton } from 'antd';
 import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import StoreModal from 'components/StoreModal';
+import LoginModal from 'components/LoginModal';
 
 const Store = () => {
   /*
@@ -42,12 +44,14 @@ const Store = () => {
   // 리뷰 갯수 표현 state
   const [storeReview, setStoreReview] = useState([1]);
   // 가게 정보 요청 (삭제요청/ 제보요청)
-  const [storeInfo, setStoreInfo] = useState(true);
+  const [storeInfo, setStoreInfo] = useState(false);
+  // 로그인 모달
+  const [loginModal, setLoginModal] = useState(false);
   // 카테고리 관리
   const [inputStatus, setInputStatus] = useState('');
   // 카테고리 비율
   const [categoryRate, setCategoryRate] = useState(100);
-  // 모달 요청
+  // 삭제 요청 모달
   const [onModal, setOnModal] = useState(false);
 
   // 해당 가게에 대한 리뷰 리스트
@@ -151,12 +155,17 @@ const Store = () => {
     alert('clicked!');
   }, []);
 
+  const onClickLogin = useCallback(() => {
+    setLoginModal((prev) => !prev);
+  }, []);
+
   const onClickModal = useCallback(() => {
     setOnModal((prev) => !prev);
   }, []);
 
   const onCloseModal = useCallback(() => {
     setOnModal(false);
+    setLoginModal(false);
   });
 
   const goToCategories = useCallback(() => {
@@ -171,6 +180,11 @@ const Store = () => {
             <LeftOutlined />
           </CloseModalButton>
           <span>{title}</span>
+          {!storeInfo ? (
+            <RemoveRequestButton2 onClick={onClickLogin}>로그인</RemoveRequestButton2>
+          ) : (
+            <RemoveRequestButton2 onClick={onClickLogin}>로그아웃</RemoveRequestButton2>
+          )}
           {storeInfo && <RemoveRequestButton onClick={onClickModal}>삭제요청</RemoveRequestButton>}
         </CategoryHeader>
         <StoreMain>
@@ -254,6 +268,7 @@ const Store = () => {
           </StoreContent>
         </StoreMain>
       </div>
+      {loginModal && <LoginModal onClose={onCloseModal} />}
       {onModal && <StoreModal title={title} id={id} onClose={onCloseModal} />}
     </>
   );
