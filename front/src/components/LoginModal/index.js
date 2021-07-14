@@ -25,17 +25,6 @@ const LoginModal = (props) => {
     [],
   );
 
-  // 리다이렉트 형식의 카카오 로그인
-
-  // const loginWithKakao = useCallback(() => {
-  //   Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
-
-  //   Kakao.Auth.authorize({
-  //     redirectUri: 'http://localhost:3000',
-  //     scope: 'profile_nickname, profile_image, account_email',
-  //   });
-  // }, []);
-
   const socialLogin = useCallback(() => {
     Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
 
@@ -43,22 +32,15 @@ const LoginModal = (props) => {
       scope: 'profile_nickname, profile_image, account_email',
 
       success: function (authObj) {
-        // console.log('정상적으로 로그인 되었습니다.', authObj);
-
-        setKtoken(authObj.access_token);
-        onClose();
-        // 카카오 서버에서 성공시 console 창에 해당 데이터 출력
-        // window.Kakao.API.request({
-        //   url: '/v2/user/me',
-        //   success: (res) => {
-        //     const kakao_account = res.kakao_account;
-        //     console.log('kakao_account:', kakao_account);
-        //   },
-        //   fail: function (err) {
-        //     console.log('에러', err);
-        //     return;
-        //   },
-        // });
+        console.log('authObj: ', authObj);
+        // token이라는 이름으로 authObj.access_token (access token)을 생성 및 로컬 스토리지에서 저장
+        localStorage.setItem('token', authObj.access_token);
+        if (authObj.access_token) {
+          setKtoken(authObj.access_token);
+          onClose();
+          Kakao.cleanup();
+          console.log('Kakao.cleanup!');
+        }
       },
       fail: function (err) {
         console.log('에러', err);

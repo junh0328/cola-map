@@ -17,7 +17,6 @@ import {
   StoreContent,
   StoreContentCategory,
   StoreContentCategoryHeader,
-  StoreContentCategoryMain,
   StoreContentHeader,
   StoreContentHeaderMain,
   StoreContentHeaderSub,
@@ -28,12 +27,11 @@ import {
   StoreMap,
 } from './style';
 import { useKeyword } from 'apis/useKeyword';
-import { Card, Skeleton } from 'antd';
+import { Skeleton } from 'antd';
 import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
-import axios from 'axios';
 import { LOGIN_REQUEST } from 'reducers/personal';
 
 const Store = () => {
@@ -101,16 +99,22 @@ const Store = () => {
   const history = useHistory();
   const commentRef = useRef();
   const dispatch = useDispatch();
+  const localToken = localStorage.getItem('token');
 
   useEffect(() => {
-    console.log('me:', me);
+    if (me) console.log('me:', me);
   }, [me]);
 
   useEffect(() => {
-    console.log('token 감지 : ', ktoken);
+    console.log('local Storage token 감지 : ', ktoken);
+    if (!ktoken) {
+      if (localToken) {
+        setKtoken(localToken);
+      }
+    }
+
     // 로그인 성공시 LoginModal에서 setKtoken으로 관리하는 token이 담긴다 후에, 서버로 해당 토큰을 전달한다.
     if (ktoken) {
-      console.log('토큰 넘길 수 있음', ktoken);
       dispatch({
         type: LOGIN_REQUEST,
         data: {
@@ -171,12 +175,15 @@ const Store = () => {
 
   // 카카오 로그아웃
   const logoutWithKakao = useCallback(() => {
-    if (Kakao.Auth.getAccessToken()) {
-      console.log('카카오 인증 액세스 토큰이 존재합니다.', Kakao.Auth.getAccessToken());
-      Kakao.Auth.logout(() => {
-        console.log('로그아웃 되셨습니다.', Kakao.Auth.getAccessToken());
-      });
-      setKtoken(null);
+    Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
+    if (!Kakao.Auth.getAccessToken()) {
+      alert('Not logged in.');
+      return;
+    } else {
+      localStorage.removeItem('token');
+      Kakao.Auth.logout();
+      setKtoken(null); // state 관리를 위해 존재
+      Kakao.cleanup();
     }
   }, []);
 

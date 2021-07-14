@@ -3,7 +3,6 @@ import { LOGIN_DONE, LOGIN_FAILURE, LOGIN_REQUEST } from 'reducers/personal';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 
 function loginAPI(data) {
-  console.log('loginAPI data:', data);
   try {
     axios.defaults.withCredentials = true;
     return axios.post(`http://localhost:5000/user/login?uniqId=${data.uniqId}&nickname=${data.nickname}`, data);
@@ -13,10 +12,8 @@ function loginAPI(data) {
 }
 
 function* loginRequest(action) {
-  console.log('action: ', action);
   try {
     const result = yield call(loginAPI, action.data);
-    console.log('result:', result);
     yield put({
       type: LOGIN_DONE,
       data: result,
