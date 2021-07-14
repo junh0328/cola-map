@@ -28,18 +28,18 @@ userRouter.delete('/:id', async (req, res) => {
 
 userRouter.post('/login', async (req, res) => {
   try {
-    const uniqId = req.query.uniqId;
+    const uniqId = req.body.uniqId;
 
     let user = await User.findOne({ uniqId: uniqId });
     if (!user) {
-      const avatarUrl = req.query.avatarUrl,
-        nickname = req.query.nickname,
-        kakaoMail = req.query.kakaoMail;
+      const profile_image = req.body.profile_image,
+        profile_nickname = req.body.profile_nickname,
+        account_email = req.body.account_email;
       const userObject = new User({
         uniqId: uniqId,
-        nickname: nickname,
-        avatarUrl: avatarUrl,
-        kakaoMail: kakaoMail,
+        profile_image: profile_image,
+        profile_nickname: profile_nickname,
+        account_email: account_email,
       });
       user = await userObject.save();
     }
