@@ -11,16 +11,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  nickname: {
+  profile_nickname: {
     type: String,
     required: true,
     trim: true,
   },
-  avatarUrl: {
+  profile_image: {
     type: String,
-    default: '../default_avatar.jpg',
+    require: true,
   },
-  kakaoMail: {
+  account_email: {
     type: String,
     unique: true,
   },
