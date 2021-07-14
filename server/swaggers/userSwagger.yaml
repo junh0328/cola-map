@@ -7,15 +7,25 @@ paths:
       responses:
         '200':
           description: OK
+        '500':
+          description: ERROR
 
   /user/{userId}:
     delete:
       tags:
         - user
       summary: DELETE ONE USER
+      parameters:
+        - in: params
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: OK
+        '500':
+          description: ERROR
 
   /user/login:
     post:
@@ -23,12 +33,20 @@ paths:
         - user
       summary: LOGIN
       parameters:
-        - in: query
+        - in: body
           name: uniqId
           required: true
+          unique: true
           schema:
             type: string
             default: '123457'
+        - in: body
+          name: profile_nickname
+          required: true
+        - in: body
+          name: account_email
       responses:
         '200':
           description: OK
+        '500':
+          description: ERROR
