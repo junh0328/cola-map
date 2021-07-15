@@ -19,19 +19,27 @@ const Personal = () => {
   const [loginModal, setLoginModal] = useState(false);
   // 성공시 생기는 토큰 관리
   const [ktoken, setKtoken] = useState(null);
+  // const localToken = localStorage.getItem('token');
 
-  const { me } = useSelector((state) => state.personal);
+  // const { me } = useSelector((state) => state.personal);
 
   const requireAlert = useCallback(() => {
     alert('회원 정보가 없습니다. 로그인 모달을 띄웁니다.');
   }, []);
 
-  useEffect(() => {
-    if (!me) {
-      requireAlert();
-      setLoginModal(true);
-    }
-  }, [me]);
+  // useEffect(() => {
+  // console.log('local Storage token 감지 : ', ktoken);
+  // if (!ktoken) {
+  //   if (localToken) {
+  //     setKtoken(localToken);
+  //     return;
+  //   }
+  // }
+  //   if (!ktoken) {
+  //     requireAlert();
+  //     setLoginModal(true);
+  //   }
+  // }, [ktoken]);
 
   const onCloseModal = useCallback(() => {
     setLoginModal(false);

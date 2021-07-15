@@ -33,18 +33,12 @@ import coca from 'apis/license/coca.png';
 import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
 import { LOGIN_REQUEST } from 'reducers/personal';
+import { calCategory } from 'hooks/calCategory';
+import { reviewList } from 'apis/dummy/reviewList';
 
 const Store = () => {
-  /*
-  서버에 요청을 통해 가게에 대한 정보를 담은 storeInfo
-  후에 이 페이지에서 직접 useKeyword 요청을 보내는 것이 아닌 dispatch를 통해 서버에 저장되어 있는 store 정보가 있을 경우 state를 변경한다
-  해당 가게에 대한 값(정보)이 있을 경우에는 삭제 요청을 보여지도록 하고, 없을 경우에는 제보요청이 보여지도록 조건문을 준다
-  */
-
   // 리뷰 갯수 표현 state
   const [storeReview, setStoreReview] = useState([1]);
-  // 가게 정보 요청 (삭제요청/ 제보요청)
-  const { me } = useSelector((state) => state.personal);
   // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
   // 카테고리 관리
@@ -56,64 +50,26 @@ const Store = () => {
   // 성공시 생기는 토큰 관리
   const [ktoken, setKtoken] = useState(null);
 
-  // 해당 가게에 대한 리뷰 리스트
-  const reviewList = [
-    {
-      id: 1,
-      storeName: '헤반트 범계점',
-      userName: '윤성님',
-      comment: '존맛탱 가게입니다 추천해요',
-      category: '펩시',
-    },
-    {
-      id: 2,
-      storeName: '헤반트 범계점',
-      userName: '도해님',
-      comment: '튀김이 바삭바삭해용.튀김이 바삭바삭해용',
-      category: '코카콜라',
-    },
-    {
-      id: 3,
-      storeName: '헤반트 범계점',
-      userName: '진수님',
-      comment: '여긴 왜 제로콜라 없나요?',
-      category: '펩시',
-    },
-    {
-      id: 4,
-      storeName: '헤반트 범계점',
-      userName: '준희님',
-      comment: '펩시 제로 라임맛 최고',
-      category: '펩시',
-    },
-    {
-      id: 5,
-      storeName: '헤반트 범계점',
-      userName: '준희님',
-      comment: '펩시 제로 라임맛 최고',
-      category: '코카콜라',
-    },
-  ];
-
+  // 서버로 부터 전달 받는 state 내 정보
+  const { me } = useSelector((state) => state.personal);
+  const dispatch = useDispatch();
   const { title, id } = useParams();
   const history = useHistory();
   const commentRef = useRef();
-  const dispatch = useDispatch();
-  const localToken = localStorage.getItem('token');
+
+  // const localToken = localStorage.getItem('token');
 
   useEffect(() => {
-    if (me) console.log('me:', me);
-  }, [me]);
+    // console.log('local Storage token 감지 : ', ktoken);
+    // 카카오 로그인을 통해 로그인을 한 상황이 아닌, 로컬 스토리지의 토큰을 활용할 때
+    // if (!ktoken) {
+    //   if (localToken) {
+    //     setKtoken(localToken);
+    //   }
+    // }
 
-  useEffect(() => {
-    console.log('local Storage token 감지 : ', ktoken);
-    if (!ktoken) {
-      if (localToken) {
-        setKtoken(localToken);
-      }
-    }
-
-    // 로그인 성공시 LoginModal에서 setKtoken으로 관리하는 token이 담긴다 후에, 서버로 해당 토큰을 전달한다.
+    // 로그인 성공시, LoginModal에서 setKtoken으로 관리하는 token이 담는다.
+    // 후에 이 토큰을 서버로 전달한다.
     if (ktoken) {
       dispatch({
         type: LOGIN_REQUEST,
@@ -133,24 +89,8 @@ const Store = () => {
   // 카테고리 비율을 계산할 함수 calCategory() 실행 후 결과 값을 CategoryRate state에 담고 props로 전달
   useEffect(() => {
     const categoryResult = calCategory(reviewList);
-    // console.log(categoryResult);
     setCategoryRate(categoryResult);
   }, [reviewList]);
-
-  const calCategory = useCallback((reviewList) => {
-    // 펩시 개수, 콜라 개수
-    let pepsiArr = [];
-    let cocaArr = [];
-
-    reviewList.map((r) => {
-      if (r.category === '펩시') {
-        pepsiArr.push(r.category);
-      } else if (r.category === '코카콜라') {
-        cocaArr.push(r.category);
-      }
-    });
-    return Math.floor((pepsiArr.length / reviewList.length) * 100);
-  }, []);
 
   const handleClickRadioButton = useCallback((radioBtnName) => {
     setInputStatus(radioBtnName);
@@ -174,18 +114,21 @@ const Store = () => {
   );
 
   // 카카오 로그아웃
-  const logoutWithKakao = useCallback(() => {
+  const logoutWithKakao = async () => {
     Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
     if (!Kakao.Auth.getAccessToken()) {
       alert('Not logged in.');
       return;
-    } else {
-      localStorage.removeItem('token');
-      Kakao.Auth.logout();
-      setKtoken(null); // state 관리를 위해 존재
-      Kakao.cleanup();
     }
-  }, []);
+    // 토큰이 2개입니다. 하나는 로컬 스토리지에 저장된 access_token > token
+    // 카카오 api를 통해 생성한 결과물(access_token)를 담은 토큰  > ktoken
+    // localStorage.removeItem('token');
+    await Kakao.Auth.logout(function () {
+      console.log('로그아웃 성공', Kakao.Auth.getAccessToken());
+    });
+    // setKtoken(null); // state 관리를 위해 존재, setKtoken(null)을 하게되면 logout이 안먹음
+    // Kakao.cleanup();
+  };
 
   const onClickLogin = useCallback(() => {
     setLoginModal((prev) => !prev);
