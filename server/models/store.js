@@ -22,7 +22,7 @@ const storeSchema = new mongoose.Schema(
     },
     mostPosted: {
       type: String,
-    }
+    },
   },
   {
     timestamps: true,

@@ -4,11 +4,11 @@ const postSchema = new mongoose.Schema(
   {
     store: {
       type: mongoose.Types.ObjectId,
-      ref: 'Store'
+      ref: 'Store',
     },
     user: {
       type: mongoose.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     },
     drink: {
       type: String,
@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema(
     },
     comment: {
       type: String,
-    }
+    },
   },
   {
     timestamps: true,
