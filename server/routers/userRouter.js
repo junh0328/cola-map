@@ -1,35 +1,76 @@
 const express = require('express');
-const User = require('../models/user');
 const userRouter = express.Router();
+
+const User = require('../models/user');
 const auth = require('../middleware/auth');
 
+// 임시 API - 모든 유저 조회
 userRouter.get('/', async (req, res) => {
   try {
     let user = await User.find({});
     res.send({
       AllOfUser: user,
     });
-  } catch (error) {
-    res.status(500).send({ error: error });
+  } catch (e) {
+    res.status(500).send({ error: e.message });
   }
 });
 
-userRouter.delete('/:id', async (req, res) => {
+// 임시 API - 모든 유저 데이터 삭제
+userRouter.delete('/all', async (req, res) => {
   try {
-    const id = req.params.id;
+    await User.deleteMany({});
+    res.send({ message: 'Success' });
+  } catch (e) {
+    res.status(500).send({ error: e.message });
+  }
+});
+
+// 유저 프로필
+userRouter.get('/profile', auth, async (req, res) => {
+  try {
+    const id = req.user._id;
+    const user = await User.findById({ _id: id });
+    res.status(200).send(user.profile_nickname);
+  } catch (e) {
+    res.status(500).send({ error: e.message });
+  }
+});
+
+// 닉네임 변경
+userRouter.post('/set-nickname', auth, async (req, res) => {
+  try {
+    const id = req.user._id;
+    const nickname = req.body.profile_nickname;
+    if (nickname) {
+      await User.findByIdAndUpdate(id, { profile_nickname: nickname });
+      const user = await User.findById({ _id: id });
+      res.status(200).send(user);
+    } else {
+      res.status(500).send({ error: 'nickname is required' });
+    }
+  } catch (e) {
+    res.status(500).send({ error: e.message });
+  }
+});
+
+// 회원 탈퇴
+userRouter.delete('/quit', async (req, res) => {
+  try {
+    const id = req.user._id;
     const deletedUser = await User.findOneAndDelete({ _id: id });
-    res.send({
-      'Deleted User': deletedUser,
-    });
-  } catch (error) {
-    res.status(500).send({ error: error });
+    res.status(200).send(deletedUser);
+  } catch (e) {
+    res.status(500).send({ error: e.message });
   }
 });
 
+// 로그인 & 회원가입
 userRouter.post('/login', async (req, res) => {
-  try {
-    const uniqId = req.body.uniqId;
+  console.log(req.body);
+  const uniqId = req.body.uniqId;
 
+  try {
     let user = await User.findOne({ uniqId: uniqId });
     if (!user) {
       const profile_image = req.body.profile_image,

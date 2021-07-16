@@ -2,8 +2,8 @@ paths:
   /post:
     post:
       tags:
-      - post
-      summary: WRITE POST
+        - post
+      summary: 제보 작성 - Authorization 키 필요
       requestBody:
         content:
           application/json:
@@ -11,35 +11,35 @@ paths:
               type: object
               properties:
                 store:
-                  type: string    
+                  type: string
                 storeName:
-                  type: string    
-                kakaoId: 
-                  type: string    
+                  type: string
+                kakaoId:
+                  type: string
                 addressX:
-                  type: number    
+                  type: number
                 addressY:
                   type: number
                 drink:
-                  type: string    
+                  type: string
                 comment:
-                  type: string    
+                  type: string
             examples:
               store does not exists:
-                  summary: store does not exists
-                  value:
-                    storeName: BHC 상암동
-                    kakaoId: 123456
-                    addressX: 123.456
-                    addressY: 123.456
-                    drink: 코카콜라
-                    comment: 코카콜라가 왔어요 !
+                summary: store does not exists
+                value:
+                  storeName: BHC 상암동
+                  kakaoId: 123456
+                  addressX: 123.456
+                  addressY: 123.456
+                  drink: 코카콜라
+                  comment: 코카콜라가 왔어요 !
               store alreay exists:
-                  summary: store alreay exists
-                  value:
-                    store: 60d98d045437b83d4c8826db
-                    drink: 코카콜라
-                    comment: 코카콜라가 왔어요 !
+                summary: store alreay exists
+                value:
+                  store: 60d98d045437b83d4c8826db
+                  drink: 코카콜라
+                  comment: 코카콜라가 왔어요 !
       security:
         - bearerAuth: []
       responses:
@@ -49,15 +49,15 @@ paths:
   /post/store/{storeId}:
     get:
       tags:
-      - post
-      summary: GET STORE'S POST
-      parameters: 
-        - in: path  
+        - post
+      summary: 특정 스토어의 제보 조회
+      parameters:
+        - in: path
           name: storeId
           required: true
-          schema: 
+          schema:
             type: string
-            default: '60d8791b2219231ff4cfb8c0'      
+            default: '60d8791b2219231ff4cfb8c0'
       responses:
         '200':
           description: OK
@@ -65,8 +65,8 @@ paths:
   /post/user:
     get:
       tags:
-      - post
-      summary: GET USER'S POST
+        - post
+      summary: 내가 한 제보 조회 - Authorization 키 필요
       security:
         - bearerAuth: []
       responses:
@@ -76,14 +76,14 @@ paths:
   /post/{postId}:
     delete:
       tags:
-      - post
-      summary: DELETE POST
-      parameters: 
+        - post
+      summary: 내가 한 제보 삭제 - Authorization 키 필요
+      parameters:
         - in: path
           name: postId
           required: true
-          schema: 
-            type: string            
+          schema:
+            type: string
       security:
         - bearerAuth: []
       responses:

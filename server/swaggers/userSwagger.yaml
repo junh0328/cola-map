@@ -3,27 +3,36 @@ paths:
     get:
       tags:
         - user
-      summary: GET ALL OF USER
+      summary: 모든 유저 조회(임시)
       responses:
         '200':
-          description: OK
+          description: 모든 유저 목록 출력
         '500':
           description: ERROR
 
-  /user/{userId}:
-    delete:
+  /user/profile:
+    get:
       tags:
         - user
-      summary: DELETE ONE USER
-      parameters:
-        - in: params
-          name: id
-          required: true
-          schema:
-            type: string
+      summary: 유저 프로필 페이지 - Authorization 키 필요
       responses:
         '200':
-          description: OK
+          description: 유저 닉네임 출력
+        '500':
+          description: ERROR
+
+  /user/set-nickname:
+    post:
+      tags:
+        - user
+      summary: 닉네임 변경 - Authorization 키 필요
+      parameters:
+        - in: body
+          name: profile_nickname
+          required: true
+      responses:
+        '200':
+          description: 유저의 닉네임을 변경하고 변경된 닉네임 출력
         '500':
           description: ERROR
 
@@ -31,7 +40,7 @@ paths:
     post:
       tags:
         - user
-      summary: LOGIN
+      summary: 로그인 - Authorization 키 필요
       parameters:
         - in: body
           name: uniqId
@@ -48,5 +57,27 @@ paths:
       responses:
         '200':
           description: OK
+        '500':
+          description: ERROR
+
+  /user/quit:
+    delete:
+      tags:
+        - user
+      summary: 회원 탈퇴 - Authorization 키 필요
+      responses:
+        '200':
+          description: 삭제 처리된 유저 출력
+        '500':
+          description: ERROR
+
+  /user/all:
+    delete:
+      tags:
+        - user
+      summary: 모든 유저 데이터 삭제(임시)
+      responses:
+        '200':
+          description: 'Success'
         '500':
           description: ERROR
