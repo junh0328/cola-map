@@ -3,71 +3,60 @@ const Post = require('../models/post');
 const storeRouter = express.Router();
 const Store = require('../models/store');
 
-// 전체 제보 목록 확인
+// 전체 제보 목록 조회
 storeRouter.get('/', async (req, res) => {
   try {
     const getStores = await Store.find({});
-    res.json({
-      Stores: getStores,
-    });
+    res.status(200).send(getStores);
   } catch (error) {
-    console.log(error);
+    res.status(500).send({ error: error.message });
   }
 });
 
-// 제보 확인
-storeRouter.get('/:id', async (req, res) => {
+// 특정 제보 조회
+storeRouter.get('/:storeId', async (req, res) => {
   try {
-    const getStore = await Store.findById({ _id: req.params.id }).lean();
-    const post = await Post.find({ store: getStore._id })
-      .populate('user')
-      .sort({ createdAt: -1 })
+    const id = req.params.storeId;
+    const getStore = await Store.findById({ _id: id }).lean();
+    // const post = await Post.find({ store: getStore._id })
+    //   .populate('user')
+    //   .sort({ createdAt: -1 });
 
-    getStore.post = post
-    res.json({
-      Store: getStore,
-    });
+    // getStore.post = post;
+    res.status(200).send(getStore);
   } catch (error) {
-    console.log(error);
+    res.status(500).send({ error: error.message });
   }
 });
 
-// 제보 생성
-storeRouter.post('/', async (req, res) => {
+// 특정 가게 데이터 삭제(임시)
+storeRouter.delete('/:storeId', async (req, res) => {
+  const id = req.params.storeId;
   try {
-    const {
-      body: { storeName, category, latitude, longitude },
-    } = req;
-    const newStore = await Store.create({
-      storeName,
-      category,
-      latitude,
-      longitude,
-    });
-    // 생성한 데이터 확인
-    res.json({
-      newStore: newStore,
-    });
+    const store = await Store.findByIdAndDelete({ _id: id });
+    const posts = await Post.remove({ store: id })
+      .status(200)
+      .send({ '삭제된 스토어': store, '삭제된 스토어 제보': posts });
   } catch (error) {
-    console.log(error);
-    res.json({
-      error: error,
-    });
+    res.status(500).send({ error: error.message });
   }
 });
 
-// 데이터 전체 삭제
-storeRouter.delete('/:id', async (req, res) => {
-  const {
-    params: { id },
-  } = req;
+// 카테고리(콜라 종류)별 데이터 조회
+storeRouter.get('/category/pepsi', async (req, res) => {
   try {
-    await Store.findByIdAndDelete({ _id: id });
-    res.json({
-      message: 'Complete',
-    });
+    const pepsi = await Store.find({ mostPosted: '펩시콜라' });
+    res.status(200).send(pepsi);
   } catch (error) {
-    console.log(error);
+    res.status(500).send({ error: error.message });
+  }
+});
+storeRouter.get('/category/coca', async (req, res) => {
+  try {
+    const coca = await Store.find({ mostPosted: '코카콜라' });
+    res.status(200).send(coca);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
   }
 });
 

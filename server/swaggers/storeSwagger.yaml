@@ -1,0 +1,65 @@
+paths:
+  /store:
+    get:
+      tags:
+        - store
+      summary: 전체 스토어 조회
+      responses:
+        '200':
+          description: 모든 스토어 출력
+        '500':
+          description: ERROR
+
+  /store/{storeId}:
+    get:
+      tags:
+        - store
+      summary: 특정 스토어 조회
+      parameters:
+        - in: params
+          name: storeId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 특정 스토어 데이터 출력
+        '500':
+          description: ERROR
+    delete:
+      tags:
+        - store
+      summary: 특정 스토어 및 연결된 제보 데이터 삭제(임시)
+      parameters:
+        - in: params
+          name: storeId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 삭제된 스토어, 포스트(제보) 데이터 출력
+        '500':
+          description: ERROR
+
+  /store/category/pepsi:
+    get:
+      tags:
+        - store
+      summary: 펩시 스토어 조회
+      responses:
+        '200':
+          description: mostPosted 밸류가 펩시콜라인 스토어 출력
+        '500':
+          description: ERROR
+
+  /store/category/coca:
+    get:
+      tags:
+        - store
+      summary: 코카콜라 스토어 조회
+      responses:
+        '200':
+          description: mostPosted 밸류가 코카콜라인 스토어 출력
+        '500':
+          description: ERROR
