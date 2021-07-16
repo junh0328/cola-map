@@ -3,7 +3,7 @@ const Post = require('../models/post');
 const storeRouter = express.Router();
 const Store = require('../models/store');
 
-// 전체 제보 목록 조회
+// 전체 가게 목록 조회
 storeRouter.get('/', async (req, res) => {
   try {
     const getStores = await Store.find({});
@@ -13,7 +13,7 @@ storeRouter.get('/', async (req, res) => {
   }
 });
 
-// 특정 제보 조회
+// 특정 가게 조회
 storeRouter.get('/:storeId', async (req, res) => {
   try {
     const id = req.params.storeId;
