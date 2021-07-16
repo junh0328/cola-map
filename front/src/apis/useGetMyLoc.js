@@ -1,5 +1,6 @@
 import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
+import marker from 'apis/license/marker.png';
 
 const { kakao } = window;
 
@@ -33,7 +34,7 @@ export function useGetMyLoc() {
   function displayMarker(positions) {
     // console.log('positions 배열 출력:', positions);
     for (var i = 0; i < positions.length; i++) {
-      const imageSize = new kakao.maps.Size(40, 60);
+      const imageSize = new kakao.maps.Size(25, 35);
 
       // 마커 이미지를 위한 변수
       let markerImage;
@@ -73,6 +74,7 @@ export function useGetMyLoc() {
       id: 1,
       title: '내 위치',
       latlng: null,
+      img: marker,
     },
     // {
     //   id: 2,

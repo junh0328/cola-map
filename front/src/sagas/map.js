@@ -76,6 +76,10 @@ function* setAddress(param) {
     });
   } catch (err) {
     console.log(err);
+    yield put({
+      type: SEARCH_ADDRESS_FAILURE,
+      error: err.response,
+    });
   }
 }
 

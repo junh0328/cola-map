@@ -1,3 +1,6 @@
+import pepsi from 'apis/license/pepsi.png';
+import coca from 'apis/license/coca.png';
+
 export const reviewList = [
   {
     id: 1,
@@ -39,3 +42,18 @@ export const reviewList = [
 /*
 후에는 DB에 저장된 데이터이므로 잠시 분류해 두었습니다
 */
+
+export const positions = [
+  // {
+  //   id: 1,
+  //   title: '내 위치',
+  //   latlng: null,
+  // },
+  // {
+  //   id: 2,
+  //   title: '메가커피 의왕내손점',
+  //   latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
+  //   img: coca,
+  //   storeId: 940929140,
+  // },
+];

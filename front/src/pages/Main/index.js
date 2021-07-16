@@ -4,30 +4,15 @@ import 'slick-carousel/slick/slick-theme.css';
 import AimButton from 'components/AimButtonn';
 import SearchInput from 'components/SearchInput';
 import Map from 'components/Map';
-import pepsi from 'apis/license/pepsi.png';
-import coca from 'apis/license/coca.png';
+
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ApplyButton from 'components/ApplyButton';
+import { positions } from 'apis/dummy/reviewList';
 
 export default function Main() {
   // 검색 결과를 담을 initialState
   const { searchAddress, serachAddressDone } = useSelector((state) => state.map);
-
-  const positions = [
-    //   {
-    //     id: 1,
-    //     title: '내 위치',
-    //     latlng: null,
-    //   },
-    //   {
-    //     id: 2,
-    //     title: '메가커피 의왕내손점',
-    //     latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
-    //     img: coca,
-    //     storeId: 940929140,
-    //   },
-  ];
 
   const settings = {
     dots: false,
@@ -45,7 +30,7 @@ export default function Main() {
       <SearchInput />
       {serachAddressDone && <ApplyButton data={searchAddress} />}
       <AimButton />
-      {positions.length ? (
+      {positions.length && (
         <SlideWrapper>
           <MySlider {...settings} style={{ height: '100%' }}>
             {positions.map((item) => {
@@ -67,8 +52,6 @@ export default function Main() {
             })}
           </MySlider>
         </SlideWrapper>
-      ) : (
-        <></>
       )}
     </>
   );

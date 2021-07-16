@@ -71,7 +71,7 @@ const Store = () => {
       }
       Kakao.cleanup();
     }
-  }, [me]);
+  }, [ktoken, me]);
 
   /* 서버로 토큰을 전달하기 위한 함수 */
   // useEffect(() => {
@@ -86,7 +86,7 @@ const Store = () => {
   //   }
   // }, [ktoken]);
 
-  /* 로그인시 scope로 넘겨줬던 닉네임을 카카오 API로부터 요청 후 전달 받은 뒤 출력 */
+  /* 로그인 시 scope로 넘겨줬던 닉네임을 카카오 API로부터 요청 후 전달 받은 뒤 출력 */
   useEffect(() => {
     if (ktoken) {
       window.Kakao.API.request({
@@ -101,7 +101,7 @@ const Store = () => {
         },
       });
     }
-  });
+  }, [ktoken]);
 
   useEffect(() => {
     dispatch(getLocation());

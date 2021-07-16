@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MapWrapper } from './style';
 import { getLocation, setAddress } from 'reducers/map';
+import marker from 'apis/license/marker.png';
 
 export default function Map() {
   /**
@@ -69,16 +70,22 @@ export default function Map() {
     stores.forEach((data) => {
       const { x, y, place_name, id } = data;
       const position = new kakao.maps.LatLng(y, x);
+
+      var markerImageUrl = marker,
+        markerImageSize = new kakao.maps.Size(25, 35); // 마커 이미지의 크기
+
+      // 마커 이미지를 생성한다
+      var markerImage = new kakao.maps.MarkerImage(markerImageUrl, markerImageSize);
+
       const markerItem = new kakao.maps.Marker({
         title: place_name,
         position: position,
+        image: markerImage,
       });
       kakao.maps.event.addListener(markerItem, 'click', () => {
         location.href = `store/${place_name}/${id}`;
-      })
-      tmpMarkers.push(
-        markerItem
-      );
+      });
+      tmpMarkers.push(markerItem);
     });
     setMarkers(tmpMarkers);
     markersControl(true);
