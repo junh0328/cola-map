@@ -56,37 +56,59 @@ const Store = () => {
   const { title, id } = useParams();
   const history = useHistory();
   const commentRef = useRef();
-
   // const localToken = localStorage.getItem('token');
 
   useEffect(() => {
-    // console.log('local Storage token 감지 : ', ktoken);
-    // 카카오 로그인을 통해 로그인을 한 상황이 아닌, 로컬 스토리지의 토큰을 활용할 때
-    // if (!ktoken) {
-    //   if (localToken) {
-    //     setKtoken(localToken);
-    //   }
-    // }
+    /* 로컬 스토리지에 토큰이 있는데, 로그인을 통해 들어온 것이 아닌 경우 (ktoken이 없음) */
+    if (!ktoken && !me) {
+      Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
+      const isToken = Kakao.Auth.getAccessToken();
+      if (isToken) {
+        console.log('isToken: ', isToken);
+        setKtoken(isToken);
+        Kakao.cleanup();
+        console.log('Kakao.cleanup! - isToken');
+      }
+      Kakao.cleanup();
+    }
+  }, [me]);
 
-    // 로그인 성공시, LoginModal에서 setKtoken으로 관리하는 token이 담는다.
-    // 후에 이 토큰을 서버로 전달한다.
+  /* 서버로 토큰을 전달하기 위한 함수 */
+  // useEffect(() => {
+  //   if (ktoken) {
+  //     dispatch({
+  //       type: LOGIN_REQUEST,
+  //       data: {
+  //         uniqId: ktoken,
+  //         nickname: '준희',
+  //       },
+  //     });
+  //   }
+  // }, [ktoken]);
+
+  /* 로그인시 scope로 넘겨줬던 닉네임을 카카오 API로부터 요청 후 전달 받은 뒤 출력 */
+  useEffect(() => {
     if (ktoken) {
-      dispatch({
-        type: LOGIN_REQUEST,
-        data: {
-          uniqId: ktoken,
-          nickname: '준희',
+      window.Kakao.API.request({
+        url: '/v2/user/me',
+        success: (res) => {
+          const kakao_account = res.kakao_account;
+          alert(`${kakao_account.profile.nickname}님 환영합니다!`);
+        },
+        fail: function (err) {
+          console.log('에러', err);
+          return;
         },
       });
     }
-  }, [ktoken]);
+  });
 
   useEffect(() => {
     dispatch(getLocation());
     useKeyword(title);
   }, []);
 
-  // 카테고리 비율을 계산할 함수 calCategory() 실행 후 결과 값을 CategoryRate state에 담고 props로 전달
+  /* 카테고리 비율을 계산할 함수 calCategory() 실행 후 결과 값을 CategoryRate state에 담고 props로 전달 */
   useEffect(() => {
     const categoryResult = calCategory(reviewList);
     setCategoryRate(categoryResult);
@@ -113,22 +135,20 @@ const Store = () => {
     [inputStatus],
   );
 
-  // 카카오 로그아웃
-  const logoutWithKakao = async () => {
+  /* 카카오 로그아웃 */
+  const logoutWithKakao = useCallback(() => {
     Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
     if (!Kakao.Auth.getAccessToken()) {
       alert('Not logged in.');
       return;
     }
-    // 토큰이 2개입니다. 하나는 로컬 스토리지에 저장된 access_token > token
-    // 카카오 api를 통해 생성한 결과물(access_token)를 담은 토큰  > ktoken
     // localStorage.removeItem('token');
-    await Kakao.Auth.logout(function () {
-      console.log('로그아웃 성공', Kakao.Auth.getAccessToken());
+    Kakao.Auth.logout(function () {
+      console.log('토큰 정보 확인:', Kakao.Auth.getAccessToken());
+      setKtoken(null);
+      Kakao.cleanup();
     });
-    // setKtoken(null); // state 관리를 위해 존재, setKtoken(null)을 하게되면 logout이 안먹음
-    // Kakao.cleanup();
-  };
+  }, []);
 
   const onClickLogin = useCallback(() => {
     setLoginModal((prev) => !prev);
