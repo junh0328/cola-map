@@ -19,9 +19,11 @@ const swaggerSpec = swaggerJsdoc(swagger);
 const userRouter = require('./routers/userRouter');
 const storeRouter = require('./routers/storeRouter');
 const postRouter = require('./routers/postRouter');
+const askRouter = require('./routers/askRouter');
 
 // Proxy set
 app.set('trust proxy', 1);
+
 if (process.env.NODE_ENV === 'production') {
   // Product
   app.use(morgan('combined'));
@@ -49,6 +51,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/user', userRouter);
 app.use('/store', storeRouter);
 app.use('/post', postRouter);
+app.use('/ask', askRouter);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
