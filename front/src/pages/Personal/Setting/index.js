@@ -28,6 +28,7 @@ const Setting = () => {
       alert(`${result}로 닉네임이 변경되었습니다.`);
     } else {
       alert('올바른 닉네임을 입력해주세요');
+      return;
     }
     setNickname(result);
   }, []);

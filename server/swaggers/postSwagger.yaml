@@ -1,0 +1,91 @@
+paths:
+  /post:
+    post:
+      tags:
+      - post
+      summary: WRITE POST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                store:
+                  type: string    
+                storeName:
+                  type: string    
+                kakaoId: 
+                  type: string    
+                addressX:
+                  type: number    
+                addressY:
+                  type: number
+                drink:
+                  type: string    
+                comment:
+                  type: string    
+            examples:
+              store does not exists:
+                  summary: store does not exists
+                  value:
+                    storeName: BHC 상암동
+                    kakaoId: 123456
+                    addressX: 123.456
+                    addressY: 123.456
+                    drink: 코카콜라
+                    comment: 코카콜라가 왔어요 !
+              store alreay exists:
+                  summary: store alreay exists
+                  value:
+                    store: 60d98d045437b83d4c8826db
+                    drink: 코카콜라
+                    comment: 코카콜라가 왔어요 !
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+  /post/store/{storeId}:
+    get:
+      tags:
+      - post
+      summary: GET STORE'S POST
+      parameters: 
+        - in: path  
+          name: storeId
+          required: true
+          schema: 
+            type: string
+            default: '60d8791b2219231ff4cfb8c0'      
+      responses:
+        '200':
+          description: OK
+
+  /post/user:
+    get:
+      tags:
+      - post
+      summary: GET USER'S POST
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+
+  /post/{postId}:
+    delete:
+      tags:
+      - post
+      summary: DELETE POST
+      parameters: 
+        - in: path
+          name: postId
+          required: true
+          schema: 
+            type: string            
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK

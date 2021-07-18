@@ -12,8 +12,11 @@ import {
 } from './style';
 import { useKeyword } from 'apis/useKeyword';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { searchAddress } from 'reducers/map';
 
 const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, show, onCloseModal }) => {
+  const dispatch = useDispatch();
   const divStyle = useMemo(() => ({ overflow: 'auto', height: '60vh' }));
   const liStyle = useMemo(
     () => ({
@@ -31,12 +34,14 @@ const SearchModal = ({ fetchedData, setFetchedData, searchValue, onChangeValue, 
   const SearchKeyword = useCallback((e) => {
     e.preventDefault();
     useKeyword(searchValue);
+    dispatch(searchAddress(searchValue));
     onCloseModal();
   });
 
   // fetchedData가 매핑된 li 태그 클릭시 해당 키워드를 바탕으로 useKeyword() 함수 호출
   const ClickKeyword = useCallback((keyword) => {
     useKeyword(keyword);
+    dispatch(searchAddress(searchValue));
     onCloseModal();
   });
 

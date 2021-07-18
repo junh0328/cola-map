@@ -1,9 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MapWrapper } from './style';
 import { getLocation, setAddress } from 'reducers/map';
+import marker from 'apis/license/marker.png';
 
 export default function Map() {
+  /**
+   * store: 중심 좌표 기준 주변 가게들
+   * markers: 주변 가게들 마커
+   */
+  const [stores, setStores] = useState([]);
+  const [markers, setMarkers] = useState([]);
+
   const dispatch = useDispatch();
   const { map } = useSelector((state) => {
     return {
@@ -17,9 +25,20 @@ export default function Map() {
 
   useEffect(() => {
     if (map) {
-      kakao.maps.event.addListener(map, 'idle', getAddress);
+      kakao.maps.event.addListener(map, 'idle', () => {
+        getAddress();
+        getKeyword();
+      });
     }
   }, [map]);
+
+  useEffect(() => {
+    addMarker();
+  }, [stores]);
+
+  useEffect(() => {
+    markersControl();
+  }, [markers]);
 
   const getAddress = () => {
     const geocoder = new kakao.maps.services.Geocoder();
@@ -27,6 +46,55 @@ export default function Map() {
     geocoder.coord2Address(La, Ma, (result, status) => {
       dispatch(setAddress(result[0], status));
     });
+  };
+
+  const getKeyword = () => {
+    const places = new kakao.maps.services.Places(map);
+    const radius = 1000;
+    places.categorySearch(
+      'FD6', // https://apis.map.kakao.com/web/documentation/#CategoryCode
+      function (result, status) {
+        // callback
+        setStores(result);
+      },
+      {
+        useMapCenter: true,
+        radius: radius, // 반경
+        sort_by: 'DISTANCE', // 정렬 옵션 (https://apis.map.kakao.com/web/documentation/#services_SortBy)
+      },
+    );
+  };
+
+  const addMarker = () => {
+    const tmpMarkers = [];
+    stores.forEach((data) => {
+      const { x, y, place_name, id } = data;
+      const position = new kakao.maps.LatLng(y, x);
+
+      var markerImageUrl = marker,
+        markerImageSize = new kakao.maps.Size(25, 35); // 마커 이미지의 크기
+
+      // 마커 이미지를 생성한다
+      var markerImage = new kakao.maps.MarkerImage(markerImageUrl, markerImageSize);
+
+      const markerItem = new kakao.maps.Marker({
+        title: place_name,
+        position: position,
+        image: markerImage,
+      });
+      kakao.maps.event.addListener(markerItem, 'click', () => {
+        location.href = `store/${place_name}/${id}`;
+      });
+      tmpMarkers.push(markerItem);
+    });
+    setMarkers(tmpMarkers);
+    markersControl(true);
+  };
+
+  const markersControl = (del = false) => {
+    for (let i = 0; i < markers.length; i++) {
+      del ? markers[i].setMap(null) : markers[i].setMap(map);
+    }
   };
 
   return (

@@ -11,10 +11,18 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  nickname: {
+  profile_nickname: {
     type: String,
     required: true,
     trim: true,
+  },
+  profile_image: {
+    type: String,
+    require: true,
+  },
+  account_email: {
+    type: String,
+    unique: true,
   },
   // point: {
   //   type: Number,

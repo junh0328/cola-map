@@ -17,21 +17,7 @@ server 폴더 내에서 실행
 
 </br>
 
-### 📄 API
+### 🖥 서버, DB 정상 실행 시 메시지
 
-- #### GET
-  - /store - 전체 제보(가게) 목록 조회
-  - /store/:id - id 값에 해당하는 제보(가게) 조회
-- #### POST
-  - /store - 제보(가게) 생성
-- #### DELETE
-  - /store/:id - id 값에 해당하는 제보(가게) 삭제
 
-</br>
-
-### 📄 변수명
-
-- storeName: 가게이름(String)
-- latitude: 위도(Number)
-- longitude: 경도(Number)
-- category: 콜라/펩시(String)
+<img src="./server_db_message.png" width="30%">
