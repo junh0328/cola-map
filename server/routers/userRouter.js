@@ -67,9 +67,7 @@ userRouter.delete('/quit', async (req, res) => {
 
 // 로그인 & 회원가입
 userRouter.post('/login', async (req, res) => {
-  console.log(req.body);
   const uniqId = req.body.uniqId;
-
   try {
     let user = await User.findOne({ uniqId: uniqId });
     if (!user) {
