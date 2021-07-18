@@ -38,14 +38,13 @@ userRouter.get('/profile', auth, async (req, res) => {
 });
 
 // 닉네임 변경
-userRouter.post('/set-nickname', auth, async (req, res) => {
+userRouter.patch('/nickname', auth, async (req, res) => {
   try {
     const id = req.user._id;
     const nickname = req.body.profile_nickname;
     if (nickname) {
       await User.findByIdAndUpdate(id, { profile_nickname: nickname });
-      const user = await User.findById({ _id: id });
-      res.status(200).send(user);
+      res.status(200).send(req.body.profile_nickname);
     } else {
       res.status(500).send({ error: 'nickname is required' });
     }
