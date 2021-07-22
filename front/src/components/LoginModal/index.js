@@ -1,4 +1,5 @@
 import { CloseOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 import React, { useCallback, useMemo } from 'react';
 import {
@@ -12,7 +13,7 @@ import {
 } from './style';
 
 const LoginModal = (props) => {
-  const { onClose, setKtoken } = props;
+  const { onClose } = props;
 
   const BtnStyle = useMemo(
     () => ({
@@ -26,28 +27,7 @@ const LoginModal = (props) => {
   );
 
   const socialLogin = useCallback(() => {
-    Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
-
-    Kakao.Auth.login({
-      scope: 'profile_nickname, profile_image, account_email',
-
-      success: function (authObj) {
-        // console.log('authObj: ', authObj);
-        Kakao.Auth.setAccessToken(authObj.access_token);
-        // localStorage.setItem('token', authObj.access_token);
-        if (authObj.access_token) {
-          setKtoken(authObj.access_token);
-          onClose();
-          Kakao.cleanup();
-          console.log('Kakao.cleanup!-login');
-        }
-      },
-      fail: function (err) {
-        console.log('에러', err);
-        alert('로그인실패!');
-        return;
-      },
-    });
+    location.href = `http://localhost:5000/user/kakao/login`;
   }, []);
 
   return (

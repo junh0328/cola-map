@@ -32,7 +32,7 @@ import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
-import { LOGIN_REQUEST } from 'reducers/personal';
+import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 import { calCategory } from 'hooks/calCategory';
 import { reviewList } from 'apis/dummy/reviewList';
 
@@ -47,61 +47,26 @@ const Store = () => {
   const [categoryRate, setCategoryRate] = useState(100);
   // 삭제 요청 모달
   const [onModal, setOnModal] = useState(false);
-  // 성공시 생기는 토큰 관리
-  const [ktoken, setKtoken] = useState(null);
 
   // 서버로 부터 전달 받는 state 내 정보
-  const { me } = useSelector((state) => state.personal);
+  const { myInfo } = useSelector((state) => state.personal);
   const dispatch = useDispatch();
   const { title, id } = useParams();
   const history = useHistory();
   const commentRef = useRef();
-  // const localToken = localStorage.getItem('token');
 
+  // 로컬 스토리지에 토큰이 존재하는지 확인
+  const myToken = localStorage.getItem('token');
+
+  // 로컬 스토리지에 토큰이 있는데, 내 정보가 reducer에 없을 경우 유저 정보를 요청
   useEffect(() => {
-    /* 로컬 스토리지에 토큰이 있는데, 로그인을 통해 들어온 것이 아닌 경우 (ktoken이 없음) */
-    if (!ktoken && !me) {
-      Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
-      const isToken = Kakao.Auth.getAccessToken();
-      if (isToken) {
-        console.log('isToken: ', isToken);
-        setKtoken(isToken);
-        Kakao.cleanup();
-        console.log('Kakao.cleanup! - isToken');
-      }
-      Kakao.cleanup();
-    }
-  }, [ktoken, me]);
-
-  /* 서버로 토큰을 전달하기 위한 함수 */
-  // useEffect(() => {
-  //   if (ktoken) {
-  //     dispatch({
-  //       type: LOGIN_REQUEST,
-  //       data: {
-  //         uniqId: ktoken,
-  //         nickname: '준희',
-  //       },
-  //     });
-  //   }
-  // }, [ktoken]);
-
-  /* 로그인 시 scope로 넘겨줬던 닉네임을 카카오 API로부터 요청 후 전달 받은 뒤 출력 */
-  useEffect(() => {
-    if (ktoken) {
-      window.Kakao.API.request({
-        url: '/v2/user/me',
-        success: (res) => {
-          const kakao_account = res.kakao_account;
-          alert(`${kakao_account.profile.nickname}님 환영합니다!`);
-        },
-        fail: function (err) {
-          console.log('에러', err);
-          return;
-        },
+    if (!myInfo && myToken) {
+      console.log('me가 없으므로, 유저 정보를 요청합니다');
+      dispatch({
+        type: LOAD_INFO_REQUEST,
       });
     }
-  }, [ktoken]);
+  }, []);
 
   useEffect(() => {
     dispatch(getLocation());
@@ -137,16 +102,8 @@ const Store = () => {
 
   /* 카카오 로그아웃 */
   const logoutWithKakao = useCallback(() => {
-    Kakao.init(`${process.env.REACT_APP_KAKAO_KEY}`);
-    if (!Kakao.Auth.getAccessToken()) {
-      alert('Not logged in.');
-      return;
-    }
-    // localStorage.removeItem('token');
-    Kakao.Auth.logout(function () {
-      console.log('토큰 정보 확인:', Kakao.Auth.getAccessToken());
-      setKtoken(null);
-      Kakao.cleanup();
+    dispatch({
+      type: LOG_OUT_REQUEST,
     });
   }, []);
 
@@ -175,8 +132,8 @@ const Store = () => {
             <LeftOutlined />
           </CloseModalButton>
           <span>{title}</span>
-          {ktoken && <RemoveRequestButton2 onClick={logoutWithKakao}>로그아웃</RemoveRequestButton2>}
-          {ktoken ? (
+          {myInfo && <RemoveRequestButton2 onClick={logoutWithKakao}>로그아웃</RemoveRequestButton2>}
+          {myInfo ? (
             <RemoveRequestButton onClick={onClickModal}>삭제요청</RemoveRequestButton>
           ) : (
             <RemoveRequestButton onClick={onClickLogin}>로그인</RemoveRequestButton>
@@ -231,10 +188,14 @@ const Store = () => {
                 </FormCategoryMain>
               </FormCategoryWrap>
               <div>
-                <MyCard title="이준희" style={{ margin: '6% 0' }}>
-                  <input ref={commentRef} style={{ padding: 10, width: '100%', border: 'none', outline: 'none' }} />
-                </MyCard>
-                <CustomBtn>리뷰쓰기</CustomBtn>
+                {myInfo && (
+                  <>
+                    <MyCard title={myInfo.myNickname} style={{ margin: '6% 0' }}>
+                      <input ref={commentRef} style={{ padding: 10, width: '100%', border: 'none', outline: 'none' }} />
+                    </MyCard>
+                    <CustomBtn>리뷰쓰기</CustomBtn>
+                  </>
+                )}
               </div>
             </form>
           </StoreContent>
@@ -263,7 +224,7 @@ const Store = () => {
           </StoreContent>
         </StoreMain>
       </div>
-      {loginModal && <LoginModal onClose={onCloseModal} setKtoken={setKtoken} />}
+      {loginModal && <LoginModal onClose={onCloseModal} />}
       {onModal && <StoreModal title={title} id={id} onClose={onCloseModal} />}
     </>
   );
