@@ -32,7 +32,7 @@ import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
-import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
+import { CHECK_USER_REQUEST, LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 import { calCategory } from 'hooks/calCategory';
 import { reviewList } from 'apis/dummy/reviewList';
 
@@ -71,6 +71,7 @@ const Store = () => {
   useEffect(() => {
     dispatch(getLocation());
     useKeyword(title);
+    getStoreLocation(title);
   }, []);
 
   /* 카테고리 비율을 계산할 함수 calCategory() 실행 후 결과 값을 CategoryRate state에 담고 props로 전달 */
@@ -78,6 +79,20 @@ const Store = () => {
     const categoryResult = calCategory(reviewList);
     setCategoryRate(categoryResult);
   }, [reviewList]);
+
+  /* params로 넘겨 받는 title을 통해 좌표 다시 받아오기 */
+  const getStoreLocation = (title) => {
+    let places = new kakao.maps.services.Places();
+
+    let callback = function (result, status) {
+      if (status === kakao.maps.services.Status.OK) {
+        console.log('result[0]번째 출력:', result[0]);
+        console.log(`result:\nx:${result[0].x} \ny:${result[0].y}`);
+      }
+    };
+
+    places.keywordSearch(title, callback);
+  };
 
   const handleClickRadioButton = useCallback((radioBtnName) => {
     setInputStatus(radioBtnName);
