@@ -8,15 +8,28 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
-// import logger from 'redux-logger';
 
 import reportWebVitals from './reportWebVitals';
+import { CHECK_USER_REQUEST } from 'reducers/personal';
 
 const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(sagaMiddleware)));
 
+const checkUser = () => {
+  console.log('check user...');
+  try {
+    store.dispatch({
+      type: CHECK_USER_REQUEST,
+    });
+  } catch (err) {
+    console.error(err);
+    return;
+  }
+};
+
 sagaMiddleware.run(rootSaga);
+checkUser();
 
 ReactDOM.render(
   <Provider store={store}>
