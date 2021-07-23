@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 require('./config/mongoose.js');
 
@@ -45,6 +46,14 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
+// Express - Session
+app.use(
+  session({
+    secret: 'colamapsession',
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
