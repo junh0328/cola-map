@@ -32,9 +32,10 @@ import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
-import { CHECK_USER_REQUEST, LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
+import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 import { calCategory } from 'hooks/calCategory';
 import { reviewList } from 'apis/dummy/reviewList';
+import { POST_STORE_REQUEST } from 'reducers/post';
 
 const Store = () => {
   // 리뷰 갯수 표현 state
@@ -47,6 +48,9 @@ const Store = () => {
   const [categoryRate, setCategoryRate] = useState(100);
   // 삭제 요청 모달
   const [onModal, setOnModal] = useState(false);
+  // 좌표값 저장
+  const [addressX, setAddressX] = useState(null);
+  const [addressY, setAddressY] = useState(null);
 
   // 서버로 부터 전달 받는 state 내 정보
   const { myInfo } = useSelector((state) => state.personal);
@@ -86,8 +90,11 @@ const Store = () => {
 
     let callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
-        console.log('result[0]번째 출력:', result[0]);
-        console.log(`result:\nx:${result[0].x} \ny:${result[0].y}`);
+        /* result[0] result의 첫 번째 x,y 좌표값을 가져오기 위해 확인 */
+        // console.log('result[0]번째 출력:', result[0]);
+        console.log(`x: ${result[0].x}\ny: ${result[0].y}`);
+        setAddressX(result[0].x);
+        setAddressY(result[0].y);
       }
     };
 
@@ -108,8 +115,21 @@ const Store = () => {
         return;
       }
       alert(
-        `가게id: ${id} \n가게이름: ${title}\n커멘트: ${comment.value}\n카테고리: ${inputStatus ? inputStatus : '없음'}`,
+        `가게id: ${id} \n가게이름: ${title}\n커멘트: ${comment.value}\n카테고리: ${
+          inputStatus ? inputStatus : '없음'
+        }\naddresX:${addressX}\naddressY:${addressY}`,
       );
+      dispatch({
+        type: POST_STORE_REQUEST,
+        data: {
+          storeName: title,
+          kakaoId: id,
+          addressX: addressX,
+          addressY: addressY,
+          drink: inputStatus,
+          comment: comment.value,
+        },
+      });
       comment.value = '';
     },
     [inputStatus],
