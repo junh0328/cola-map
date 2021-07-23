@@ -17,6 +17,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = swaggerJsdoc(swagger);
 
 // Router
+const globalRouter = require('./routers/globalRouter.js');
 const userRouter = require('./routers/userRouter');
 const storeRouter = require('./routers/storeRouter');
 const postRouter = require('./routers/postRouter');
@@ -33,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
     cors({
       origin: ['http://example.com'],
       credentials: true,
-    })
+    }),
   );
 } else {
   // Develop
@@ -42,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
     cors({
       origin: 'http://localhost:3000',
       credentials: true,
-    })
+    }),
   );
 }
 
@@ -54,9 +55,12 @@ app.use(
     saveUninitialized: true,
   }),
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Router
+app.use('/', globalRouter);
 app.use('/user', userRouter);
 app.use('/store', storeRouter);
 app.use('/post', postRouter);
