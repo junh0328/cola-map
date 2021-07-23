@@ -50,6 +50,31 @@ userRouter.get('/kakao/callback', async (req, res) => {
   } catch (e) {
     res.status(500).send(e.message);
   }
+
+  // 해당 유저 정보로 로그인 처리 후 colamap 토큰 발행
+  const profile = user.data;
+  let token;
+  try {
+    const exUser = await User.findOne({ uniqId: profile.id });
+    if (exUser) {
+      token = await exUser.generateAuthToken();
+      req.session.user = exUser;
+    } else {
+      const newUser = await User.create({
+        uniqId: profile.id,
+        profile_nickname: profile.kakao_account.profile.nickname,
+        profile_image: profile.kakao_account.profile.profile_image_url,
+        account_email: profile.kakao_account.email,
+      });
+      token = await newUser.generateAuthToken();
+      req.session.user = newUser;
+    }
+    req.session.token = token;
+    res.redirect('http://localhost:3000/');
+  } catch (e) {
+    res.status(500).send(e.message);
+  }
+});
 // 임시 API - 모든 유저 조회
 userRouter.get('/', async (req, res) => {
   try {
