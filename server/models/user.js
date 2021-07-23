@@ -11,16 +11,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  profile_nickname: {
+  profileNickname: {
     type: String,
     required: true,
     trim: true,
   },
-  profile_image: {
+  profileImage: {
     type: String,
     require: true,
   },
-  account_email: {
+  accountEmail: {
     type: String,
     unique: true,
   },
