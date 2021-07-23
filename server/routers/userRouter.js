@@ -1,6 +1,7 @@
 const express = require('express');
 const userRouter = express.Router();
 
+const User = require('../models/user.js');
 const auth = require('../middleware/auth');
 
 const axios = require('axios');
