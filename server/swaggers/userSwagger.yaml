@@ -28,7 +28,7 @@ paths:
       summary: 닉네임 변경 - Authorization 키 필요
       parameters:
         - in: body
-          name: profile_nickname
+          name: profileNickname
           required: true
       responses:
         '200':
@@ -50,10 +50,10 @@ paths:
             type: string
             default: '123457'
         - in: body
-          name: profile_nickname
+          name: profileNickname
           required: true
         - in: body
-          name: account_email
+          name: accountEmail
       responses:
         '200':
           description: OK

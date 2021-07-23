@@ -5,7 +5,7 @@ const getMostPosted = async(storeId) => {
     const post = await Post.aggregate([
         {
             $match: {
-                store: mongoose.Types.ObjectId(storeId)
+                store: storeId
             }
         },
         {

@@ -9,8 +9,8 @@ const qs = require('qs');
 
 // 카카오 로그인 로직
 userRouter.get('/kakao/login', async (req, res) => {
-  // const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile,account_email`;
-  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile_nickname,profile_image,account_email`;
+  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile,account_email`;
+  // const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile_nickname,profile_image,account_email`;
   // 비즈니스 앱
   // 카카오 Developer에서 앱을 새로 생성해야 비즈 앱으로 적용되는 것 같습니다.
   res.redirect(kakaoAuthURL);
@@ -62,9 +62,9 @@ userRouter.get('/kakao/callback', async (req, res) => {
     } else {
       const newUser = await User.create({
         uniqId: profile.id,
-        profile_nickname: profile.kakao_account.profile.nickname,
-        profile_image: profile.kakao_account.profile.profile_image_url,
-        account_email: profile.kakao_account.email,
+        profileNickname: profile.kakao_account.profile.nickname,
+        profileImage: profile.kakao_account.profile.profile_image_url,
+        accountEmail: profile.kakao_account.email,
       });
       token = await newUser.generateAuthToken();
       req.session.user = newUser;
@@ -103,7 +103,7 @@ userRouter.get('/profile', auth, async (req, res) => {
   try {
     const id = req.user._id;
     const user = await User.findById({ _id: id });
-    res.status(200).send(user.profile_nickname);
+    res.status(200).send(user.profileNickname);
   } catch (e) {
     res.status(500).send({ error: e.message });
   }
@@ -113,10 +113,10 @@ userRouter.get('/profile', auth, async (req, res) => {
 userRouter.patch('/nickname', auth, async (req, res) => {
   try {
     const id = req.user._id;
-    const nickname = req.body.profile_nickname;
+    const nickname = req.body.profileNickname;
     if (nickname) {
-      await User.findByIdAndUpdate(id, { profile_nickname: nickname });
-      res.status(200).send(req.body.profile_nickname);
+      await User.findByIdAndUpdate(id, { profileNickname: nickname });
+      res.status(200).send(req.body.profileNickname);
     } else {
       res.status(500).send({ error: 'nickname is required' });
     }

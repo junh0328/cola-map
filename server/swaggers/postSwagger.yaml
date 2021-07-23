@@ -37,7 +37,7 @@ paths:
               store alreay exists:
                 summary: store alreay exists
                 value:
-                  store: 60d98d045437b83d4c8826db
+                  store: 123456
                   drink: 코카콜라
                   comment: 코카콜라가 왔어요 !
       security:
@@ -57,7 +57,7 @@ paths:
           required: true
           schema:
             type: string
-            default: '60d8791b2219231ff4cfb8c0'
+            default: '123456'
       responses:
         '200':
           description: OK
