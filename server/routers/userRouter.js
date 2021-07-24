@@ -9,8 +9,8 @@ const qs = require('qs');
 
 // 카카오 로그인 로직
 userRouter.get('/kakao/login', async (req, res) => {
-  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile,account_email`;
-  // const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile_nickname,profile_image,account_email`;
+  // const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile,account_email`;
+  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile_nickname,profile_image,account_email`;
   // 비즈니스 앱
   // 카카오 Developer에서 앱을 새로 생성해야 비즈 앱으로 적용되는 것 같습니다.
   res.redirect(kakaoAuthURL);

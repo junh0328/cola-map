@@ -5,11 +5,10 @@ import marker from 'apis/license/marker.png';
 const { kakao } = window;
 
 export function useGetMyLoc() {
-  // console.log(`useGetMYLoc`);
   const container = document.getElementById('Map'); // 가이드는 Map이다
   const options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
-    level: 4,
+    level: 3,
   };
   const map = new kakao.maps.Map(container, options);
 
@@ -58,13 +57,6 @@ export function useGetMyLoc() {
       map.setCenter(positions[0].latlng, marker);
 
       // console.log(marker);
-
-      kakao.maps.event.addListener(marker, 'click', () => {
-        console.log('maker:', marker);
-        // if (marker.Fb !== '내 위치') {
-        //   return (location.href = `/store/${marker.Fb}`);
-        // }
-      });
     }
   }
 
@@ -76,13 +68,6 @@ export function useGetMyLoc() {
       latlng: null,
       img: marker,
     },
-    // {
-    //   id: 2,
-    //   title: '메가커피 의왕내손점',
-    //   latlng: new kakao.maps.LatLng(37.38992745536002, 126.97743015243483),
-    //   img: coca,
-    //   storeId: 940929140,
-    // },
   ];
   return { map };
 }

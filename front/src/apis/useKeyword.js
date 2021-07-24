@@ -39,6 +39,14 @@ export function useKeyword(searchValue) {
     }
   }
 
+  /* 마커를 키워드로 검색 시에는 못 움직이게 하는 것은 어떤지?*/
+  function setDraggable(draggable) {
+    // 마우스 드래그로 지도 이동 가능여부를 설정합니다
+    map.setDraggable(draggable);
+  }
+
+  setDraggable(false);
+
   // 지도에 마커를 표시하는 함수입니다
   function displayMarker(place) {
     // 마커를 생성하고 지도에 표
@@ -73,4 +81,5 @@ export function useKeyword(searchValue) {
       }
     });
   }
+  return { setDraggable };
 }

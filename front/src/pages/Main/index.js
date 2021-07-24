@@ -24,7 +24,7 @@ export default function Main() {
         console.log('token을 로컬 스토리지에 저장합니다.');
         localStorage.setItem('token', me.token);
         localStorage.setItem('uniqId', me.user.uniqId);
-        localStorage.setItem('nickname', me.user.profile_nickname);
+        localStorage.setItem('nickname', me.user.profileNickname);
       }
     }
   }, [me]);
