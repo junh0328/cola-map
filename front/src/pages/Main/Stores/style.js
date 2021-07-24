@@ -116,7 +116,6 @@ export const StoreContentHeaderMain = styled.div`
 `;
 
 export const StoreContentHeaderSub = styled.div`
-  margin-left: 10px;
   font-size: 1.5rem;
   font-weight: bolder;
   @media (max-width: 425px) {
@@ -146,8 +145,8 @@ export const MyCard = styled(Card)`
   height: 170px;
   border-radius: 15px;
   background: white;
-  background-color: ${(props) => props.category === '펩시' && '#e1f5fe'};
-  background-color: ${(props) => props.category === '코카콜라' && '#fce4ec'};
+  background-color: ${(props) => props.category === 'pepsi' && '#e1f5fe'};
+  background-color: ${(props) => props.category === 'coca' && '#fce4ec'};
   display: grid;
   position: relative;
 

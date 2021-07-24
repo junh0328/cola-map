@@ -34,12 +34,9 @@ import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
 import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 import { calCategory } from 'hooks/calCategory';
-import { reviewList } from 'apis/dummy/reviewList';
-import { POST_STORE_REQUEST } from 'reducers/post';
+import { GET_STORE_REQUEST, POST_STORE_REQUEST } from 'reducers/post';
 
 const Store = () => {
-  // 리뷰 갯수 표현 state
-  const [storeReview, setStoreReview] = useState([1]);
   // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
   // 카테고리 관리
@@ -54,6 +51,8 @@ const Store = () => {
 
   // 서버로 부터 전달 받는 state 내 정보
   const { myInfo } = useSelector((state) => state.personal);
+  // 서버로 부터 전달 받은 storeData 배열
+  const { storeData } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const { title, id } = useParams();
   const history = useHistory();
@@ -80,9 +79,24 @@ const Store = () => {
 
   /* 카테고리 비율을 계산할 함수 calCategory() 실행 후 결과 값을 CategoryRate state에 담고 props로 전달 */
   useEffect(() => {
-    const categoryResult = calCategory(reviewList);
-    setCategoryRate(categoryResult);
-  }, [reviewList]);
+    if (storeData.length) {
+      const categoryResult = calCategory(storeData);
+      setCategoryRate(categoryResult);
+    }
+  }, [storeData]);
+
+  useEffect(() => {
+    if (!storeData.length) {
+      dispatch({
+        type: GET_STORE_REQUEST,
+        data: id,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log('check storeData: ', storeData);
+  }, [storeData]);
 
   /* params로 넘겨 받는 title을 통해 좌표 다시 받아오기 */
   const getStoreLocation = (title) => {
@@ -92,7 +106,6 @@ const Store = () => {
       if (status === kakao.maps.services.Status.OK) {
         /* result[0] result의 첫 번째 x,y 좌표값을 가져오기 위해 확인 */
         // console.log('result[0]번째 출력:', result[0]);
-        console.log(`x: ${result[0].x}\ny: ${result[0].y}`);
         setAddressX(result[0].x);
         setAddressY(result[0].y);
       }
@@ -114,11 +127,6 @@ const Store = () => {
         comment.focus();
         return;
       }
-      alert(
-        `가게id: ${id} \n가게이름: ${title}\n커멘트: ${comment.value}\n카테고리: ${
-          inputStatus ? inputStatus : '없음'
-        }\naddresX:${addressX}\naddressY:${addressY}`,
-      );
       dispatch({
         type: POST_STORE_REQUEST,
         data: {
@@ -226,7 +234,11 @@ const Store = () => {
                 {myInfo && (
                   <>
                     <MyCard title={myInfo.myNickname} style={{ margin: '6% 0' }}>
-                      <input ref={commentRef} style={{ padding: 10, width: '100%', border: 'none', outline: 'none' }} />
+                      <input
+                        ref={commentRef}
+                        style={{ padding: 10, width: '100%', border: 'none', outline: 'none' }}
+                        placeholder="리뷰를 입력해주세요!"
+                      />
                     </MyCard>
                     <CustomBtn>리뷰쓰기</CustomBtn>
                   </>
@@ -237,18 +249,18 @@ const Store = () => {
           {/* 리뷰 리스트 관련 */}
           <StoreContent>
             <StoreContentHeader>
-              <StoreContentHeaderMain>리뷰 </StoreContentHeaderMain>
+              <StoreContentHeaderMain>{storeData.length ? `리뷰` : `아직까지 작성된 리뷰`}</StoreContentHeaderMain>
               <StoreContentHeaderSub>
-                {reviewList.length ? <span>{reviewList.length}개</span> : <span>0개</span>}
+                {storeData.length ? <span>&nbsp;{storeData.length}개</span> : <span>가 없습니다</span>}
               </StoreContentHeaderSub>
             </StoreContentHeader>
-            {storeReview.length ? (
+            {storeData.length ? (
               <StoreContentReview>
-                {reviewList.map((review) => (
-                  <StoreContentReviewWrap key={review.id}>
-                    <MyCard title={review.userName} bordered={false} category={review.category.toString()}>
-                      <p>{review.comment}</p>
-                      <p>{review.category === '펩시' ? <img src={pepsi} /> : <img src={coca} />}</p>
+                {storeData.map((data) => (
+                  <StoreContentReviewWrap key={data._id}>
+                    <MyCard title={data.user.profileNickname} bordered={false} category={data.drink.toString()}>
+                      <p>{data.comment}</p>
+                      <p>{data.drink === 'pepsi' ? <img src={pepsi} /> : <img src={coca} />}</p>
                     </MyCard>
                   </StoreContentReviewWrap>
                 ))}
