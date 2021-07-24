@@ -95,10 +95,10 @@ const Store = () => {
   }, []);
 
   useEffect(() => {
-    console.log('check storeData: ', storeData);
+    if (storeData.length) console.log('check storeData: ', storeData);
   }, [storeData]);
 
-  /* params로 넘겨 받는 title을 통해 좌표 다시 받아오기 */
+  /* useParams()로 넘겨 받는 title을 통해 좌표 다시 받아오기 */
   const getStoreLocation = (title) => {
     let places = new kakao.maps.services.Places();
 
@@ -145,9 +145,16 @@ const Store = () => {
 
   /* 카카오 로그아웃 */
   const logoutWithKakao = useCallback(() => {
-    dispatch({
-      type: LOG_OUT_REQUEST,
-    });
+    const result = window.confirm(
+      '로그아웃 시에 Cola? Gola!의 주요 기능을 사용하실 수 없습니다. \n정말로 로그아웃 하시겠습니까? 🤷🏻‍♂️',
+    );
+    if (result) {
+      dispatch({
+        type: LOG_OUT_REQUEST,
+      });
+    } else {
+      return;
+    }
   }, []);
 
   const onClickLogin = useCallback(() => {
@@ -251,7 +258,7 @@ const Store = () => {
             <StoreContentHeader>
               <StoreContentHeaderMain>{storeData.length ? `리뷰` : `아직까지 작성된 리뷰`}</StoreContentHeaderMain>
               <StoreContentHeaderSub>
-                {storeData.length ? <span>&nbsp;{storeData.length}개</span> : <span>가 없습니다</span>}
+                {storeData.length ? <span>&nbsp;{storeData.length}개</span> : <span>가 없어요</span>}
               </StoreContentHeaderSub>
             </StoreContentHeader>
             {storeData.length ? (
