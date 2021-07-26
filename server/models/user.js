@@ -4,31 +4,34 @@ const jwt = require('jsonwebtoken');
 
 mongoose.set('useCreateIndex', true);
 
-const userSchema = new mongoose.Schema({
-  uniqId: {
-    type: String,
-    unique: true,
-    required: true,
-    trim: true,
+const userSchema = new mongoose.Schema(
+  {
+    uniqId: {
+      type: String,
+      unique: true,
+      required: true,
+      trim: true,
+    },
+    profileNickname: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    profileImage: {
+      type: String,
+      require: true,
+    },
+    accountEmail: {
+      type: String,
+      unique: true,
+    },
+    // point: {
+    //   type: Number,
+    //   default: 0
+    // }
   },
-  profileNickname: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  profileImage: {
-    type: String,
-    require: true,
-  },
-  accountEmail: {
-    type: String,
-    unique: true,
-  },
-  // point: {
-  //   type: Number,
-  //   default: 0
-  // }
-});
+  { timestamps: true },
+);
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;

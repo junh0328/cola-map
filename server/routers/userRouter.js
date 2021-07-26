@@ -9,8 +9,8 @@ const qs = require('qs');
 
 // 카카오 로그인 로직
 userRouter.get('/kakao/login', async (req, res) => {
-  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile,account_email`;
-  // const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile_nickname,profile_image,account_email`;
+  // const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile,account_email`;
+  const kakaoAuthURL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_KEY}&redirect_uri=${process.env.KAKAO_REDIRECT_URL}&response_type=code&scope=profile_nickname,profile_image,account_email`;
   // 비즈니스 앱
   // 카카오 Developer에서 앱을 새로 생성해야 비즈 앱으로 적용되는 것 같습니다.
   res.redirect(kakaoAuthURL);
@@ -55,7 +55,7 @@ userRouter.get('/kakao/callback', async (req, res) => {
   const profile = user.data;
   let token;
   try {
-    const exUser = await User.findOne({ uniqId: profile.id });
+    const exUser = await User.findOne({ accountEmail: profile.kakao_account.email });
     if (exUser) {
       token = await exUser.generateAuthToken();
       req.session.user = exUser;
@@ -126,7 +126,7 @@ userRouter.patch('/nickname', auth, async (req, res) => {
 });
 
 // 회원 탈퇴
-userRouter.delete('/quit', async (req, res) => {
+userRouter.delete('/quit', auth, async (req, res) => {
   try {
     const id = req.user._id;
     const deletedUser = await User.findOneAndDelete({ _id: id });
