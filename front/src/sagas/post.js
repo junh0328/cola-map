@@ -23,7 +23,7 @@ function* getStoreRequest(action) {
   // console.log('check store id before get Method:', action.data);
   try {
     const result = yield call(getStoreRequestAPI, action.data);
-    // console.log('check result: ', result.data.posts);
+    console.log('check result: ', result.data);
 
     yield put({
       type: GET_STORE_SUCCESS,
