@@ -8,60 +8,69 @@ const {ObjectId} = require('mongodb')
 // 제보하기
 postRouter.post('/', auth, async (req, res) => {
   try {
-    const store = req.body.store;
-    if (store) {
-      // 이미 store 가 존재할 경우
+    
+    const kakaoId = req.body.kakaoId;
+    const storeName = req.body.storeName;
+    const addressX = req.body.addressX;
+    const addressY = req.body.addressY;
+    const drink = req.body.drink;
+    const comment = req.body.comment;
+    
+    const is_posted = await Post.countDocuments({
+      store: kakaoId,
+      user: req.user,
+    });
+    if (is_posted !== 0) {
+      return res.status(400).send({ message: '이미 등록한 업체입니다.' });
+    }
 
-      const is_posted = await Post.countDocuments({
-        store: store,
-        user: req.user,
-      });
-      // if (is_posted !== 0) {
-      //   return res.status(400).send({ message: '이미 등록한 업체입니다.' });
-      // }
-
-      const storeObject = await Store.findOne({ kakaoId: store });
-      if (req.body.drink !== storeObject.mostPosted) {
-        const reqCount = await Post.countDocuments({
-          store: store,
-          drink: req.body.drink,
-        });
-        const mostPostedCount = await Post.countDocuments({
-          store: store,
-          drink: storeObject.mostPosted,
-        });
-        if (reqCount + 1 > mostPostedCount) {
-          storeObject.mostPosted = req.body.drink;
-          await storeObject.save();
-        }
-      }
-      await Post.create({
-        store: storeObject.kakaoId,
-        user: req.user,
-        drink: req.body.drink,
-        comment: req.body.comment,
-      });
-    } else {
-      // 신규등록
-      const newStore = new Store({
-        storeName: req.body.storeName,
-        kakaoId: req.body.kakaoId,
-        addressX: req.body.addressX,
-        addressY: req.body.addressY,
-        mostPosted: req.body.drink,
+    const exStore = await Store.findOne({kakaoId : kakaoId})
+    if(!exStore) {
+        const newStore = new Store({
+        storeName: storeName,
+        kakaoId: kakaoId,
+        addressX: addressX,
+        addressY: addressY,
+        mostPosted: drink,
       });
       await newStore.save();
-
-      await Post.create({
-        store: newStore.kakaoId,
-        user: req.user,
-        drink: req.body.drink,
-        comment: req.body.comment,
-      });
+    } else { 
+      if (drink !== exStore.mostPosted) {
+        const reqCount = await Post.countDocuments({
+          store: kakaoId,
+          drink: drink,
+        });
+        const mostPostedCount = await Post.countDocuments({
+          store: kakaoId,
+          drink: exStore.mostPosted,
+        });
+        if (reqCount + 1 > mostPostedCount) {
+          exStore.mostPosted = drink;
+          await exStore.save();
+        }
+      }
     }
-    // req.user.point += 10
-    // await req.user.save()
-    res.status(200).send({ message: 'success' });
+    const posts = await Post.create({
+      store: kakaoId,
+      user: req.user,
+      drink: drink,
+      comment: comment,
+    });
+
+    const result = {
+      store: kakaoId,
+      post: {
+        _id: posts._id,
+        user: {
+          _id: req.user._id,
+          profileNickname: req.user.profileNickname,
+          profileImage:req.user.profileImage
+        },
+        drink: drink,
+        comment: comment
+      },
+    }
+    res.status(200).send({ result });
   } catch (e) {
     res.status(500).send(e.message);
   }
