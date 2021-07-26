@@ -5,7 +5,6 @@ const storeSchema = new mongoose.Schema(
     storeName: {
       type: String,
       required: true,
-      unique: true,
     },
     kakaoId: {
       type: String,
