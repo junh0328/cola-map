@@ -9,8 +9,12 @@ import {
   LOG_OUT_FAILURE,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
+  LOAD_MY_POSTS_REQUEST,
+  LOAD_MY_POSTS_SUCCESS,
+  LOAD_MY_POSTS_FAILURE,
 } from 'reducers/personal';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
+import { myConfig } from 'sagas';
 
 function checkUserAPI() {
   try {
@@ -52,7 +56,7 @@ function loadInfoAPI() {
 function* loadInfoRequest() {
   try {
     const result = yield call(loadInfoAPI);
-    console.log('load Info Data:', result);
+    // console.log('load Info Data:', result);
     yield put({
       type: LOAD_INFO_SUCCESS,
       data: result,
@@ -79,7 +83,7 @@ function logOutAPI() {
 function* logOutRequest() {
   try {
     const result = yield call(logOutAPI);
-    console.log('load Info Data:', result);
+    // console.log('load Info Data:', result);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -87,6 +91,31 @@ function* logOutRequest() {
     console.error(err);
     yield put({
       type: LOG_OUT_FAILURE,
+      error: err,
+    });
+  }
+}
+
+function loadMyPostsAPI() {
+  try {
+    return axios.get('/post/user', myConfig);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* loadMyPostsRequest() {
+  try {
+    const result = yield call(loadMyPostsAPI);
+    console.log('load my posts:', result.data.posts);
+    yield put({
+      type: LOAD_MY_POSTS_SUCCESS,
+      data: result.data.posts,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_MY_POSTS_FAILURE,
       error: err,
     });
   }
@@ -104,6 +133,15 @@ function* watchLogOutRequest() {
   yield takeLatest(LOG_OUT_REQUEST, logOutRequest);
 }
 
+function* watchloadMyPostsRequest() {
+  yield takeLatest(LOAD_MY_POSTS_REQUEST, loadMyPostsRequest);
+}
+
 export default function* personalSaga() {
-  yield all([fork(watchCheckUserRequest), fork(watchLoadInfoRequest), fork(watchLogOutRequest)]);
+  yield all([
+    fork(watchCheckUserRequest),
+    fork(watchLoadInfoRequest),
+    fork(watchLogOutRequest),
+    fork(watchloadMyPostsRequest),
+  ]);
 }

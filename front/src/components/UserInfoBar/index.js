@@ -1,16 +1,19 @@
 import { Link } from 'react-router-dom';
 import { CustomSettingOutlined, UserInfoWrapper, UserInfoWrapperMain } from './style';
 
-import { useMemo } from 'react';
-
-const UserInfoBar = () => {
+const UserInfoBar = ({ myInfo, setLoginModal }) => {
+  // console.log('myInfo', myInfo);
   return (
     <UserInfoWrapper>
-      <UserInfoWrapperMain>
-        <span title="UserName">홍길동</span>
-        <Link to={'/personal/setting'}>
+      <UserInfoWrapperMain onClick={setLoginModal}>
+        {myInfo ? <span title="UserName">{myInfo.myNickname}</span> : <span>로그인이 필요합니다</span>}
+        {myInfo ? (
+          <Link to={'/personal/setting'}>
+            <CustomSettingOutlined />
+          </Link>
+        ) : (
           <CustomSettingOutlined />
-        </Link>
+        )}
       </UserInfoWrapperMain>
     </UserInfoWrapper>
   );

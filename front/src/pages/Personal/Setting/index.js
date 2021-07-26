@@ -7,7 +7,7 @@ import {
   UserInfoWrapperSub,
   UserInfoWrapperSubBtn,
 } from './style';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import {
   AlertOutlined,
   FileTextOutlined,
@@ -17,10 +17,25 @@ import {
   UserDeleteOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_INFO_REQUEST } from 'reducers/personal';
 
 const Setting = () => {
   const style = useMemo(() => ({ cursor: 'pointer', position: 'absolute', left: '3%' }), []);
-  const [nickname, setNickname] = useState('홍길동');
+
+  const myToken = localStorage.getItem('token');
+
+  const { myInfo } = useSelector((state) => state.personal);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!myInfo && myToken) {
+      console.log('me가 없으므로, 유저 정보를 요청합니다');
+      dispatch({
+        type: LOAD_INFO_REQUEST,
+      });
+    }
+  }, []);
 
   const UpdateNickname = useCallback(() => {
     const result = window.prompt('변경할 닉네임을 입력해주세요\n한글로만 사용이 가능합니다');
@@ -30,7 +45,6 @@ const Setting = () => {
       alert('올바른 닉네임을 입력해주세요');
       return;
     }
-    setNickname(result);
   }, []);
 
   return (
@@ -41,7 +55,7 @@ const Setting = () => {
           <LeftOutlined style={style} title="뒤로가기" onClick={() => history.go(-1)} />
         </UserInfoWrapperMain>
         <UserInfoWrapperSub onClick={UpdateNickname}>
-          <span>{nickname}</span>
+          {myInfo && <span title="UserName">{myInfo.myNickname}</span>}
           <UserInfoWrapperSubBtn>
             <HighlightOutlined />
             <div>닉네임 수정</div>

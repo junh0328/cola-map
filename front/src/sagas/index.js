@@ -9,7 +9,7 @@ axios.defaults.baseURL = 'http://localhost:5000';
 axios.defaults.withCredentials = true;
 
 /* 헤더에 넣어 보낼 사용자의 토큰 */
-export let myConfig = {
+export const myConfig = {
   headers: {
     Authorization: 'Bearer ' + localStorage.getItem('token'),
   },

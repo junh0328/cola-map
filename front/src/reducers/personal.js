@@ -1,9 +1,14 @@
 import produce from 'immer';
 
 export const initialState = {
+  // 유저 정보 체크
   me: null,
 
+  // 유저 정보 가져오기
   myInfo: null,
+
+  // 내 정보에 내가 제보한 리뷰 불러오기
+  myPosts: [],
 
   checkUserLoading: false,
   checkUserSuccess: false,
@@ -16,6 +21,10 @@ export const initialState = {
   logOutLoading: false,
   logOutSuccess: false,
   logOutError: null,
+
+  loadMyPostsLoading: false,
+  loadMyPostsSuccess: false,
+  loadMyPostsError: null,
 };
 
 export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
@@ -29,6 +38,10 @@ export const LOAD_INFO_FAILURE = 'LOAD_INFO_FAILURE';
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+
+export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
+export const LOAD_MY_POSTS_SUCCESS = 'LOAD_MY_POSTS_SUCCESS';
+export const LOAD_MY_POSTS_FAILURE = 'LOAD_MY_POSTS_FAILURE';
 
 const personal = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -77,6 +90,21 @@ const personal = (state = initialState, action) =>
       case LOG_OUT_FAILURE: {
         draft.logOutLoading = false;
         draft.logOutError = action.error;
+      }
+      case LOAD_MY_POSTS_REQUEST: {
+        draft.loadMyPostsLoading = true;
+        draft.loadMyPostsSuccess = false;
+        break;
+      }
+      case LOAD_MY_POSTS_SUCCESS: {
+        draft.loadMyPostsLoading = false;
+        draft.loadMyPostsSuccess = true;
+        draft.myPosts = draft.myPosts.concat(action.data);
+        break;
+      }
+      case LOAD_MY_POSTS_FAILURE: {
+        draft.loadMyPostsLoading = false;
+        draft.loadMyPostsError = action.error;
       }
       default:
         return state;
