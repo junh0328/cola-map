@@ -23,7 +23,7 @@ function* getStoreRequest(action) {
   // console.log('check store id before get Method:', action.data);
   try {
     const result = yield call(getStoreRequestAPI, action.data);
-    console.log('check result: ', result.data);
+    // console.log('check result: ', result.data);
 
     yield put({
       type: GET_STORE_SUCCESS,
@@ -39,7 +39,7 @@ function* getStoreRequest(action) {
 }
 
 function postStoreRequestAPI(data) {
-  console.log('check before axios request:', data, localStorage.getItem('token'));
+  // console.log('check before axios request:', data, localStorage.getItem('token'));
   try {
     return axios.post('/post', data, myConfig);
   } catch (err) {
@@ -48,13 +48,13 @@ function postStoreRequestAPI(data) {
 }
 
 function* postStoreRequest(action) {
-  console.log('check before action:', action);
+  // console.log('check before action:', action);
   try {
     const result = yield call(postStoreRequestAPI, action.data);
-    console.log(result);
+    // console.log('result.data.post:', result.data.result.post);
     yield put({
       type: POST_STORE_SUCCESS,
-      data: result.data.message,
+      data: result.data.result.post,
     });
   } catch (err) {
     console.error(err);

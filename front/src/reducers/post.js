@@ -48,7 +48,7 @@ const post = (state = initialState, action) =>
       case POST_STORE_SUCCESS: {
         draft.postStoreLoading = false;
         draft.postStoreSuccess = true;
-        draft.data = action.data;
+        draft.storeData = draft.storeData.concat(action.data);
         break;
       }
       case POST_STORE_FAILURE: {

@@ -107,7 +107,7 @@ function loadMyPostsAPI() {
 function* loadMyPostsRequest() {
   try {
     const result = yield call(loadMyPostsAPI);
-    console.log('load my posts:', result.data.posts);
+    // console.log('load my posts:', result.data.posts);
     yield put({
       type: LOAD_MY_POSTS_SUCCESS,
       data: result.data.posts,
