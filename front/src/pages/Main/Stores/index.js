@@ -258,12 +258,12 @@ const Store = () => {
             <StoreContentHeader>
               <StoreContentHeaderMain>{storeData.length ? `리뷰` : `아직까지 작성된 리뷰`}</StoreContentHeaderMain>
               <StoreContentHeaderSub>
-                {storeData.length ? <span>&nbsp;{storeData.length}개</span> : <span>가 없어요</span>}
+                {storeData?.length ? <span>&nbsp;{storeData.length}개</span> : <span>가 없어요</span>}
               </StoreContentHeaderSub>
             </StoreContentHeader>
-            {storeData.length ? (
+            {storeData?.length ? (
               <StoreContentReview>
-                {storeData.map((data) => (
+                {storeData?.map((data) => (
                   <StoreContentReviewWrap key={data._id}>
                     <MyCard title={data.user.profileNickname} bordered={false} category={data.drink.toString()}>
                       <p>{data.comment}</p>
