@@ -9,7 +9,6 @@ import Categories from 'pages/Categories';
 import Category from 'pages/Categories/Category';
 import Apply from 'pages/Apply';
 import Personal from 'pages/Personal';
-import MyApply from 'pages/Personal/MyApply';
 import MyReview from 'pages/Personal/MyReview';
 import Qna from 'pages/Personal/Qna';
 import Question from 'pages/Personal/Question';
@@ -30,7 +29,6 @@ function App() {
           <Route path="/apply" component={Apply} />
           <Route path="/personal" exact component={Personal} />
           <Route path="/personal/setting" component={Setting} />
-          <Route path="/myapply" component={MyApply} />
           <Route path="/myreview" component={MyReview} />
           <Route path="/qna" component={Qna} />
           <Route path="/question" component={Question} />
