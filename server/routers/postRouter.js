@@ -4,7 +4,7 @@ const postRouter = express.Router();
 const Post = require('../models/post');
 const Store = require('../models/store');
 const getMostPosted = require('../util/getMostPosted');
-const {ObjectId} = require('mongodb')
+const { ObjectId } = require('mongodb');
 // 제보하기
 postRouter.post('/', auth, async (req, res) => {
   try {
@@ -80,16 +80,16 @@ postRouter.post('/', auth, async (req, res) => {
 postRouter.get('/store/:storeId', async (req, res) => {
   try {
     const store = req.params.storeId;
-    
-    const posts = await Post.find({store: store})
+
+    const posts = await Post.find({ store: store })
       .populate('user', 'profileNickname profileImage')
       .sort({ createdAt: -1 })
-      .select('drink comment user')
+      .select('drink comment user');
 
     const result = {
       store: store,
-      posts: posts
-    }
+      posts: posts,
+    };
 
     res.status(200).send(result);
   } catch (e) {
@@ -104,70 +104,70 @@ postRouter.get('/user', auth, async (req, res) => {
     const pipeline = [
       {
         $match: {
-          user: ObjectId(userId)
-        }
+          user: ObjectId(userId),
+        },
       },
       {
         $lookup: {
           from: 'users',
           localField: 'user',
           foreignField: '_id',
-          as: 'user'
-        }
+          as: 'user',
+        },
       },
       {
         $unwind: {
-          path: '$user'  
-        }
+          path: '$user',
+        },
       },
       {
         $lookup: {
-          from: "stores",
-          let: {store: '$store'},
+          from: 'stores',
+          let: { store: '$store' },
           pipeline: [
             {
               $match: {
                 $expr: {
-                  $eq: ['$kakaoId', '$$store']
-                }
-              }
+                  $eq: ['$kakaoId', '$$store'],
+                },
+              },
             },
           ],
-          as: 'store'
-        }
+          as: 'store',
+        },
       },
       {
         $unwind: {
-          path: '$store'
-        }
+          path: '$store',
+        },
       },
       {
         $sort: {
-          createdAt: -1
-        }
+          createdAt: -1,
+        },
       },
       {
         $group: {
           _id: '$user',
           posts: {
-            $push: '$$ROOT'
-          }
-        }
+            $push: '$$ROOT',
+          },
+        },
       },
       {
         $project: {
-          '_id.profileNickname':1,
+          '_id.profileNickname': 1,
           '_id.uniqId': 1,
           'posts._id': 1,
           'posts.drink': 1,
           'posts.comment': 1,
           'posts.store.storeName': 1,
-          'posts.store.kakaoId': 1
-        }
-      }
-    ]
+          'posts.store.kakaoId': 1,
+        },
+      },
+    ];
 
-    const posts = await Post.aggregate(pipeline)
+    const posts = await Post.aggregate(pipeline);
 
     res.status(200).send(posts[0]);
   } catch (e) {
@@ -184,10 +184,7 @@ postRouter.delete('/:postId', auth, async (req, res) => {
     });
     const mostPosted = await getMostPosted(post.store);
 
-    await Store.findOneAndUpdate(
-      { kakaoId: post.store },
-      { mostPosted: mostPosted }
-    );
+    await Store.findOneAndUpdate({ kakaoId: post.store }, { mostPosted: mostPosted });
 
     res.status(200).send({ message: 'success' });
   } catch (e) {
