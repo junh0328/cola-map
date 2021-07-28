@@ -12,10 +12,12 @@ import { Skeleton, Card } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginModal from 'components/LoginModal';
 import { LOAD_INFO_REQUEST, LOAD_MY_POSTS_REQUEST } from 'reducers/personal';
+import { useHistory } from 'react-router-dom';
 
 const Personal = () => {
   // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
+  const [canLoad, setCanLoad] = useState(false);
 
   const myToken = localStorage.getItem('token');
 
@@ -31,18 +33,24 @@ const Personal = () => {
     } else return;
   }, []);
 
+  useEffect(() => {
+    if (myToken && myInfo && !myPosts.length) {
+      setCanLoad(true);
+    }
+  }, [myToken, myInfo, myPosts.length]);
+
   // myPosts가 빈배열인데, 유저 정보는 있어야 돼
   // 근데 유저 정보는 처음에 비어있다가 나중에 들어와
   useEffect(() => {
     // LS에 Token은 있는데 storeData가 없으면 (로그인 정보가 있는데 storeData가 없으면) > dispatch
-    if (myInfo && !myPosts.length) {
-      console.log('LOAD_MY_POSTS_REQUEST_ start!');
+    if (canLoad) {
+      console.log('myInfo', myInfo);
       dispatch({
         // 내가 제보한 포스트 불러오기
         type: LOAD_MY_POSTS_REQUEST,
       });
     } else return;
-  }, [myInfo, myPosts]);
+  }, [canLoad]);
 
   const onCloseModal = useCallback(() => {
     setLoginModal(false);
@@ -78,6 +86,7 @@ const Personal = () => {
                 </Card>
               </CardWrap>
             ) : (
+              // 1.목록형 2.나열형(카드)
               <CardWrap>
                 {myPosts.map((post) => (
                   <div

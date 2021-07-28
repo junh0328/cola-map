@@ -17,11 +17,7 @@ import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { myConfig } from 'sagas';
 
 function checkUserAPI() {
-  try {
-    return axios.get('/');
-  } catch (err) {
-    console.log(err);
-  }
+  return axios.get('/');
 }
 
 function* checkUserRequest() {
@@ -41,16 +37,12 @@ function* checkUserRequest() {
 }
 
 function loadInfoAPI() {
-  try {
-    const data = {
-      myToken: localStorage.getItem('token'),
-      myId: localStorage.getItem('uniqId'),
-      myNickname: localStorage.getItem('nickname'),
-    };
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
+  const data = {
+    myToken: localStorage.getItem('token'),
+    myId: localStorage.getItem('uniqId'),
+    myNickname: localStorage.getItem('nickname'),
+  };
+  return data;
 }
 
 function* loadInfoRequest() {
@@ -97,17 +89,22 @@ function* logOutRequest() {
 }
 
 function loadMyPostsAPI() {
-  try {
+  // 로그인 후에 > 바로 personal 페이지에 접근 시, myConfig(로컬 스토리지에 저장된 나의 토큰) 확인
+  console.log('myConfig:', myConfig);
+  if (localStorage.getItem('token')) {
+    console.log('isToken and axios data: ', localStorage.getItem('token'));
     return axios.get('/post/user', myConfig);
-  } catch (err) {
-    console.log(err);
+  } else {
+    console.log('isnt Token...');
+    return;
   }
 }
 
-function* loadMyPostsRequest() {
+function* loadMyPostsRequest(action) {
+  console.log('loadMyPostsRequest action: ', action);
   try {
     const result = yield call(loadMyPostsAPI);
-    // console.log('load my posts:', result.data.posts);
+    console.log('load my posts result:', result.data.posts);
     yield put({
       type: LOAD_MY_POSTS_SUCCESS,
       data: result.data.posts,
@@ -116,7 +113,7 @@ function* loadMyPostsRequest() {
     console.error(err);
     yield put({
       type: LOAD_MY_POSTS_FAILURE,
-      error: err,
+      error: err.response.data,
     });
   }
 }
