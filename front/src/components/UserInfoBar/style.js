@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined, UserAddOutlined } from '@ant-design/icons';
 
 export const UserInfoWrapper = styled.div`
   padding: 1em;
@@ -15,6 +15,19 @@ export const UserInfoWrapper = styled.div`
 //cursor: 'pointer', position: 'absolute', right: '3%'
 
 export const CustomSettingOutlined = styled(SettingOutlined)`
+  cursor: pointer;
+  position: absolute;
+  right: 3%;
+
+  @media (max-width: 400px) {
+    right: 6%;
+  }
+  @media (max-width: 580px) {
+    right: 6%;
+  }
+`;
+
+export const CustomUserAddOutlined = styled(UserAddOutlined)`
   cursor: pointer;
   position: absolute;
   right: 3%;

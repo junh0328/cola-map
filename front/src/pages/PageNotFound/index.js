@@ -4,7 +4,7 @@ import { Result, Button } from 'antd';
 const PageNotFound = () => {
   return (
     <Result
-      style={{ border: '3px solid white', height: '100vh' }}
+      style={{ border: '3px solid white', height: '100vh', background: '#fff' }}
       status="404"
       title="404"
       subTitle="Sorry, the page you visited does not exist."
@@ -12,7 +12,7 @@ const PageNotFound = () => {
         <Button
           style={{ width: 250, height: 80, fontSize: '1.5rem' }}
           type="primary"
-          onClick={() => (location.href = 'http://localhost:3000/')}
+          onClick={() => (location.href = '/')}
         >
           Back to Home
         </Button>
