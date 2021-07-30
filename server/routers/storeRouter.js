@@ -45,7 +45,7 @@ storeRouter.delete('/:storeId', async (req, res) => {
 // 카테고리(콜라 종류)별 데이터 조회
 storeRouter.get('/category/pepsi', async (req, res) => {
   try {
-    const pepsi = await Store.find({ mostPosted: '펩시콜라' });
+    const pepsi = await Store.find({ mostPosted: 'pepsi' });
     res.status(200).send(pepsi);
   } catch (error) {
     res.status(500).send({ error: error.message });
@@ -53,7 +53,7 @@ storeRouter.get('/category/pepsi', async (req, res) => {
 });
 storeRouter.get('/category/coca', async (req, res) => {
   try {
-    const coca = await Store.find({ mostPosted: '코카콜라' });
+    const coca = await Store.find({ mostPosted: 'coca' });
     res.status(200).send(coca);
   } catch (error) {
     res.status(500).send({ error: error.message });
