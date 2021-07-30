@@ -17,7 +17,7 @@ storeRouter.get('/', async (req, res) => {
 storeRouter.get('/:storeId', async (req, res) => {
   try {
     const id = req.params.storeId;
-    const getStore = await Store.findById({ _id: id }).lean();
+    const getStore = await Store.find({ kakaoId: id });
     // const post = await Post.find({ store: getStore._id })
     //   .populate('user')
     //   .sort({ createdAt: -1 });
@@ -25,7 +25,7 @@ storeRouter.get('/:storeId', async (req, res) => {
     // getStore.post = post;
     res.status(200).send(getStore);
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    res.status(400).send({ error: error.message });
   }
 });
 
