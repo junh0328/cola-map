@@ -120,7 +120,7 @@ userRouter.delete('/quit', auth, async (req, res) => {
   try {
     const id = req.user._id;
     const deletedUser = await User.findOneAndDelete({ _id: id });
-    res.status(200).send(deletedUser);
+    res.status(204).send(deletedUser);
   } catch (e) {
     res.status(400).send({ error: e.message });
   }

@@ -7,7 +7,7 @@ paths:
       responses:
         '200':
           description: 모든 스토어 출력
-        '500':
+        '400':
           description: ERROR
 
   /store/{storeId}:
@@ -26,7 +26,7 @@ paths:
       responses:
         '200':
           description: 특정 스토어 데이터 출력
-        '500':
+        '400':
           description: ERROR
     delete:
       tags:
@@ -41,9 +41,9 @@ paths:
             type: string
             default: '123456'
       responses:
-        '200':
+        '204':
           description: 삭제된 스토어, 포스트(제보) 데이터 출력
-        '500':
+        '400':
           description: ERROR
 
   /store/category/pepsi:
@@ -54,7 +54,7 @@ paths:
       responses:
         '200':
           description: mostPosted 밸류가 펩시콜라인 스토어 출력
-        '500':
+        '400':
           description: ERROR
 
   /store/category/coca:
@@ -65,5 +65,5 @@ paths:
       responses:
         '200':
           description: mostPosted 밸류가 코카콜라인 스토어 출력
-        '500':
+        '400':
           description: ERROR

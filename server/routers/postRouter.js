@@ -69,7 +69,7 @@ postRouter.post('/', auth, async (req, res) => {
         comment: comment,
       },
     };
-    res.status(200).send({ result });
+    res.status(201).send({ result });
   } catch (e) {
     res.status(400).send(e.message);
   }
