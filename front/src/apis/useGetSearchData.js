@@ -1,6 +1,6 @@
 // Search Input에서 onchange를 통해 검색된 결과물을 담는 함수
 
-const { kakao } = window;
+var { kakao } = window;
 
 var ps = new kakao.maps.services.Places();
 
