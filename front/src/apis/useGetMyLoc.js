@@ -2,15 +2,15 @@ import pepsi from 'apis/license/pepsi.png';
 import coca from 'apis/license/coca.png';
 import marker from 'apis/license/marker.png';
 
-const { kakao } = window;
+var { kakao } = window;
 
 export function useGetMyLoc() {
-  const container = document.getElementById('Map'); // 가이드는 Map이다
-  const options = {
+  var container = document.getElementById('Map'); // 가이드는 Map이다
+  var options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 3,
   };
-  const map = new kakao.maps.Map(container, options);
+  var map = new kakao.maps.Map(container, options);
 
   // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
   if (navigator.geolocation) {
@@ -33,7 +33,7 @@ export function useGetMyLoc() {
   function displayMarker(positions) {
     // console.log('positions 배열 출력:', positions);
     for (var i = 0; i < positions.length; i++) {
-      const imageSize = new kakao.maps.Size(25, 35);
+      var imageSize = new kakao.maps.Size(25, 35);
 
       // 마커 이미지를 위한 변수
       let markerImage;

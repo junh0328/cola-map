@@ -1,18 +1,18 @@
 import markerImg from 'apis/license/marker.png';
 // useGetSearchData를 바탕으로 검색된 데이터를 지도에 표시하기 위한 함수
 
-const { kakao } = window;
+var { kakao } = window;
 
 export function useKeyword(searchValue) {
   // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
   var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-  const container = document.getElementById('Map'); // 가이드는 Map이다
-  const options = {
+  var container = document.getElementById('Map'); // 가이드는 Map이다
+  var options = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 2,
   };
-  const map = new kakao.maps.Map(container, options);
+  var map = new kakao.maps.Map(container, options);
 
   // 장소 검색 객체를 생성합니다
   var ps = new kakao.maps.services.Places();
