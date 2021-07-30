@@ -23,6 +23,7 @@ function checkUserAPI() {
 function* checkUserRequest() {
   try {
     const result = yield call(checkUserAPI);
+    // console.log('checkUserRequest.result:', result);
     yield put({
       type: CHECK_USER_SUCCESS,
       data: result.data,
@@ -90,10 +91,22 @@ function* logOutRequest() {
 
 function loadMyPostsAPI() {
   // 로그인 후에 > 바로 personal 페이지에 접근 시, myConfig(로컬 스토리지에 저장된 나의 토큰) 확인
-  console.log('myConfig:', myConfig);
+  // console.log('myConfig:', myConfig);
   if (localStorage.getItem('token')) {
+    /* 
+    사가 인덱스에서 export한 myConfig를 로그인 후, 첫 번쩨 요청시 토큰을 감지하지 못하는 오류가 있음
+    loadMyPostsAPI 함수 내부에서 헤더를 다시 만들어 주었다.
+    */
+
+    // axios 데이터와 함께 보낼 헤더
+    const tokenConfig = {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    };
     console.log('isToken and axios data: ', localStorage.getItem('token'));
-    return axios.get('/post/user', myConfig);
+
+    return axios.get('/post/user', tokenConfig);
   } else {
     console.log('isnt Token...');
     return;
