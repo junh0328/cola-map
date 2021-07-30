@@ -104,7 +104,7 @@ function loadMyPostsAPI() {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    console.log('isToken and axios data: ', localStorage.getItem('token'));
+    // console.log('isToken and axios data: ', localStorage.getItem('token'));
 
     return axios.get('/post/user', tokenConfig);
   } else {
@@ -114,10 +114,10 @@ function loadMyPostsAPI() {
 }
 
 function* loadMyPostsRequest(action) {
-  console.log('loadMyPostsRequest action: ', action);
+  // console.log('loadMyPostsRequest action: ', action);
   try {
     const result = yield call(loadMyPostsAPI);
-    console.log('load my posts result:', result.data.posts);
+    // console.log('load my posts result:', result.data.posts);
     yield put({
       type: LOAD_MY_POSTS_SUCCESS,
       data: result.data.posts,
