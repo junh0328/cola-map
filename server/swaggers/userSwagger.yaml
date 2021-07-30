@@ -14,70 +14,46 @@ paths:
     get:
       tags:
         - user
-      summary: 유저 프로필 페이지 - Authorization 키 필요
+      summary: 유저 프로필 페이지
+      security:
+        - bearerAuth: []
       responses:
         '200':
-          description: 유저 닉네임 출력
+          description: 유저 정보 출력
         '500':
           description: ERROR
 
-  /user/set-nickname:
-    post:
+  /user/nickname:
+    patch:
       tags:
         - user
-      summary: 닉네임 변경 - Authorization 키 필요
-      parameters:
-        - in: body
-          name: profileNickname
-          required: true
+      summary: 닉네임 변경
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profileNickname:
+                  type: string
+                  default: '바보'
+      security:
+        - bearerAuth: []
       responses:
-        '200':
+        '201':
           description: 유저의 닉네임을 변경하고 변경된 닉네임 출력
-        '500':
-          description: ERROR
-
-  /user/login:
-    post:
-      tags:
-        - user
-      summary: 로그인 - Authorization 키 필요
-      parameters:
-        - in: body
-          name: uniqId
-          required: true
-          unique: true
-          schema:
-            type: string
-            default: '123457'
-        - in: body
-          name: profileNickname
-          required: true
-        - in: body
-          name: accountEmail
-      responses:
-        '200':
-          description: OK
-        '500':
+        '400':
           description: ERROR
 
   /user/quit:
     delete:
       tags:
         - user
-      summary: 회원 탈퇴 - Authorization 키 필요
+      summary: 회원 탈퇴
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: 삭제 처리된 유저 출력
-        '500':
-          description: ERROR
-
-  /user/all:
-    delete:
-      tags:
-        - user
-      summary: 모든 유저 데이터 삭제(임시)
-      responses:
-        '200':
-          description: 'Success'
         '500':
           description: ERROR

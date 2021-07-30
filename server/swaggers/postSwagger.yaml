@@ -3,7 +3,7 @@ paths:
     post:
       tags:
         - post
-      summary: 제보 작성 - Authorization 키 필요
+      summary: 제보 작성
       requestBody:
         content:
           application/json:
@@ -54,6 +54,7 @@ paths:
       parameters:
         - in: path
           name: storeId
+          description: 'store 객체의 kakaoId 값'
           required: true
           schema:
             type: string
@@ -66,7 +67,7 @@ paths:
     get:
       tags:
         - post
-      summary: 내가 한 제보 조회 - Authorization 키 필요
+      summary: 내가 한 제보 조회
       security:
         - bearerAuth: []
       responses:
@@ -77,15 +78,17 @@ paths:
     delete:
       tags:
         - post
-      summary: 내가 한 제보 삭제 - Authorization 키 필요
+      summary: 내가 한 제보 삭제
       parameters:
         - in: path
           name: postId
+          description: 'post 객체의 _id 값'
           required: true
           schema:
             type: string
+            default: '60fd6662d2d2c52f2033c79e'
       security:
         - bearerAuth: []
       responses:
-        '200':
+        '204':
           description: OK

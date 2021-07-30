@@ -3,7 +3,7 @@ paths:
     get:
       tags:
         - store
-      summary: 전체 스토어 조회
+      summary: 전체 스토어 조회(임시)
       responses:
         '200':
           description: 모든 스토어 출력
@@ -14,13 +14,15 @@ paths:
     get:
       tags:
         - store
-      summary: 특정 스토어 조회
+      summary: 특정 스토어 조회(임시)
       parameters:
-        - in: params
+        - in: path
           name: storeId
+          description: 'store 객체의 kakaoId 값'
           required: true
           schema:
             type: string
+            default: '123456'
       responses:
         '200':
           description: 특정 스토어 데이터 출력
@@ -31,11 +33,13 @@ paths:
         - store
       summary: 특정 스토어 및 연결된 제보 데이터 삭제(임시)
       parameters:
-        - in: params
+        - in: path
           name: storeId
+          description: 'store 객체의 kakaoId 값'
           required: true
           schema:
             type: string
+            default: '123456'
       responses:
         '200':
           description: 삭제된 스토어, 포스트(제보) 데이터 출력
