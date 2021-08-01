@@ -18,11 +18,12 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
+import { CHANGE_NICKNAME_REQUEST, LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 
 const Setting = () => {
   const style = useMemo(() => ({ cursor: 'pointer', position: 'absolute', left: '3%' }), []);
 
+  // 로컬 스토리지에 토큰 정보가 업데이트 될 때마다 상태를 변경할 state
   const [tokenData, setTokenData] = useState(false);
   const myToken = localStorage.getItem('token');
 
@@ -47,8 +48,14 @@ const Setting = () => {
 
   const UpdateNickname = useCallback(() => {
     const result = window.prompt('변경할 닉네임을 입력해주세요\n한글로만 사용이 가능합니다');
-    if (result.trim() !== '') {
-      alert(`${result}로 닉네임이 변경되었습니다.`);
+    if (result && result.trim() !== '') {
+      dispatch({
+        type: CHANGE_NICKNAME_REQUEST,
+        data: {
+          profileNickname: result,
+        },
+      });
+      setTokenData(true);
     } else {
       alert('올바른 닉네임을 입력해주세요');
       return;

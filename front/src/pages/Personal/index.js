@@ -42,22 +42,14 @@ const Personal = () => {
     }
   }, [myToken, myInfo, myPosts.length]);
 
-  // myPosts가 빈배열인데, 유저 정보는 있어야 돼
-  // 근데 유저 정보는 처음에 비어있다가 나중에 들어와
   useEffect(() => {
-    // LS에 Token은 있는데 storeData가 없으면 (로그인 정보가 있는데 storeData가 없으면) > dispatch
     if (canLoad) {
       console.log('myInfo', myInfo);
       dispatch({
-        // 내가 제보한 포스트 불러오기
         type: LOAD_MY_POSTS_REQUEST,
       });
     } else return;
   }, [canLoad]);
-
-  useEffect(() => {
-    console.log(listMenu.toString());
-  }, [listMenu]);
 
   const onCloseModal = useCallback(() => {
     setLoginModal(false);

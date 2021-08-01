@@ -25,6 +25,10 @@ export const initialState = {
   loadMyPostsLoading: false,
   loadMyPostsSuccess: false,
   loadMyPostsError: null,
+
+  changeNicknameLoading: false,
+  changeNicknameSuccess: false,
+  changeNicknameError: null,
 };
 
 export const CHECK_USER_REQUEST = 'CHECK_USER_REQUEST';
@@ -42,6 +46,10 @@ export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
 export const LOAD_MY_POSTS_SUCCESS = 'LOAD_MY_POSTS_SUCCESS';
 export const LOAD_MY_POSTS_FAILURE = 'LOAD_MY_POSTS_FAILURE';
+
+export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_REQUEST';
+export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
+export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
 
 const personal = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -105,6 +113,21 @@ const personal = (state = initialState, action) =>
       case LOAD_MY_POSTS_FAILURE: {
         draft.loadMyPostsLoading = false;
         draft.loadMyPostsError = action.error;
+      }
+      case CHANGE_NICKNAME_REQUEST: {
+        draft.changeNicknameLoading = true;
+        draft.changeNicknameSuccess = false;
+        break;
+      }
+      case CHANGE_NICKNAME_SUCCESS: {
+        draft.changeNicknameLoading = false;
+        draft.changeNicknameSuccess = true;
+
+        break;
+      }
+      case CHANGE_NICKNAME_FAILURE: {
+        draft.changeNicknameLoading = false;
+        draft.changeNicknameError = action.error;
       }
       default:
         return state;
