@@ -220,13 +220,13 @@ const Store = () => {
                     onClick={() => handleClickRadioButton('pepsi')}
                   />
                   <img src={pepsi} />
-                  <span>{categoryRate}%</span>
+                  {storeData.length ? <span>{categoryRate}%</span> : <span> </span>}
                 </FormCategoryMain>
                 <FormCategoryMain>
-                  <span>VS</span>
+                  {storeData.length ? <span>VS</span> : <b>아직까지 작성된 리뷰가 없어요</b>}
                 </FormCategoryMain>
                 <FormCategoryMain>
-                  <span>{100 - categoryRate}%</span>
+                  {storeData.length ? <span>{100 - categoryRate}%</span> : <span> </span>}
                   <img src={coca} />
                   <input
                     type="radio"
@@ -256,9 +256,9 @@ const Store = () => {
           {/* 리뷰 리스트 관련 */}
           <StoreContent>
             <StoreContentHeader>
-              <StoreContentHeaderMain>{storeData.length ? `리뷰` : `아직까지 작성된 리뷰`}</StoreContentHeaderMain>
+              <StoreContentHeaderMain>{storeData.length > 1 && `리뷰`}</StoreContentHeaderMain>
               <StoreContentHeaderSub>
-                {storeData?.length ? <span>&nbsp;{storeData.length}개</span> : <span>가 없어요</span>}
+                {storeData?.length > 1 && <span>&nbsp;{storeData.length}개</span>}
               </StoreContentHeaderSub>
             </StoreContentHeader>
             {storeData?.length ? (
