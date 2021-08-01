@@ -5,6 +5,7 @@ const Post = require('../models/post');
 const Store = require('../models/store');
 const getMostPosted = require('../util/getMostPosted');
 const { ObjectId } = require('mongodb');
+
 // 제보하기
 postRouter.post('/', auth, async (req, res) => {
   try {
@@ -169,6 +170,48 @@ postRouter.get('/user', auth, async (req, res) => {
     const posts = await Post.aggregate(pipeline);
 
     res.status(200).send(posts[0]);
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+});
+
+// 제보 수정 GET
+postRouter.get('/:postId', auth, async (req, res) => {
+  try {
+    const {
+      params: { postId },
+    } = req;
+    const post = await Post.findOne({ _id: postId, user: req.user._id });
+    console.log(post);
+    res.status(200).send({ drink: post.drink, comment: post.comment });
+  } catch (error) {
+    res.status(400).send({ error: error.message });
+  }
+});
+
+// 제보 수정 PATCH
+postRouter.patch('/:postId', auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const {
+      params: { postId },
+      body: { drink, comment },
+    } = req;
+    const post = await Post.findOne({ _id: postId, user: userId });
+    const kakaoId = post.store;
+    if (drink !== post.drink) {
+      await Post.findOneAndUpdate({ _id: postId, user: userId }, { drink });
+      const countCoca = await Post.countDocuments({ store: kakaoId, drink: 'coca' });
+      const countPepsi = await Post.countDocuments({ store: kakaoId, drink: 'pepsi' });
+      if (countCoca <= countPepsi) {
+        await Store.findOneAndUpdate({ kakaoId: kakaoId }, { mostPosted: 'pepsi' });
+      } else {
+        await Store.findOneAndUpdate({ kakaoId: kakaoId }, { mostPosted: 'coca' });
+      }
+    }
+    await Post.findOneAndUpdate({ _id: postId, user: userId }, { comment });
+    const storeName = await Store.findOne({ kakaoId: kakaoId }).storeName;
+    res.redirect(`http://localhost:3000/store/${storeName}/${kakaoId}/`);
   } catch (e) {
     res.status(400).send(e.message);
   }
