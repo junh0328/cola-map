@@ -77,7 +77,7 @@ paths:
   /post/{postId}:
     get:
       tags:
-        - get
+        - post - edit
       summary: 내가 한 제보 수정 - 수정 페이지
       parameters:
         - in: path
@@ -98,7 +98,7 @@ paths:
           description: 로그인 필요
     patch:
       tags:
-        - get
+        - post - edit
       summary: 내가 한 제보 수정 - 데이터 전송
       parameters:
         - in: path
