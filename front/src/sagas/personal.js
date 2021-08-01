@@ -12,9 +12,11 @@ import {
   LOAD_MY_POSTS_REQUEST,
   LOAD_MY_POSTS_SUCCESS,
   LOAD_MY_POSTS_FAILURE,
+  CHANGE_NICKNAME_REQUEST,
+  CHANGE_NICKNAME_SUCCESS,
+  CHANGE_NICKNAME_FAILURE,
 } from 'reducers/personal';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
-import { myConfig } from 'sagas';
 
 function checkUserAPI() {
   return axios.get('/');
@@ -131,6 +133,41 @@ function* loadMyPostsRequest(action) {
   }
 }
 
+function changeNicknameAPI(data) {
+  // 위의 loadMyPostsAPI 함수와 동일
+  if (localStorage.getItem('token')) {
+    const tokenConfig = {
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    };
+
+    localStorage.setItem('nickname', data.profileNickname);
+    return axios.patch('/user/nickname', data, tokenConfig);
+  } else {
+    console.log('isnt Token...');
+    return;
+  }
+}
+
+function* changeNicknameRequest(action) {
+  console.log('changeNicknameRequest action: ', action);
+  try {
+    const result = yield call(changeNicknameAPI, action.data);
+    // console.log('load my posts result:', result.data.posts);
+    yield put({
+      type: CHANGE_NICKNAME_SUCCESS,
+      data: result,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: CHANGE_NICKNAME_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function* watchCheckUserRequest() {
   yield takeLatest(CHECK_USER_REQUEST, checkUserRequest);
 }
@@ -147,11 +184,16 @@ function* watchloadMyPostsRequest() {
   yield takeLatest(LOAD_MY_POSTS_REQUEST, loadMyPostsRequest);
 }
 
+function* watchChangeNicknameRequest() {
+  yield takeLatest(CHANGE_NICKNAME_REQUEST, changeNicknameRequest);
+}
+
 export default function* personalSaga() {
   yield all([
     fork(watchCheckUserRequest),
     fork(watchLoadInfoRequest),
     fork(watchLogOutRequest),
     fork(watchloadMyPostsRequest),
+    fork(watchChangeNicknameRequest),
   ]);
 }
