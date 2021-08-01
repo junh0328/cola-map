@@ -75,6 +75,60 @@ paths:
           description: OK
 
   /post/{postId}:
+    get:
+      tags:
+        - get
+      summary: 내가 한 제보 수정 - 수정 페이지
+      parameters:
+        - in: path
+          name: postId
+          description: 'post 객체의 _id 값'
+          required: true
+          schema:
+            type: string
+            default: '61066341d222d41ac82f31b3'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: ERROR
+        '401':
+          description: 로그인 필요
+    patch:
+      tags:
+        - get
+      summary: 내가 한 제보 수정 - 데이터 전송
+      parameters:
+        - in: path
+          name: postId
+          description: 'post 객체의 _id 값'
+          required: true
+          schema:
+            type: string
+            default: '60fd6662d2d2c52f2033c79e'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                drink:
+                  type: string
+                  default: 'coca/pepsi 중 선택해주세요'
+                comment:
+                  type: string
+                  default: '내용을 입력해주세요'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: ERROR
+        '401':
+          description: 로그인 필요
     delete:
       tags:
         - post
