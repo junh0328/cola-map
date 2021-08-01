@@ -2,9 +2,9 @@ import {
   PersonalWrapper,
   PersonalContentBox,
   PersonalLinkBox,
-  CardWrap,
   PersonalContentBoxWrap,
-  MyCard,
+  NonCardWrap,
+  SelectWrap,
 } from './style';
 import UserInfoBar from 'components/UserInfoBar';
 import { useCallback, useEffect, useState } from 'react';
@@ -12,12 +12,15 @@ import { Skeleton, Card } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginModal from 'components/LoginModal';
 import { LOAD_INFO_REQUEST, LOAD_MY_POSTS_REQUEST } from 'reducers/personal';
-import { useHistory } from 'react-router-dom';
+import CardList from 'components/CardList';
+import MenuList from 'components/MenuList';
+import { AppstoreFilled, UnorderedListOutlined } from '@ant-design/icons';
 
 const Personal = () => {
   // 로그인 모달
   const [loginModal, setLoginModal] = useState(false);
   const [canLoad, setCanLoad] = useState(false);
+  const [listMenu, setListMenu] = useState('list');
 
   const myToken = localStorage.getItem('token');
 
@@ -44,13 +47,17 @@ const Personal = () => {
   useEffect(() => {
     // LS에 Token은 있는데 storeData가 없으면 (로그인 정보가 있는데 storeData가 없으면) > dispatch
     if (canLoad) {
-      // console.log('myInfo', myInfo);
+      console.log('myInfo', myInfo);
       dispatch({
         // 내가 제보한 포스트 불러오기
         type: LOAD_MY_POSTS_REQUEST,
       });
     } else return;
   }, [canLoad]);
+
+  useEffect(() => {
+    console.log(listMenu.toString());
+  }, [listMenu]);
 
   const onCloseModal = useCallback(() => {
     setLoginModal(false);
@@ -66,15 +73,28 @@ const Personal = () => {
               {myPosts.length ? (
                 <>
                   <div style={{ fontWeight: 'bold' }}>
-                    내가 제보한 가게 <span>무려 {myPosts.length}개</span>
+                    {myPosts.length < 10 ? (
+                      <>
+                        내가 제보한 가게 <span>아직 {myPosts.length}개</span>
+                      </>
+                    ) : (
+                      <>
+                        내가 제보한 가게 <span>무려 {myPosts.length}개</span>
+                      </>
+                    )}
                   </div>
+                  {/* <Switch style={{ background: 'gray' }} onChange={() => setListMenu((prev) => !prev)} /> */}
+                  <SelectWrap>
+                    <AppstoreFilled onClick={() => setListMenu('card')} />
+                    <UnorderedListOutlined onClick={() => setListMenu('list')} />
+                  </SelectWrap>
                 </>
               ) : (
                 <span>제보한 가게가 없어요</span>
               )}
             </PersonalLinkBox>
             {!(myInfo && myPosts) ? (
-              <CardWrap>
+              <NonCardWrap>
                 <Card style={{ margin: 5 }}>
                   <Skeleton active />
                 </Card>
@@ -84,22 +104,13 @@ const Personal = () => {
                 <Card style={{ margin: 5 }}>
                   <Skeleton active />
                 </Card>
-              </CardWrap>
+                <Card style={{ margin: 5 }}>
+                  <Skeleton active />
+                </Card>
+              </NonCardWrap>
             ) : (
               // 1.목록형 2.나열형(카드)
-              <CardWrap>
-                {myPosts.map((post) => (
-                  <div
-                    style={{ cursor: 'pointer' }}
-                    key={post._id}
-                    onClick={() => (location.href = `store/${post.store.storeName}/${post.store.kakaoId}`)}
-                  >
-                    <MyCard title={post.store.storeName}>
-                      <p>{post.comment}</p>
-                    </MyCard>
-                  </div>
-                ))}
-              </CardWrap>
+              <>{listMenu === 'list' ? <MenuList myPosts={myPosts} /> : <CardList myPosts={myPosts} />}</>
             )}
           </PersonalContentBoxWrap>
         </PersonalContentBox>

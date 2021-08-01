@@ -7,7 +7,7 @@ import {
   UserInfoWrapperSub,
   UserInfoWrapperSubBtn,
 } from './style';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   AlertOutlined,
   FileTextOutlined,
@@ -18,11 +18,12 @@ import {
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_INFO_REQUEST } from 'reducers/personal';
+import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 
 const Setting = () => {
   const style = useMemo(() => ({ cursor: 'pointer', position: 'absolute', left: '3%' }), []);
 
+  const [tokenData, setTokenData] = useState(false);
   const myToken = localStorage.getItem('token');
 
   const { myInfo } = useSelector((state) => state.personal);
@@ -37,12 +38,33 @@ const Setting = () => {
     }
   }, []);
 
+  // LOG_OUT_REQUEST 성공시 Main 페이지로 이동
+  useEffect(() => {
+    if (tokenData) {
+      location.href = '/';
+    }
+  });
+
   const UpdateNickname = useCallback(() => {
     const result = window.prompt('변경할 닉네임을 입력해주세요\n한글로만 사용이 가능합니다');
     if (result.trim() !== '') {
       alert(`${result}로 닉네임이 변경되었습니다.`);
     } else {
       alert('올바른 닉네임을 입력해주세요');
+      return;
+    }
+  }, []);
+
+  const logoutWithKakao = useCallback(() => {
+    const result = window.confirm(
+      '로그아웃 시에 Cola? Gola!의 주요 기능을 사용하실 수 없습니다. \n정말로 로그아웃 하시겠습니까? 🤷🏻‍♂️',
+    );
+    if (result) {
+      dispatch({
+        type: LOG_OUT_REQUEST,
+      });
+      setTokenData(true);
+    } else {
       return;
     }
   }, []);
@@ -76,10 +98,12 @@ const Setting = () => {
           </Link>
         </PersonalLinkBox>
         <PersonalLinkBox>
-          <Link to="/quit">
-            <UserDeleteOutlined style={{ marginRight: 10 }} />
-            <span>탈퇴하기</span>
-          </Link>
+          <a>
+            <div onClick={logoutWithKakao}>
+              <UserDeleteOutlined style={{ marginRight: 10 }} />
+              <span>로그아웃</span>
+            </div>
+          </a>
         </PersonalLinkBox>
         <PersonalLinkBox>
           <a href="https://doong-ji.github.io/" target="_blank">

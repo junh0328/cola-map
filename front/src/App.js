@@ -12,7 +12,6 @@ import Personal from 'pages/Personal';
 import MyReview from 'pages/Personal/MyReview';
 import Qna from 'pages/Personal/Qna';
 import Question from 'pages/Personal/Question';
-import Quit from 'pages/Personal/Quit';
 import Setting from 'pages/Personal/Setting';
 import PageNotFound from 'pages/PageNotFound';
 
@@ -32,7 +31,6 @@ function App() {
           <Route path="/myreview" component={MyReview} />
           <Route path="/qna" component={Qna} />
           <Route path="/question" component={Question} />
-          <Route path="/quit" component={Quit} />
           <Route component={PageNotFound} />
         </AppLayout>
       </Switch>
