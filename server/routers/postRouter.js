@@ -8,14 +8,13 @@ const { ObjectId } = require('mongodb');
 // 제보하기
 postRouter.post('/', auth, async (req, res) => {
   try {
-    
     const kakaoId = req.body.kakaoId;
     const storeName = req.body.storeName;
     const addressX = req.body.addressX;
     const addressY = req.body.addressY;
     const drink = req.body.drink;
     const comment = req.body.comment;
-    
+
     const is_posted = await Post.countDocuments({
       store: kakaoId,
       user: req.user,
@@ -24,9 +23,9 @@ postRouter.post('/', auth, async (req, res) => {
       return res.status(400).send({ message: '이미 등록한 업체입니다.' });
     }
 
-    const exStore = await Store.findOne({kakaoId : kakaoId})
-    if(!exStore) {
-        const newStore = new Store({
+    const exStore = await Store.findOne({ kakaoId: kakaoId });
+    if (!exStore) {
+      const newStore = new Store({
         storeName: storeName,
         kakaoId: kakaoId,
         addressX: addressX,
@@ -34,7 +33,7 @@ postRouter.post('/', auth, async (req, res) => {
         mostPosted: drink,
       });
       await newStore.save();
-    } else { 
+    } else {
       if (drink !== exStore.mostPosted) {
         const reqCount = await Post.countDocuments({
           store: kakaoId,
@@ -64,15 +63,15 @@ postRouter.post('/', auth, async (req, res) => {
         user: {
           _id: req.user._id,
           profileNickname: req.user.profileNickname,
-          profileImage:req.user.profileImage
+          profileImage: req.user.profileImage,
         },
         drink: drink,
-        comment: comment
+        comment: comment,
       },
-    }
-    res.status(200).send({ result });
+    };
+    res.status(201).send({ result });
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(400).send(e.message);
   }
 });
 
@@ -93,7 +92,7 @@ postRouter.get('/store/:storeId', async (req, res) => {
 
     res.status(200).send(result);
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(400).send(e.message);
   }
 });
 
@@ -171,7 +170,7 @@ postRouter.get('/user', auth, async (req, res) => {
 
     res.status(200).send(posts[0]);
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(400).send(e.message);
   }
 });
 
@@ -188,7 +187,7 @@ postRouter.delete('/:postId', auth, async (req, res) => {
 
     res.status(200).send({ message: 'success' });
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(400).send(e.message);
   }
 });
 

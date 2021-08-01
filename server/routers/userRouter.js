@@ -34,7 +34,7 @@ userRouter.get('/kakao/callback', async (req, res) => {
       }),
     });
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(400).send(e.message);
   }
 
   // kakao 토큰으로 유저 정보 확인
@@ -48,7 +48,7 @@ userRouter.get('/kakao/callback', async (req, res) => {
       },
     });
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(400).send(e.message);
   }
 
   // 해당 유저 정보로 로그인 처리 후 colamap 토큰 발행
@@ -72,7 +72,7 @@ userRouter.get('/kakao/callback', async (req, res) => {
     req.session.token = token;
     res.redirect('http://localhost:3000/');
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(400).send(e.message);
   }
 });
 
@@ -84,17 +84,7 @@ userRouter.get('/', async (req, res) => {
       AllOfUser: user,
     });
   } catch (e) {
-    res.status(500).send({ error: e.message });
-  }
-});
-
-// 임시 API - 모든 유저 데이터 삭제
-userRouter.delete('/all', async (req, res) => {
-  try {
-    await User.deleteMany({});
-    res.send({ message: 'Success' });
-  } catch (e) {
-    res.status(500).send({ error: e.message });
+    res.status(400).send({ error: e.message });
   }
 });
 
@@ -105,7 +95,7 @@ userRouter.get('/profile', auth, async (req, res) => {
     const user = await User.findById({ _id: id });
     res.status(200).send(user.profileNickname);
   } catch (e) {
-    res.status(500).send({ error: e.message });
+    res.status(400).send({ error: e.message });
   }
 });
 
@@ -116,12 +106,12 @@ userRouter.patch('/nickname', auth, async (req, res) => {
     const nickname = req.body.profileNickname;
     if (nickname) {
       await User.findByIdAndUpdate(id, { profileNickname: nickname });
-      res.status(200).send(req.body.profileNickname);
+      res.status(201).send({ message: 'success', nickname: nickname });
     } else {
-      res.status(500).send({ error: 'nickname is required' });
+      res.status(400).send({ error: 'nickname is required' });
     }
   } catch (e) {
-    res.status(500).send({ error: e.message });
+    res.status(400).send({ error: e.message });
   }
 });
 
@@ -130,9 +120,9 @@ userRouter.delete('/quit', auth, async (req, res) => {
   try {
     const id = req.user._id;
     const deletedUser = await User.findOneAndDelete({ _id: id });
-    res.status(200).send(deletedUser);
+    res.status(204).send(deletedUser);
   } catch (e) {
-    res.status(500).send({ error: e.message });
+    res.status(400).send({ error: e.message });
   }
 });
 
