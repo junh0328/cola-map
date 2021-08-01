@@ -33,9 +33,9 @@ storeRouter.get('/:storeId', async (req, res) => {
 storeRouter.delete('/:storeId', async (req, res) => {
   const id = req.params.storeId;
   try {
-    const store = await Store.findByIdAndDelete({ _id: id });
-    const posts = await Post.remove({ store: id });
-    res.status(204).send({ '삭제된 스토어': store, '삭제된 스토어 제보': posts });
+    const posts = await Post.deleteMany({ store: id });
+    const store = await Store.findOneAndDelete({ kakaoId: id });
+    res.status(200).send({ '삭제된 스토어': store, '함께 삭제된 스토어의 제보 수': posts.n });
   } catch (error) {
     res.status(400).send({ error: error.message });
   }
