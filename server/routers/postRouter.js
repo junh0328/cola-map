@@ -211,7 +211,7 @@ postRouter.patch('/:postId', auth, async (req, res) => {
     }
     await Post.findOneAndUpdate({ _id: postId, user: userId }, { comment });
     const storeName = await Store.findOne({ kakaoId: kakaoId }).storeName;
-    res.redirect(`http://localhost:3000/store/${storeName}/${kakaoId}/`);
+    res.status(201).send({ message: 'success' });
   } catch (e) {
     res.status(400).send(e.message);
   }
