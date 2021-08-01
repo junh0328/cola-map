@@ -16,9 +16,6 @@ const Navbar = () => {
       <NavLink to="/categories" activeStyle={activeStyle}>
         <BarsOutlined />
       </NavLink>
-      <NavLink to="/apply" activeStyle={activeStyle}>
-        <FormOutlined />
-      </NavLink>
       <NavLink to="/personal" activeStyle={activeStyle}>
         <SmileOutlined />
       </NavLink>

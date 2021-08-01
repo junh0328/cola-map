@@ -17,7 +17,7 @@ export const CategoryHeader = styled.div`
 
   @media (max-width: 425px) {
     & span {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
   }
 `;
@@ -39,7 +39,7 @@ export const RemoveRequestButton = styled.div`
   cursor: pointer;
 
   @media (max-width: 425px) {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 `;
 
@@ -51,8 +51,8 @@ export const RemoveRequestButton2 = styled.div`
   cursor: pointer;
 
   @media (max-width: 425px) {
-    font-size: 0.8rem;
-    right: 20%;
+    font-size: 0.7rem;
+    right: 18%;
   }
 `;
 

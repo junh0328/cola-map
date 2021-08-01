@@ -57,12 +57,43 @@ export const PersonalLinkBox = styled.div`
   }
 `;
 
+export const SelectWrap = styled.div`
+  position: absolute;
+  right: 0;
+
+  & svg {
+    font-size: 1.8rem;
+    margin-right: 10px;
+  }
+
+  @media (max-width: 580px) {
+    & svg {
+      font-size: 1.1rem;
+    }
+  }
+`;
+
+// style={{ position: 'absolute', right: 0 }}
+
+export const NonCardWrap = styled.div`
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  padding-top: 1%;
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
 export const CardWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding-top: 1%;
 
-  @media (max-width: 580px) {
+  @media (max-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
   }
   @media (max-width: 400px) {
@@ -72,4 +103,9 @@ export const CardWrap = styled.div`
 
 export const MyCard = styled(Card)`
   margin: 3px;
+  transition: 300ms;
+
+  &:hover {
+    font-weight: bolder;
+  }
 `;

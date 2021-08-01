@@ -10,7 +10,7 @@ export const LinkWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 25%;
+    width: 33%;
     text-decoration: none;
     color: #414141;
     margin-right: 10px;
