@@ -12,12 +12,21 @@ JWT_SECRET=yourJWTSecretKey
 ✔ MONGODB_URL의 경우 슬랙 채널 고정메시지 참고
 
 server 폴더 내에서 실행  
-`npm install` - 필요 모듈 설치  
-`npm run dev` - 서버 실행
+`$ npm install` - 필요 모듈 설치  
+`$ npm run dev` - 서버 실행
 
-</br>
+<br>
 
 ### 🖥 서버, DB 정상 실행 시 메시지
 
-
 <img src="./server_db_message.png" width="30%">
+
+
+<br>
+### 문의하기 기능 사용 전 dotenv 설정
+
+>
+```
+MAIL_USER=colamap.dev@gmail.com
+MAIL_PASS=<슬랙 채널 고정메시지 참고>
+```
