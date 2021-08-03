@@ -131,7 +131,7 @@ paths:
           description: 로그인 필요
     delete:
       tags:
-        - post
+        - post - edit
       summary: 내가 한 제보 삭제
       parameters:
         - in: path
