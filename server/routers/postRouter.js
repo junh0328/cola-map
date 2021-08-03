@@ -223,9 +223,16 @@ postRouter.delete('/:postId', auth, async (req, res) => {
       user: req.user,
       _id: req.params.postId,
     });
-    const mostPosted = await getMostPosted(post.store);
 
-    await Store.findOneAndUpdate({ kakaoId: post.store }, { mostPosted: mostPosted });
+    // mostPosted 갱신
+    const countCoca = await Post.countDocuments({ store: post.store, drink: 'coca' });
+    const countPepsi = await Post.countDocuments({ store: post.store, drink: 'pepsi' });
+
+    if (countCoca <= countPepsi) {
+      await Store.findOneAndUpdate({ kakaoId: post.store }, { mostPosted: 'pepsi' });
+    } else {
+      await Store.findOneAndUpdate({ kakaoId: post.store }, { mostPosted: 'coca' });
+    }
 
     res.status(200).send({ message: 'success' });
   } catch (e) {
