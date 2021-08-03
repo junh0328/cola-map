@@ -52,12 +52,12 @@ askRouter.post('/mail', auth, async (req, res) => {
     };
 
     // 메일 발송
-    transporter.sendMail(mailOptions, function (error, info) {
+    transporter.sendMail(mailOptions, function (error) {
       if (error) {
         res.sendStatus(500);
         console.log({ error: error.message });
       } else {
-        res.status(201).send({ message: 'success', info: info });
+        res.status(201).send({ message: 'success' });
       }
       transporter.close();
     });
