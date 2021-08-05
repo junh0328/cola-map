@@ -1,5 +1,8 @@
 import axios from 'axios';
 import {
+  DELETE_POST_FAILURE,
+  DELETE_POST_REQUEST,
+  DELETE_POST_SUCCESS,
   GET_STORE_FAILURE,
   GET_STORE_REQUEST,
   GET_STORE_SUCCESS,
@@ -65,13 +68,44 @@ function* postStoreRequest(action) {
   }
 }
 
+function deletePostRequestAPI(data) {
+  try {
+    return axios.delete(`/post/${data}`, myConfig);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* deletePostRequest(action) {
+  console.log('action.data: ', action);
+  try {
+    const result = yield call(deletePostRequestAPI, action.data);
+    console.log('delete result 츨력: ', result);
+    if (result.statusText === 'OK') {
+      yield put({
+        type: DELETE_POST_SUCCESS,
+        data: action.data,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: DELETE_POST_FAILURE,
+      error: err,
+    });
+  }
+}
+
 function* watchPostStore() {
   yield takeLatest(POST_STORE_REQUEST, postStoreRequest);
 }
 function* watchGetStore() {
   yield takeLatest(GET_STORE_REQUEST, getStoreRequest);
 }
+function* watchDeletePost() {
+  yield takeLatest(DELETE_POST_REQUEST, deletePostRequest);
+}
 
 export default function* postSaga() {
-  yield all([fork(watchPostStore), fork(watchGetStore)]);
+  yield all([fork(watchPostStore), fork(watchGetStore), fork(watchDeletePost)]);
 }

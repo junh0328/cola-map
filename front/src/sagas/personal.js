@@ -25,7 +25,7 @@ function checkUserAPI() {
 function* checkUserRequest() {
   try {
     const result = yield call(checkUserAPI);
-    // console.log('checkUserRequest.result:', result);
+    console.log('checkUserRequest.result:', result);
     yield put({
       type: CHECK_USER_SUCCESS,
       data: result.data,
@@ -42,7 +42,7 @@ function* checkUserRequest() {
 function loadInfoAPI() {
   const data = {
     myToken: localStorage.getItem('token'),
-    myId: localStorage.getItem('uniqId'),
+    myId: localStorage.getItem('myId'),
     myNickname: localStorage.getItem('nickname'),
   };
   return data;
@@ -68,7 +68,7 @@ function* loadInfoRequest() {
 function logOutAPI() {
   try {
     localStorage.removeItem('token');
-    localStorage.removeItem('uniqId');
+    localStorage.removeItem('_id');
     localStorage.removeItem('nickname');
   } catch (err) {
     console.log(err);

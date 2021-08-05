@@ -23,7 +23,7 @@ export default function Main() {
       if (me?.token) {
         console.log('token을 로컬 스토리지에 저장합니다.');
         localStorage.setItem('token', me.token);
-        localStorage.setItem('uniqId', me.user.uniqId);
+        localStorage.setItem('myId', me.user._id);
         localStorage.setItem('nickname', me.user.profileNickname);
       }
     }

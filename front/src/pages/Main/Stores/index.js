@@ -1,4 +1,4 @@
-import { DeleteOutlined, FormOutlined, LeftOutlined } from '@ant-design/icons';
+import { LeftOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -37,7 +37,7 @@ import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
 import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 import { calCategory } from 'hooks/calCategory';
-import { GET_STORE_REQUEST, POST_STORE_REQUEST } from 'reducers/post';
+import { DELETE_POST_REQUEST, GET_STORE_REQUEST, POST_STORE_REQUEST } from 'reducers/post';
 import CardMetaContent from 'components/CardMetaContent';
 
 const Store = () => {
@@ -84,6 +84,7 @@ const Store = () => {
   /* 카테고리 비율을 계산할 함수 calCategory() 실행 후 결과 값을 CategoryRate state에 담고 props로 전달 */
   useEffect(() => {
     if (storeData.length) {
+      console.log('storeData : ', storeData);
       const categoryResult = calCategory(storeData);
       setCategoryRate(categoryResult);
     }
@@ -101,10 +102,6 @@ const Store = () => {
       });
     }
   }, []);
-
-  useEffect(() => {
-    if (storeData.length) console.log('check storeData: ', storeData);
-  }, [storeData]);
 
   /* useParams()로 넘겨 받는 title을 통해 좌표 다시 받아오기 */
   const getStoreLocation = (title) => {
@@ -181,6 +178,18 @@ const Store = () => {
   const goToCategories = useCallback(() => {
     return history.go(-1);
   }, [inputStatus]);
+
+  const deletePost = useCallback((id) => {
+    const result = window.confirm('정알로 해당 게시글을 삭제하시겠습니까?');
+    if (result) {
+      console.log('deletePost Start!: ', id);
+      dispatch({
+        type: DELETE_POST_REQUEST,
+        data: id,
+      });
+    }
+    return;
+  }, []);
 
   return (
     <>
@@ -274,8 +283,13 @@ const Store = () => {
                 {storeData?.map((data) => (
                   <StoreContentReviewWrap key={data._id}>
                     <MyCard title={data.user.profileNickname} bordered={false} category={data.drink.toString()}>
-                      <MyFormOutlined onClick={() => alert('clicked!')} />
-                      <MyDeleteOutlined onClick={() => alert('trash!')} />
+                      {data.user._id === myInfo.myId && (
+                        <>
+                          <MyFormOutlined onClick={() => alert('clicked!')} />
+                          <MyDeleteOutlined onClick={() => deletePost(data._id)} />
+                        </>
+                      )}
+
                       <MyCardMeta description={<CardMetaContent postData={data} />} />
                     </MyCard>
                   </StoreContentReviewWrap>
