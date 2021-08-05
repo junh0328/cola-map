@@ -42,7 +42,7 @@ const Setting = () => {
   // LOG_OUT_REQUEST 성공시 Main 페이지로 이동
   useEffect(() => {
     if (tokenData) {
-      location.href = '/';
+      location.href = '/personal';
     }
   });
 
