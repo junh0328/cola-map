@@ -1,5 +1,8 @@
+import { DeleteOutlined, FormOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Card } from 'antd';
+
+const { Meta } = Card;
 
 export const CategoryHeader = styled.div`
   position: relative;
@@ -168,6 +171,28 @@ export const MyCard = styled(Card)`
       bottom: 10%;
       width: 20%;
     }
+  }
+`;
+
+export const MyFormOutlined = styled(FormOutlined)`
+  position: absolute;
+  right: 75px;
+  top: 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+`;
+
+export const MyDeleteOutlined = styled(DeleteOutlined)`
+  position: absolute;
+  right: 45px;
+  top: 25px;
+  font-size: 1.1rem;
+  cursor: pointer;
+`;
+
+export const MyCardMeta = styled(Meta)`
+  & p {
+    color: black;
   }
 `;
 

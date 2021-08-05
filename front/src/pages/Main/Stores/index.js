@@ -1,4 +1,4 @@
-import { LeftOutlined } from '@ant-design/icons';
+import { DeleteOutlined, FormOutlined, LeftOutlined } from '@ant-design/icons';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -11,6 +11,9 @@ import {
   FormCategoryWrap,
   InnerGraph,
   MyCard,
+  MyCardMeta,
+  MyDeleteOutlined,
+  MyFormOutlined,
   MyGraph,
   RemoveRequestButton,
   RemoveRequestButton2,
@@ -35,6 +38,7 @@ import LoginModal from 'components/LoginModal';
 import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 import { calCategory } from 'hooks/calCategory';
 import { GET_STORE_REQUEST, POST_STORE_REQUEST } from 'reducers/post';
+import CardMetaContent from 'components/CardMetaContent';
 
 const Store = () => {
   // 로그인 모달
@@ -84,6 +88,10 @@ const Store = () => {
       setCategoryRate(categoryResult);
     }
   }, [storeData]);
+
+  useEffect(() => {
+    if (myInfo) console.log('myInfo 출력: ', myInfo);
+  }, [myInfo]);
 
   useEffect(() => {
     if (!storeData.length) {
@@ -266,8 +274,9 @@ const Store = () => {
                 {storeData?.map((data) => (
                   <StoreContentReviewWrap key={data._id}>
                     <MyCard title={data.user.profileNickname} bordered={false} category={data.drink.toString()}>
-                      <p>{data.comment}</p>
-                      <p>{data.drink === 'pepsi' ? <img src={pepsi} /> : <img src={coca} />}</p>
+                      <MyFormOutlined onClick={() => alert('clicked!')} />
+                      <MyDeleteOutlined onClick={() => alert('trash!')} />
+                      <MyCardMeta description={<CardMetaContent postData={data} />} />
                     </MyCard>
                   </StoreContentReviewWrap>
                 ))}
