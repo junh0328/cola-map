@@ -25,7 +25,7 @@ function checkUserAPI() {
 function* checkUserRequest() {
   try {
     const result = yield call(checkUserAPI);
-    console.log('checkUserRequest.result:', result);
+    // console.log('checkUserRequest.result:', result);
     yield put({
       type: CHECK_USER_SUCCESS,
       data: result.data,
@@ -151,7 +151,7 @@ function changeNicknameAPI(data) {
 }
 
 function* changeNicknameRequest(action) {
-  console.log('changeNicknameRequest action: ', action);
+  // console.log('changeNicknameRequest action: ', action);
   try {
     const result = yield call(changeNicknameAPI, action.data);
     // console.log('load my posts result:', result.data.posts);
