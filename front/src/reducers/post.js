@@ -15,6 +15,10 @@ export const initialState = {
   deletePostLoading: false,
   deletePostSuccess: false,
   deletePostError: null,
+
+  updatePostLoading: false,
+  updatePostSuccess: false,
+  updatePostError: null,
 };
 
 export const GET_STORE_REQUEST = 'GET_STORE_REQUEST';
@@ -28,6 +32,10 @@ export const POST_STORE_FAILURE = 'POST_STORE_FAILURE';
 export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+
+export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
+export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
 
 const post = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -79,6 +87,23 @@ const post = (state = initialState, action) =>
       case DELETE_POST_FAILURE: {
         draft.deletePostLoading = false;
         draft.deletePostError = action.error;
+        break;
+      }
+      case UPDATE_POST_REQUEST: {
+        draft.updatePostLoading = true;
+        draft.updatePostSuccess = false;
+        break;
+      }
+      case UPDATE_POST_SUCCESS: {
+        draft.updatePostLoading = false;
+        draft.updatePostSuccess = true;
+        draft.storeData.find((v) => v._id === action.data.postId).comment = action.data.comment;
+
+        break;
+      }
+      case UPDATE_POST_FAILURE: {
+        draft.updatePostLoading = false;
+        draft.updatePostError = action.error;
         break;
       }
       default:

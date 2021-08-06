@@ -9,6 +9,9 @@ import {
   POST_STORE_FAILURE,
   POST_STORE_REQUEST,
   POST_STORE_SUCCESS,
+  UPDATE_POST_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
 } from 'reducers/post';
 
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
@@ -96,6 +99,33 @@ function* deletePostRequest(action) {
   }
 }
 
+function updatePostRequestAPI(data) {
+  // console.log('updatePostRequestApi data 출력: ', data);
+  try {
+    return axios.patch(`/post/${data.postId}`, data, myConfig);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* updatePostRequest(action) {
+  // console.log('action.data: ', action);
+  try {
+    const result = yield call(updatePostRequestAPI, action.data);
+    // console.log('update result 츨력: ', result);
+    yield put({
+      type: UPDATE_POST_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: UPDATE_POST_FAILURE,
+      error: err,
+    });
+  }
+}
+
 function* watchPostStore() {
   yield takeLatest(POST_STORE_REQUEST, postStoreRequest);
 }
@@ -106,6 +136,10 @@ function* watchDeletePost() {
   yield takeLatest(DELETE_POST_REQUEST, deletePostRequest);
 }
 
+function* watchUpdatePost() {
+  yield takeLatest(UPDATE_POST_REQUEST, updatePostRequest);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchPostStore), fork(watchGetStore), fork(watchDeletePost)]);
+  yield all([fork(watchPostStore), fork(watchGetStore), fork(watchDeletePost), fork(watchUpdatePost)]);
 }

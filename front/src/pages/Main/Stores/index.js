@@ -37,7 +37,7 @@ import StoreModal from 'components/StoreModal';
 import LoginModal from 'components/LoginModal';
 import { LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
 import { calCategory } from 'hooks/calCategory';
-import { DELETE_POST_REQUEST, GET_STORE_REQUEST, POST_STORE_REQUEST } from 'reducers/post';
+import { DELETE_POST_REQUEST, GET_STORE_REQUEST, POST_STORE_REQUEST, UPDATE_POST_REQUEST } from 'reducers/post';
 import CardMetaContent from 'components/CardMetaContent';
 
 const Store = () => {
@@ -52,11 +52,13 @@ const Store = () => {
   // 좌표값 저장
   const [addressX, setAddressX] = useState(null);
   const [addressY, setAddressY] = useState(null);
+  // 수정 모드
+  const [editMode, setEditMode] = useState(false);
 
   // 서버로 부터 전달 받는 state 내 정보
   const { myInfo } = useSelector((state) => state.personal);
   // 서버로 부터 전달 받은 storeData 배열
-  const { storeData } = useSelector((state) => state.post);
+  const { storeData, updatePostSuccess } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   const { title, id } = useParams();
   const history = useHistory();
@@ -91,10 +93,6 @@ const Store = () => {
   }, [storeData]);
 
   useEffect(() => {
-    if (myInfo) console.log('myInfo 출력: ', myInfo);
-  }, [myInfo]);
-
-  useEffect(() => {
     if (!storeData.length) {
       dispatch({
         type: GET_STORE_REQUEST,
@@ -102,6 +100,12 @@ const Store = () => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (updatePostSuccess) {
+      onCancelUpdate();
+    }
+  }, [updatePostSuccess]);
 
   /* useParams()로 넘겨 받는 title을 통해 좌표 다시 받아오기 */
   const getStoreLocation = (title) => {
@@ -190,6 +194,30 @@ const Store = () => {
     }
     return;
   }, []);
+
+  /* 수정하기 관련 */
+  const onClickUpdate = useCallback(() => {
+    setEditMode(true);
+  }, []);
+
+  const onCancelUpdate = useCallback(() => {
+    setEditMode(false);
+  }, []);
+
+  /* props로 전달해준 onChangePost의 인수를 통해 전달 받을 값을 함수 표현식에서 파라미터를 통해 블록 내부의 변수로 사용하여 dispatch 객체 내부에 담았음 */
+  const onChangePost = useCallback(
+    (editText, id, drink) => () => {
+      dispatch({
+        type: UPDATE_POST_REQUEST,
+        data: {
+          postId: id,
+          drink: drink,
+          comment: editText,
+        },
+      });
+    },
+    [storeData],
+  );
 
   return (
     <>
@@ -283,20 +311,30 @@ const Store = () => {
                 {storeData?.map((data) => (
                   <StoreContentReviewWrap key={data._id}>
                     <MyCard title={data.user.profileNickname} bordered={false} category={data.drink.toString()}>
-                      {data.user._id === myInfo.myId && (
+                      {data.user._id === myInfo?.myId && (
                         <>
-                          <MyFormOutlined onClick={() => alert('clicked!')} />
+                          <MyFormOutlined onClick={onClickUpdate} />
                           <MyDeleteOutlined onClick={() => deletePost(data._id)} />
                         </>
                       )}
 
-                      <MyCardMeta description={<CardMetaContent postData={data} />} />
+                      <MyCardMeta
+                        description={
+                          <CardMetaContent
+                            onChangePost={onChangePost}
+                            onCancelUpdate={onCancelUpdate}
+                            editMode={editMode}
+                            myInfo={myInfo}
+                            postData={data}
+                          />
+                        }
+                      />
                     </MyCard>
                   </StoreContentReviewWrap>
                 ))}
               </StoreContentReview>
             ) : (
-              <Skeleton></Skeleton>
+              <Skeleton />
             )}
           </StoreContent>
         </StoreMain>
