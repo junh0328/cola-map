@@ -119,11 +119,14 @@ function* loadMyPostsRequest(action) {
   // console.log('loadMyPostsRequest action: ', action);
   try {
     const result = yield call(loadMyPostsAPI);
-    // console.log('load my posts result:', result.data.posts);
-    yield put({
-      type: LOAD_MY_POSTS_SUCCESS,
-      data: result.data.posts,
-    });
+    console.log('load my posts result:', result.data.posts);
+    if (result.data.posts !== undefined) {
+      console.log('load my post success!');
+      yield put({
+        type: LOAD_MY_POSTS_SUCCESS,
+        data: result.data.posts,
+      });
+    } else return;
   } catch (err) {
     console.error(err);
     yield put({

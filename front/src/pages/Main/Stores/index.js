@@ -207,14 +207,17 @@ const Store = () => {
   /* props로 전달해준 onChangePost의 인수를 통해 전달 받을 값을 함수 표현식에서 파라미터를 통해 블록 내부의 변수로 사용하여 dispatch 객체 내부에 담았음 */
   const onChangePost = useCallback(
     (editText, id, drink) => () => {
-      dispatch({
-        type: UPDATE_POST_REQUEST,
-        data: {
-          postId: id,
-          drink: drink,
-          comment: editText,
-        },
-      });
+      const result = window.confirm(`입력하신 '${editText}'으로 내용을 수정하시겠습니까?`);
+      if (result) {
+        dispatch({
+          type: UPDATE_POST_REQUEST,
+          data: {
+            postId: id,
+            drink: drink,
+            comment: editText,
+          },
+        });
+      } else return;
     },
     [storeData],
   );
