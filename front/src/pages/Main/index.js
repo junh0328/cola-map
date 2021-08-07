@@ -6,22 +6,19 @@ import SearchInput from 'components/SearchInput';
 import Map from 'components/Map';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ApplyButton from 'components/ApplyButton';
 import { positions } from 'apis/dummy/reviewList';
 import { useEffect } from 'react';
 
 export default function Main() {
   // 검색 결과를 담을 initialState
-  const { searchAddress, serachAddressDone } = useSelector((state) => state.map);
+  const { searchAddress } = useSelector((state) => state.map);
 
   // me가 생기려면 로그인 과정을 거쳐야 합니다.
   const { me } = useSelector((state) => state.personal);
 
   useEffect(() => {
     if (me) {
-      console.log('me 정보를 확인합니다', me);
       if (me?.token) {
-        console.log('token을 로컬 스토리지에 저장합니다.');
         localStorage.setItem('token', me.token);
         localStorage.setItem('myId', me.user._id);
         localStorage.setItem('nickname', me.user.profileNickname);
@@ -43,7 +40,6 @@ export default function Main() {
     <>
       <Map />
       <SearchInput />
-      {serachAddressDone && <ApplyButton data={searchAddress} />}
       <AimButton />
       {positions.length && (
         <SlideWrapper>

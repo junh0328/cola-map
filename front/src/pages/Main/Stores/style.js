@@ -166,10 +166,18 @@ export const MyCard = styled(Card)`
     width: 90px;
   }
 
+  & input {
+    padding: 0 !important;
+  }
+
   @media (max-width: 425px) {
     & img {
       bottom: 10%;
       width: 20%;
+    }
+
+    & input {
+      font-size: 0.8rem;
     }
   }
 `;
@@ -177,17 +185,23 @@ export const MyCard = styled(Card)`
 export const MyFormOutlined = styled(FormOutlined)`
   position: absolute;
   right: 75px;
-  top: 25px;
+  top: 20px;
   font-size: 1.1rem;
   cursor: pointer;
+  @media (max-width: 425px) {
+    right: 60px;
+  }
 `;
 
 export const MyDeleteOutlined = styled(DeleteOutlined)`
   position: absolute;
   right: 45px;
-  top: 25px;
+  top: 20px;
   font-size: 1.1rem;
   cursor: pointer;
+  @media (max-width: 425px) {
+    right: 30px;
+  }
 `;
 
 export const MyCardMeta = styled(Meta)`
@@ -267,6 +281,10 @@ export const FormCategoryMain = styled.div`
     & span {
       font-weight: 400;
       font-size: 1rem;
+    }
+
+    & b {
+      font-size: 0.9rem;
     }
   }
 `;
