@@ -37,7 +37,7 @@ const Personal = () => {
   }, []);
 
   useEffect(() => {
-    if (myToken && myInfo && !myPosts.length) {
+    if (myInfo && !myPosts.length) {
       setCanLoad(true);
     }
   }, [myToken, myInfo, myPosts.length]);
@@ -75,7 +75,6 @@ const Personal = () => {
                       </>
                     )}
                   </div>
-                  {/* <Switch style={{ background: 'gray' }} onChange={() => setListMenu((prev) => !prev)} /> */}
                   <SelectWrap>
                     <AppstoreFilled onClick={() => setListMenu('card')} />
                     <UnorderedListOutlined onClick={() => setListMenu('list')} />
@@ -85,7 +84,8 @@ const Personal = () => {
                 <span>제보한 가게가 없어요</span>
               )}
             </PersonalLinkBox>
-            {!(myInfo && myPosts) ? (
+            {/* 내 정보가 있는데, myPosts.length가 없다면 ? */}
+            {!myPosts.length ? (
               <NonCardWrap>
                 <Card style={{ margin: 5 }}>
                   <Skeleton active />
