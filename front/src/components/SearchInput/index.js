@@ -1,16 +1,19 @@
 // 메인 창에 뜨는 검색창 (input)
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SearchForm, SearchInputWrapper } from './style';
 import { DownOutlined } from '@ant-design/icons';
 import SearchModal from 'components/SearchModal';
 import { getSearchData } from 'apis/useGetSearchData';
+import { useSelector } from 'react-redux';
 
 const SearchInput = () => {
   // 모달 상태 관리
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [fetchedData, setFetchedData] = useState([]);
+
+  const { searchAddress } = useSelector((state) => state.map);
 
   const onChangeValue = useCallback((e) => {
     setSearchValue(e.target.value);
@@ -40,9 +43,9 @@ const SearchInput = () => {
       <SearchInputWrapper>
         <SearchForm onClick={onClickSearchModal}>
           {/* 후에 현재 위치를 받아와 location을 표시 */}
-          {searchValue ? (
+          {searchAddress?.place_name ? (
             <span style={{ marginBottom: '0 !important' }}>
-              <b>'{searchValue}'</b> 에 대한 검색 결과입니다
+              <b>'{searchAddress.place_name}'</b> 에 대한 검색 결과입니다
             </span>
           ) : (
             <span style={{ marginBottom: '0 !important' }}>구, 동, 건물명, 역 등으로 검색</span>

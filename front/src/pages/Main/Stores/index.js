@@ -70,7 +70,6 @@ const Store = () => {
   // 로컬 스토리지에 토큰이 있는데, 내 정보가 reducer에 없을 경우 유저 정보를 요청
   useEffect(() => {
     if (!myInfo && myToken) {
-      console.log('me가 없으므로, 유저 정보를 요청합니다');
       dispatch({
         type: LOAD_INFO_REQUEST,
       });
@@ -113,8 +112,6 @@ const Store = () => {
 
     let callback = function (result, status) {
       if (status === kakao.maps.services.Status.OK) {
-        /* result[0] result의 첫 번째 x,y 좌표값을 가져오기 위해 확인 */
-        // console.log('result[0]번째 출력:', result[0]);
         setAddressX(result[0].x);
         setAddressY(result[0].y);
       }
@@ -133,6 +130,11 @@ const Store = () => {
       const comment = commentRef.current;
       if (comment.value.trim() === '' || inputStatus === '') {
         alert('게시글을 입력 또는 카테고리 선택을 완료해야 합니다');
+        comment.focus();
+        return;
+      }
+      if (comment.value.length > 60) {
+        alert(`60자 이상 작성하실 수 없습니다 (${comment.value.length}/60)`);
         comment.focus();
         return;
       }
@@ -207,7 +209,11 @@ const Store = () => {
   /* props로 전달해준 onChangePost의 인수를 통해 전달 받을 값을 함수 표현식에서 파라미터를 통해 블록 내부의 변수로 사용하여 dispatch 객체 내부에 담았음 */
   const onChangePost = useCallback(
     (editText, id, drink) => () => {
-      const result = window.confirm(`입력하신 '${editText}'으로 내용을 수정하시겠습니까?`);
+      const result = window.confirm(`입력하신 "${editText}"(로/으로) 내용을 수정하시겠습니까?`);
+      if (editText.length > 60) {
+        alert(`60자 이상의 글을 등록할 수 없습니다 (${editText.length}/60)`);
+        return;
+      }
       if (result) {
         dispatch({
           type: UPDATE_POST_REQUEST,
