@@ -3,6 +3,7 @@ import produce from 'immer';
 export const initialState = {
   data: null,
   storeData: [],
+  categoryData: [],
 
   getStoreLoading: false,
   getStoreSuccess: false,
@@ -19,6 +20,10 @@ export const initialState = {
   updatePostLoading: false,
   updatePostSuccess: false,
   updatePostError: null,
+
+  getCategoryLoading: false,
+  getCategorySuccess: false,
+  getCategoryError: null,
 };
 
 export const GET_STORE_REQUEST = 'GET_STORE_REQUEST';
@@ -36,6 +41,12 @@ export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 export const UPDATE_POST_REQUEST = 'UPDATE_POST_REQUEST';
 export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS';
 export const UPDATE_POST_FAILURE = 'UPDATE_POST_FAILURE';
+
+export const GET_CATEGORY_REQUEST = 'GET_CATEGORY_REQUEST';
+export const GET_CATEGORY_SUCCESS = 'GET_CATEGORY_SUCCESS';
+export const GET_CATEGORY_FAILURE = 'GET_CATEGORY_FAILURE';
+
+export const RESET_CATEGORY_LIST = 'RESET_CATEGORY_LIST';
 
 const post = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -104,6 +115,25 @@ const post = (state = initialState, action) =>
       case UPDATE_POST_FAILURE: {
         draft.updatePostLoading = false;
         draft.updatePostError = action.error;
+        break;
+      }
+      case RESET_CATEGORY_LIST: {
+        draft.categoryData = [];
+      }
+      case GET_CATEGORY_REQUEST: {
+        draft.getCategoryLoading = true;
+        draft.getCategorySuccess = false;
+        break;
+      }
+      case GET_CATEGORY_SUCCESS: {
+        draft.getCategoryLoading = false;
+        draft.getCategorySuccess = true;
+        draft.categoryData = draft.categoryData.concat(action.data);
+        break;
+      }
+      case GET_CATEGORY_FAILURE: {
+        draft.getCategoryLoading = false;
+        draft.getCategoryError = action.error;
         break;
       }
       default:

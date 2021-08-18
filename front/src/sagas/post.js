@@ -3,6 +3,9 @@ import {
   DELETE_POST_FAILURE,
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
+  GET_CATEGORY_FAILURE,
+  GET_CATEGORY_REQUEST,
+  GET_CATEGORY_SUCCESS,
   GET_STORE_FAILURE,
   GET_STORE_REQUEST,
   GET_STORE_SUCCESS,
@@ -126,6 +129,30 @@ function* updatePostRequest(action) {
   }
 }
 
+function getCategoryRequestAPI(data) {
+  try {
+    return axios.get(`store/category/${data}`);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+function* getCategoryRequest(action) {
+  try {
+    const result = yield call(getCategoryRequestAPI, action.data);
+    yield put({
+      type: GET_CATEGORY_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: GET_CATEGORY_FAILURE,
+      error: err,
+    });
+  }
+}
+
 function* watchPostStore() {
   yield takeLatest(POST_STORE_REQUEST, postStoreRequest);
 }
@@ -140,6 +167,16 @@ function* watchUpdatePost() {
   yield takeLatest(UPDATE_POST_REQUEST, updatePostRequest);
 }
 
+function* watchGetCategory() {
+  yield takeLatest(GET_CATEGORY_REQUEST, getCategoryRequest);
+}
+
 export default function* postSaga() {
-  yield all([fork(watchPostStore), fork(watchGetStore), fork(watchDeletePost), fork(watchUpdatePost)]);
+  yield all([
+    fork(watchPostStore),
+    fork(watchGetStore),
+    fork(watchDeletePost),
+    fork(watchUpdatePost),
+    fork(watchGetCategory),
+  ]);
 }
