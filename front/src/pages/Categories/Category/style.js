@@ -12,6 +12,12 @@ export const CategoryHeader = styled.div`
   & span {
     font-size: 1.3rem;
   }
+
+  @media (max-width: 425px) {
+    & span {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const CloseModalButton = styled.div`

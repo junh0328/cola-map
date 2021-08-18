@@ -1,26 +1,27 @@
 import React from 'react';
 import CategoryButton from 'components/CategoryButton';
 import { CategoriesHeader, CategoriesMain, CategoriesWrapper, CategoryWrap } from './style';
+import coca from 'apis/license/coca.png';
+import pepsi from 'apis/license/pepsi.png';
 
 const Categories = () => {
   const bevarages = [
     {
       id: 1,
-      img: 'http://getdrawings.com/free-icon/coke-icon-70.png',
+      img: pepsi,
       name: '펩시',
     },
     {
       id: 2,
-      img: 'http://img.danawa.com/prod_img/500000/840/156/img/3156840_1.jpg?shrink=500:500&_v=20200326113047',
+      img: coca,
       name: '코카콜라',
     },
-
   ];
 
   return (
     <CategoriesWrapper>
       <CategoriesHeader>
-        이 안에 <b>&nbsp;네 최애쯤</b>은 하나 있겠지!
+        당신의 <b>&nbsp;최애를&nbsp;</b>픽해주세요!
       </CategoriesHeader>
       <CategoriesMain>
         <CategoryWrap>
