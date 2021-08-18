@@ -24,6 +24,10 @@ const Category = () => {
   }, []);
 
   useEffect(() => {
+    categoryData && console.log(categoryData);
+  }, [categoryData]);
+
+  useEffect(() => {
     categoryName && getCategory();
   }, [categoryName]);
 
@@ -62,9 +66,8 @@ const Category = () => {
           categoryData.map((c) => (
             <MenuListWrapper key={c._id}>
               <ul>
-                <li>
-                  <p>{c.storeName}</p>
-                  <p>{c.mostPosted === 'coca' ? '코카콜라' : '펩시'}</p>
+                <li onClick={() => (location.href = `/store/${c.storeName}/${c.kakaoId}`)}>
+                  <p>📍 {c.storeName}</p>
                 </li>
               </ul>
             </MenuListWrapper>
