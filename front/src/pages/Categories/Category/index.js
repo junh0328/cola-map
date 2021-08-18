@@ -11,6 +11,9 @@ import { MenuListWrapper } from 'components/MenuList/style';
 import { GET_CATEGORY_REQUEST } from 'reducers/post';
 import { useHistory } from 'react-router-dom';
 
+import coca from 'apis/license/coca.png';
+import pepsi from 'apis/license/pepsi.png';
+
 const Category = () => {
   const { name } = useParams();
   const { categoryData } = useSelector((state) => state.post);
@@ -59,7 +62,19 @@ const Category = () => {
         <CloseModalButton onClick={goToCategories}>
           <LeftOutlined />
         </CloseModalButton>
-        <span>{name}를 픽한 가게 목록 보기</span>
+        <span>
+          {name === '펩시' ? (
+            <>
+              <img src={pepsi} style={{ width: 40 }} />
+              펩시
+            </>
+          ) : (
+            <>
+              <img src={coca} style={{ width: 40 }} />
+              코카콜라
+            </>
+          )}
+        </span>
       </CategoryHeader>
       <div style={{ marginTop: 30, paddingRight: 20, overflow: 'scroll', height: '100vh' }}>
         {categoryData.length >= 1 &&
@@ -67,7 +82,7 @@ const Category = () => {
             <MenuListWrapper key={c._id}>
               <ul>
                 <li onClick={() => (location.href = `/store/${c.storeName}/${c.kakaoId}`)}>
-                  <p>📍 {c.storeName}</p>
+                  <p>{c.storeName}</p>
                 </li>
               </ul>
             </MenuListWrapper>

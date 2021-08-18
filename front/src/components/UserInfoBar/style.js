@@ -7,7 +7,7 @@ export const UserInfoWrapper = styled.div`
   font-size: 1.2rem;
   color: #0f4c82;
 
-  @media (max-width: 400px) {
+  @media (max-width: 425px) {
     font-size: 0.9rem;
   }
 `;

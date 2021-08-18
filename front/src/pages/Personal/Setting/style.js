@@ -101,8 +101,7 @@ export const UserInfoWrapperSub = styled.div`
 
   @media (max-width: 425px) {
     & span {
-      font-size: 1rem;
-      font-weight: normal;
+      font-size: 0.9rem;
     }
   }
 `;

@@ -8,14 +8,7 @@ import {
   UserInfoWrapperSubBtn,
 } from './style';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  AlertOutlined,
-  FileTextOutlined,
-  HighlightOutlined,
-  LeftOutlined,
-  TeamOutlined,
-  UserDeleteOutlined,
-} from '@ant-design/icons';
+import { FileTextOutlined, HighlightOutlined, LeftOutlined, TeamOutlined, UserDeleteOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CHANGE_NICKNAME_REQUEST, LOAD_INFO_REQUEST, LOG_OUT_REQUEST } from 'reducers/personal';
@@ -93,12 +86,6 @@ const Setting = () => {
       </UserInfoWrapper>
       <PersonalContentBox>
         <PersonalLinkBox>
-          <Link to="/qna">
-            <AlertOutlined style={{ marginRight: 10 }} />
-            <span>자주 묻는 질문</span>
-          </Link>
-        </PersonalLinkBox>
-        <PersonalLinkBox>
           <Link to="/question">
             <FileTextOutlined style={{ marginRight: 10 }} />
             <span>문의하기</span>
@@ -113,7 +100,7 @@ const Setting = () => {
           </a>
         </PersonalLinkBox>
         <PersonalLinkBox>
-          <a href="https://doong-ji.github.io/" target="_blank">
+          <a href="https://github.com/Doong-Ji/cola-map" target="_blank">
             <TeamOutlined style={{ marginRight: 10 }} />
             <span>만든 사람들</span>
           </a>
