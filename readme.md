@@ -15,6 +15,10 @@
 | 백엔드 |          [유진수](https://github.com/Yubron)           |
 | 백엔드 |          [전도해](https://github.com/dode777)          |
 
+# 📍 노션 링크 바로가기
+
+[Notion](https://alder-waltz-e64.notion.site/2-cola-gola-5c6a19b206d44659b6bb7037d11993d5)
+
 # ✍🏼 기술 스택
 
 ### FrontEnd
