@@ -18,7 +18,7 @@ export const SearchForm = styled.div`
   justify-content: center;
   border-radius: 15px;
   border: none;
-  width: 60vw;
+  width: 70vw;
   height: auto;
   background-color: white;
   color: #414141;
@@ -28,7 +28,7 @@ export const SearchForm = styled.div`
   box-shadow: 5px 6px 5px 1px rgba(0, 0, 0, 0.1);
 
   & span {
-    margin-left: 4%;
+    margin-left: 6%;
   }
 
   @media (max-width: 400px) {

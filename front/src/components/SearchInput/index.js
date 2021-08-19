@@ -44,8 +44,15 @@ const SearchInput = () => {
         <SearchForm onClick={onClickSearchModal}>
           {/* 후에 현재 위치를 받아와 location을 표시 */}
           {searchAddress?.place_name ? (
-            <span style={{ marginBottom: '0 !important' }}>
-              <b>'{searchAddress.place_name}'</b> 에 대한 검색 결과입니다
+            <span
+              style={{
+                marginBottom: '0 !important',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              <b>{searchAddress.place_name}</b> 에 대한 검색 결과입니다
             </span>
           ) : (
             <span style={{ marginBottom: '0 !important' }}>구, 동, 건물명, 역 등으로 검색</span>

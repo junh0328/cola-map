@@ -225,7 +225,7 @@ export const StoreContentCategoryHeader = styled.div`
     font-weight: bolder;
   }
   @media (max-width: 425px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 

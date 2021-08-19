@@ -235,7 +235,9 @@ const Store = () => {
           <CloseModalButton onClick={goToCategories}>
             <LeftOutlined />
           </CloseModalButton>
-          <span>{title}</span>
+          <div style={{ width: 180, height: 18, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            <span>{title}</span>
+          </div>
           {myInfo && <RemoveRequestButton2 onClick={logoutWithKakao}>로그아웃</RemoveRequestButton2>}
           {myInfo ? (
             <RemoveRequestButton onClick={onClickModal}>삭제요청</RemoveRequestButton>
@@ -253,7 +255,8 @@ const Store = () => {
             <StoreContentMain>
               <StoreContentCategory>
                 <StoreContentCategoryHeader>
-                  <span>{title}</span>의 최애 음료수는?
+                  <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{title}</span>의
+                  최애 음료수는?
                 </StoreContentCategoryHeader>
               </StoreContentCategory>
             </StoreContentMain>
