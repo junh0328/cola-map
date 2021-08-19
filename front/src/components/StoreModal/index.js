@@ -27,10 +27,6 @@ const StoreModal = (props) => {
     [],
   );
 
-  useEffect(() => {
-    console.log('report: ', report);
-  }, [report]);
-
   const handleClickButton = useCallback((value) => {
     setReport(value);
   }, []);

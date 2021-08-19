@@ -27,15 +27,7 @@ const Category = () => {
   }, []);
 
   useEffect(() => {
-    categoryData && console.log(categoryData);
-  }, [categoryData]);
-
-  useEffect(() => {
     categoryName && getCategory();
-  }, [categoryName]);
-
-  useEffect(() => {
-    categoryName && console.log(categoryName);
   }, [categoryName]);
 
   const goToCategories = useCallback(() => {

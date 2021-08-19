@@ -22,7 +22,6 @@ const CardMetaContent = (props) => {
 
   return (
     <div>
-      {/* postData 안에 들어있는 유저의 정보(_id)와 내 로컬스토리지에 들어있는 (_id)가 같을 경우에만 editMode에서 수정 및 취소 버튼이 보이도록 */}
       {editMode && postData.user._id === myInfo.myId ? (
         <>
           <TextArea

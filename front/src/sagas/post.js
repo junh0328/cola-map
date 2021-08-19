@@ -29,10 +29,8 @@ function getStoreRequestAPI(data) {
 }
 
 function* getStoreRequest(action) {
-  // console.log('check store id before get Method:', action.data);
   try {
     const result = yield call(getStoreRequestAPI, action.data);
-    // console.log('check result: ', result.data);
 
     yield put({
       type: GET_STORE_SUCCESS,
@@ -48,7 +46,6 @@ function* getStoreRequest(action) {
 }
 
 function postStoreRequestAPI(data) {
-  // console.log('check before axios request:', data, localStorage.getItem('token'));
   try {
     return axios.post('/post', data, myConfig);
   } catch (err) {
@@ -57,10 +54,8 @@ function postStoreRequestAPI(data) {
 }
 
 function* postStoreRequest(action) {
-  // console.log('check before action:', action);
   try {
     const result = yield call(postStoreRequestAPI, action.data);
-    // console.log('result.data.post:', result.data.result.post);
     yield put({
       type: POST_STORE_SUCCESS,
       data: result.data.result.post,
@@ -83,10 +78,8 @@ function deletePostRequestAPI(data) {
 }
 
 function* deletePostRequest(action) {
-  console.log('action.data: ', action);
   try {
     const result = yield call(deletePostRequestAPI, action.data);
-    console.log('delete result 츨력: ', result);
     if (result.statusText === 'OK') {
       yield put({
         type: DELETE_POST_SUCCESS,
@@ -103,7 +96,6 @@ function* deletePostRequest(action) {
 }
 
 function updatePostRequestAPI(data) {
-  // console.log('updatePostRequestApi data 출력: ', data);
   try {
     return axios.patch(`/post/${data.postId}`, data, myConfig);
   } catch (err) {
@@ -112,10 +104,8 @@ function updatePostRequestAPI(data) {
 }
 
 function* updatePostRequest(action) {
-  // console.log('action.data: ', action);
   try {
-    const result = yield call(updatePostRequestAPI, action.data);
-    // console.log('update result 츨력: ', result);
+    yield call(updatePostRequestAPI, action.data);
     yield put({
       type: UPDATE_POST_SUCCESS,
       data: action.data,

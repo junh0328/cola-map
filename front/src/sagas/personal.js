@@ -25,7 +25,6 @@ function checkUserAPI() {
 function* checkUserRequest() {
   try {
     const result = yield call(checkUserAPI);
-    // console.log('checkUserRequest.result:', result);
     yield put({
       type: CHECK_USER_SUCCESS,
       data: result.data,
@@ -51,7 +50,6 @@ function loadInfoAPI() {
 function* loadInfoRequest() {
   try {
     const result = yield call(loadInfoAPI);
-    // console.log('load Info Data:', result);
     yield put({
       type: LOAD_INFO_SUCCESS,
       data: result,
@@ -77,8 +75,7 @@ function logOutAPI() {
 
 function* logOutRequest() {
   try {
-    const result = yield call(logOutAPI);
-    // console.log('load Info Data:', result);
+    yield call(logOutAPI);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -92,21 +89,12 @@ function* logOutRequest() {
 }
 
 function loadMyPostsAPI() {
-  // 로그인 후에 > 바로 personal 페이지에 접근 시, myConfig(로컬 스토리지에 저장된 나의 토큰) 확인
-  // console.log('myConfig:', myConfig);
   if (localStorage.getItem('token')) {
-    /* 
-    사가 인덱스에서 export한 myConfig를 로그인 후, 첫 번쩨 요청시 토큰을 감지하지 못하는 오류가 있음
-    loadMyPostsAPI 함수 내부에서 헤더를 다시 만들어 주었다.
-    */
-
-    // axios 데이터와 함께 보낼 헤더
     const tokenConfig = {
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       },
     };
-    // console.log('isToken and axios data: ', localStorage.getItem('token'));
 
     return axios.get('/post/user', tokenConfig);
   } else {
@@ -116,12 +104,9 @@ function loadMyPostsAPI() {
 }
 
 function* loadMyPostsRequest(action) {
-  // console.log('loadMyPostsRequest action: ', action);
   try {
     const result = yield call(loadMyPostsAPI);
-    console.log('load my posts result:', result.data.posts);
     if (result.data.posts !== undefined) {
-      console.log('load my post success!');
       yield put({
         type: LOAD_MY_POSTS_SUCCESS,
         data: result.data.posts,
@@ -154,10 +139,8 @@ function changeNicknameAPI(data) {
 }
 
 function* changeNicknameRequest(action) {
-  // console.log('changeNicknameRequest action: ', action);
   try {
     const result = yield call(changeNicknameAPI, action.data);
-    // console.log('load my posts result:', result.data.posts);
     yield put({
       type: CHANGE_NICKNAME_SUCCESS,
       data: result,

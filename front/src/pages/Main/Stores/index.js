@@ -235,7 +235,16 @@ const Store = () => {
           <CloseModalButton onClick={goToCategories}>
             <LeftOutlined />
           </CloseModalButton>
-          <div style={{ width: 180, height: 18, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <div
+            style={{
+              width: 180,
+              height: 18,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              textAlign: 'center',
+            }}
+          >
             <span>{title}</span>
           </div>
           {myInfo && <RemoveRequestButton2 onClick={logoutWithKakao}>로그아웃</RemoveRequestButton2>}
