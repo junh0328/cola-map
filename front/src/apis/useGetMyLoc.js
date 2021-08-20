@@ -1,6 +1,4 @@
-import pepsi from 'apis/license/pepsi.png';
-import coca from 'apis/license/coca.png';
-import marker from 'apis/license/marker.png';
+import myMarker from 'apis/license/myMarker.png';
 
 var { kakao } = window;
 
@@ -31,9 +29,8 @@ export function useGetMyLoc() {
   }
 
   function displayMarker(positions) {
-    // console.log('positions 배열 출력:', positions);
     for (var i = 0; i < positions.length; i++) {
-      var imageSize = new kakao.maps.Size(25, 35);
+      var imageSize = new kakao.maps.Size(35, 35);
 
       // 마커 이미지를 위한 변수
       let markerImage;
@@ -55,18 +52,15 @@ export function useGetMyLoc() {
 
       // 지도 중심좌표를 접속위치로 변경합니다
       map.setCenter(positions[0].latlng, marker);
-
-      // console.log(marker);
     }
   }
 
-  // 더미데이터이기 때문에 useGetMyLoc 함수 내에 적용하였습니다
   const positions = [
     {
       id: 1,
       title: '내 위치',
       latlng: null,
-      img: marker,
+      img: myMarker,
     },
   ];
   return { map };
